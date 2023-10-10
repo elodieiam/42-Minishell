@@ -6,15 +6,11 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/10 15:45:19 by taospa           ###   ########.fr       */
+/*   Updated: 2023/10/10 15:49:29 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include "../libft/libft.h"
+#include "../include/minishell.h"
 
 int	main(void)
 {
