@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/13 14:41:55 by tsaint-p         ###   ########.fr       */
+/*   Created: 2023/10/13 15:25:41 by tsaint-p          #+#    #+#             */
+/*   Updated: 2023/10/13 17:43:02 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	main(void)
+int	ft_isspace(int ch)
 {
-	char	*line;
+	return ((ch == ' ') || (ch >= 9 && ch <= 13));
+}
 
-	while (1)
-	{
-		line = readline("minishell>");
-		if (!ft_strncmp(line, "exit", 5))
-			break ;
-		ft_lexer(line);
-		free(line);
-	}
+int	ft_iswordsep(int ch)
+{
+	return (ft_isspace(ch) || ch == '|' || ch == '&' ||
+		ch == '<' || ch == '>' || ch == '(' || ch == ')');
 }
