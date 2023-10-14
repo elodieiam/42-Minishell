@@ -6,7 +6,7 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/13 17:42:36 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:51:47 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_token
 
 /*----------------lexer.c---------------*/
 t_token	*ft_lexer(char *cmd_line);
+void	printlist(t_token *token); //temp
 
 /*----------------tokens.c---------------*/
 void	ft_addtokback(t_token **tok_list, t_token *token);

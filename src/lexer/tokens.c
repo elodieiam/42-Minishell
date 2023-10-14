@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:52:47 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/13 17:42:28 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:55:59 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,16 @@ t_token	*ft_newtoken(char *string)
 
 void	ft_addtokback(t_token **tok_list, t_token *token)
 {
-	if (!tok_list)
+	t_token	*current_tok;
+
+	if (!*tok_list)
 	{
 		*tok_list = token;
 		return ;
 	}
-	while ((*tok_list)->next)
-		*tok_list = (*tok_list)->next;
-	(*tok_list)->next = token;
+	current_tok = *tok_list;
+	while (current_tok->next)
+		current_tok = current_tok->next;
+	current_tok->next = token;
 }
 
