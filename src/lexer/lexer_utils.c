@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:25:41 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/13 17:43:02 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/14 22:06:39 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ int	ft_isspace(int ch)
 
 int	ft_iswordsep(int ch)
 {
-	return (ft_isspace(ch) || ch == '|' || ch == '&' ||
-		ch == '<' || ch == '>' || ch == '(' || ch == ')');
+	return (ft_isspace(ch) || ch == '|' || ch == '&'
+		|| ch == '<' || ch == '>' || ch == '(' || ch == ')');
 }

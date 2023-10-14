@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:41:50 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/14 21:52:48 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/14 22:06:13 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,9 @@ char	*ft_getstring(char **cmd_line)
 		return (get_sepstring(cmd_line));
 	if ((*cmd_line)[i] == 34 || (*cmd_line)[i] == 39)
 		quote = (*cmd_line)[i++];
-	while ((*cmd_line)[i])
-	{
-		if (!quote && ft_iswordsep((*cmd_line)[i]))
-			break;
+	while ((*cmd_line)[i] && (!quote || !ft_iswordsep((*cmd_line)[i])))
 		if ((*cmd_line)[i++] == quote)
 			quote = 0;
-	}
 	if (quote && (*cmd_line)[i] == quote)
 		i++;
 	res = ft_calloc(i + 1, sizeof(char));
@@ -87,11 +83,13 @@ char	*ft_getstring(char **cmd_line)
 
 void	printlist(t_token *token)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	while (token)
 	{
 		i++;
-		printf("lst %d = %s\n", i , token->string);
+		printf("lst %d = %s\n", i, token->string);
 		token = token->next;
 	}
 	printf("\n");

@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:52:47 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/14 21:55:59 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/14 22:10:15 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ t_toktype	ft_gettype(char *string)
 	return (T_WORD);
 }
 
+//if !string useful ?
 t_token	*ft_newtoken(char *string)
 {
 	t_token	*token;
 
-	if (!string) //useful ?
+	if (!string)
 		return (NULL);
 	token = malloc(sizeof(t_token));
 	if (!token)
@@ -64,4 +65,3 @@ void	ft_addtokback(t_token **tok_list, t_token *token)
 		current_tok = current_tok->next;
 	current_tok->next = token;
 }
-
