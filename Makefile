@@ -1,28 +1,27 @@
 NAME	=	minishell
 
-SRC_DIR	=	src/
+SRC_DIR	=	src
 
-SRC		=	main.c
+SRC		=	main.c \
+			lexer/lexer.c lexer/lexer_utils.c lexer/tokens.c lexer/free_lexer.c
 
-SRCS	=	$(addprefix $(SRC_DIR), $(SRC))
+OBJ_DIR	=	obj
 
-OBJ_DIR	=	obj/
+OBJ		=	$(SRC:%.c=%.o)
 
-OBJ		=	$(SRC:.c=.o)
-
-OBJS	=	$(addprefix $(OBJ_DIR), $(OBJ))
+OBJS	=	$(addprefix $(OBJ_DIR)/, $(OBJ))
 
 ########	CC  & FLAGS		########
 
 CC		=	cc
 
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -g3 #-fsanitize=address
 
 ########		LIBFT		########
 
-LFT_DIR	=	libft/
+LFT_DIR	=	libft
 
-LIBFT	=	$(LFT_DIR)libft.a
+LIBFT	=	$(LFT_DIR)/libft.a
 
 ########		RULES		########
 
@@ -31,8 +30,10 @@ all	:			$(NAME)
 $(NAME) :		$(OBJS) $(LIBFT) 
 				@$(CC) $(CFLAGS) -L$(LFT_DIR) $^ -o $@ -lreadline
 
-$(OBJ_DIR)%.o :	$(SRC_DIR)%.c
-				@$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
+				@mkdir -p $(@D)
+				$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT) :
 				@echo "making libft..."
