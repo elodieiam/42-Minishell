@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:41:50 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/14 22:06:13 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:06:14 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@ char	*fill_string(char *dest, char **cmd_line, int quote)
 		dest[i++] = **cmd_line;
 		quote = *((*cmd_line)++);
 	}
-	while (**cmd_line)
+	while (**cmd_line && !(!quote && ft_iswordsep(**cmd_line)))
 	{
-		if (!quote && ft_iswordsep(**cmd_line))
-			break ;
 		if (**cmd_line == quote)
 			quote = 0;
 		dest[i++] = *((*cmd_line)++);
@@ -70,7 +68,7 @@ char	*ft_getstring(char **cmd_line)
 		return (get_sepstring(cmd_line));
 	if ((*cmd_line)[i] == 34 || (*cmd_line)[i] == 39)
 		quote = (*cmd_line)[i++];
-	while ((*cmd_line)[i] && (!quote || !ft_iswordsep((*cmd_line)[i])))
+	while ((*cmd_line)[i] && !(!quote && ft_iswordsep((*cmd_line)[i])))
 		if ((*cmd_line)[i++] == quote)
 			quote = 0;
 	if (quote && (*cmd_line)[i] == quote)
