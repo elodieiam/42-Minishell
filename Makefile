@@ -3,7 +3,7 @@ NAME	=	minishell
 SRC_DIR	=	src
 
 SRC		=	main.c \
-			lexer/lexer.c lexer/lexer_utils.c lexer/tokens.c
+			lexer/lexer.c lexer/lexer_utils.c lexer/tokens.c lexer/free_lexer.c
 
 OBJ_DIR	=	obj
 
@@ -15,7 +15,7 @@ OBJS	=	$(addprefix $(OBJ_DIR)/, $(OBJ))
 
 CC		=	cc
 
-CFLAGS	=	-Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -g3 #-fsanitize=address
 
 ########		LIBFT		########
 
