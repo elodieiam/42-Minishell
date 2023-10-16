@@ -6,7 +6,7 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/14 21:51:47 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:06:39 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include <stdlib.h>
 # include "../libft/libft.h"
 
+//
+//
+//
+//tokens for the lexer part
 typedef enum e_toktype
 {
 	T_START = 0,
@@ -39,6 +43,42 @@ typedef struct s_token
 	char			*string;
 	struct s_token	*next;
 }	t_token;
+
+//
+//
+//
+typedef struct s_rdlist
+{
+	char			*file;
+	t_toktype		rdtype;
+	struct s_rdlist	*next;
+}	t_rdlist;
+
+typedef struct s_command
+{
+	char		**arguments;
+	t_rdlist	*redirects;
+}	t_command;
+
+struct s_pipe
+{
+	struct s_node	*r_child;
+	struct s_node	*l_child;
+};
+
+struct s_operand
+{
+	t_toktype		optype;
+	struct s_node	*r_child;
+	struct s_node	*l_child;
+};
+
+typedef union u_node
+{
+	struct	s_pipe		pipe;
+	struct	s_operand	operand;
+	t_command			command;
+} t_node;
 
 /*----------------lexer.c---------------*/
 t_token	*ft_lexer(char *cmd_line);
