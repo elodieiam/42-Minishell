@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
 /*   Updated: 2023/10/16 13:06:39 by tsaint-p         ###   ########.fr       */
@@ -83,6 +83,7 @@ typedef union u_node
 /*----------------lexer.c---------------*/
 t_token	*ft_lexer(char *cmd_line);
 void	printlist(t_token *token); //temp
+void	free_tokens(t_token **tokens);
 
 /*----------------tokens.c---------------*/
 void	ft_addtokback(t_token **tok_list, t_token *token);

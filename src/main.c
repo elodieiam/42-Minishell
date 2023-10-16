@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/16 12:50:32 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:08:12 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,14 @@ int	main(void)
 	{
 		line = readline("minishell>");
 		if (!ft_strncmp(line, "exit", 5))
+		{
+			free(line);	
 			break ;
+		}
+		add_history(line);
 		tokens = ft_lexer(line);
 		print_tokens(tokens);
 		free(line);
+		free_tokens(&tokens);
 	}
 }
