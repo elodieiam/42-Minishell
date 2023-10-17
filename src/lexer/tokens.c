@@ -6,11 +6,11 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:52:47 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/14 22:10:15 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:05:45 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include <minishell.h>
 
 t_toktype	ft_gettype(char *string)
 {

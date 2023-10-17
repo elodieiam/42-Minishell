@@ -6,11 +6,11 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 12:27:02 by elrichar          #+#    #+#             */
-/*   Updated: 2023/10/16 12:54:22 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:06:34 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include <minishell.h>
 
 void	free_tokens(t_token **tokens)
 {
