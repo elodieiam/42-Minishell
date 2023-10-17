@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/16 13:08:12 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:57:07 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	main(void)
 		add_history(line);
 		tokens = ft_lexer(line);
 		print_tokens(tokens);
+		int	parse_res = parse(tokens);
 		free(line);
 		free_tokens(&tokens);
 	}
