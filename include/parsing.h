@@ -34,12 +34,13 @@ struct s_operand
 	struct s_node	*r_child;
 };
 
-typedef union u_node
+typedef struct s_node
 {
-	struct 
+	int					is_command;
 	struct s_operand	operand;
 	t_command			command;
 } 	t_node;
+
 
 /*----------------parsing.c---------------*/
 int	parse(t_data *data);

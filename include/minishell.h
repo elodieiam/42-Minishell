@@ -26,4 +26,6 @@ typedef struct s_data
 	t_node	*tree;
 }	t_data;
 
+char	*tta(t_toktype int_type);
+
 #endif
