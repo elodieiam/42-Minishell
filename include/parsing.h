@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:28:57 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/16 15:34:22 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/17 12:33:04 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ struct s_operand
 
 typedef union u_node
 {
-	struct	s_operand	operand;
+	struct 
+	struct s_operand	operand;
 	t_command			command;
 } 	t_node;
 
 /*----------------parsing.c---------------*/
-
+int	parse(t_data *data);
 #endif
