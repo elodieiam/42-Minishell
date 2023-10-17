@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:28:57 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/16 15:34:22 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:52:02 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ struct s_operand
 	struct s_node	*r_child;
 };
 
-typedef union u_node
+typedef struct s_node
 {
-	struct	s_operand	operand;
+	int					is_command;
+	struct s_operand	operand;
 	t_command			command;
 } 	t_node;
+
 
 /*----------------parsing.c---------------*/
 
