@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/17 18:24:28 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:25:06 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,40 +55,6 @@ int	check_word(char *str)
 	}
 	return (dquotes + squotes);
 }
-
-t_node	*init_cmd_node(t_token *cmd_tok, int malloc_size)
-{
-	t_node	*res;
-
-	res = new_node(1);
-	if (!res)
-		return (NULL);
-	node->
-}
-
-t_node	*handlecommand(t_data *data, t_token *current_tok)
-{
-	t_token	*curr;
-	int		malloc_size;
-	t_node	*cmd_node;
-
-	curr = current_tok;
-	malloc_size = 0;
-	while (curr && curr->type != T_PIPE && curr->type != T_OR && curr->type != T_AND)
-	{
-		if (curr->type == T_WORD)
-			malloc_size++;
-		if (curr->type > 6 && curr->type < 11)
-		{
-			if (curr->next && curr->next->type != T_WORD)
-				//exit (syntax error near curr->string)
-			curr = curr->next;
-		}
-		curr = curr->next;
-	}
-	return (init_cmd_node(current_tok, malloc_size));
-}
-
 int	parse(t_data *data)
 {
 	int		parenth;

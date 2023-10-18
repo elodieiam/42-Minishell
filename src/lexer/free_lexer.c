@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 12:27:02 by elrichar          #+#    #+#             */
-/*   Updated: 2023/10/17 17:06:34 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:11:06 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ void	free_tokens(t_token **tokens)
 		free(current);
 		current = *tokens;
 	}
-	
+	*tokens = NULL;
 }

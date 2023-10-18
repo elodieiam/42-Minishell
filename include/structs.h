@@ -6,9 +6,12 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/17 18:16:26 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:04:06 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
 typedef enum e_toktype
 {
@@ -68,3 +71,5 @@ typedef struct s_data
 	t_token *tokens;
 	t_node	*tree;
 }	t_data;
+
+#endif
