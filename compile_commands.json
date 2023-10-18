@@ -1,0 +1,19 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I./include",
+      "-g3",
+      "-c",
+      "-o",
+      "obj/main.o",
+      "src/main.c"
+    ],
+    "directory": "/mnt/c/Users/taosp/Documents/wsl/minishell/github",
+    "file": "/mnt/c/Users/taosp/Documents/wsl/minishell/github/src/main.c",
+    "output": "/mnt/c/Users/taosp/Documents/wsl/minishell/github/obj/main.o"
+  }
+]

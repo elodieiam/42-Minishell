@@ -3,7 +3,9 @@ NAME	=	minishell
 SRC_DIR	=	src
 
 SRC		=	main.c \
-			lexer/lexer.c lexer/lexer_utils.c lexer/tokens.c lexer/free_lexer.c
+			lexer/lexer.c lexer/lexer_utils.c lexer/tokens.c lexer/free_lexer.c \
+			parsing/parsing.c parsing/tree.c \
+			exit/exit.c
 
 OBJ_DIR	=	obj
 
