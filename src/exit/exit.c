@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/13 15:25:41 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/17 17:05:56 by tsaint-p         ###   ########.fr       */
+/*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
+/*   Updated: 2023/10/17 17:28:17 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	ft_isspace(int ch)
+int	errnl(int exit_code, char *error_str)
 {
-	return ((ch == ' ') || (ch >= 9 && ch <= 13));
+	write(2, error_str, ft_strlen(error_str));
+	return (exit_code);
 }
 
-int	ft_iswordsep(int ch)
+int	exit_line(t_data *data, int exit_code)
 {
-	return (ft_isspace(ch) || ch == '|' || ch == '&'
-		|| ch == '<' || ch == '>' || ch == '(' || ch == ')');
+	if (!data)
+		return (exit_code);
+	if (data->tokens)
+		free_tokens(&(data->tokens));
+	//TODO : free tree
+	data->err_code = exit_code;
+	return (exit_code);
 }

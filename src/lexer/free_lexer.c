@@ -6,11 +6,11 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 12:27:02 by elrichar          #+#    #+#             */
-/*   Updated: 2023/10/16 12:54:22 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:11:06 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include <minishell.h>
 
 void	free_tokens(t_token **tokens)
 {
@@ -24,5 +24,5 @@ void	free_tokens(t_token **tokens)
 		free(current);
 		current = *tokens;
 	}
-	
+	*tokens = NULL;
 }

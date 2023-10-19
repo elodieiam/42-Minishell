@@ -6,11 +6,11 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/16 13:08:12 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:19:41 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include <minishell.h>
 
 char	*tta(t_toktype int_type)
 {
@@ -53,7 +53,7 @@ void	print_tokens(t_token *tokens)
 int	main(void)
 {
 	char	*line;
-	t_token	*tokens;
+	t_data	*data;
 
 	while (1)
 	{
@@ -64,9 +64,15 @@ int	main(void)
 			break ;
 		}
 		add_history(line);
-		tokens = ft_lexer(line);
-		print_tokens(tokens);
+		data = malloc(sizeof(t_data));
+		if (!data)
+			return (-1);
+		data->tokens = ft_lexer(line);
+		print_tokens(data->tokens);
+		parse(data);
+		print_tree(data->tree, 0);
 		free(line);
-		free_tokens(&tokens);
+		exit_line(data, 0);
 	}
+	return (data->err_code);
 }
