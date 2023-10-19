@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:38:44 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/19 11:55:12 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/19 22:27:11 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_node	*new_node(int is_command)
 {
 	t_node	*node;
 
-	node = malloc (sizeof(t_node));
+	node = malloc(sizeof(t_node));
 	if (!node)
 		return (NULL);
 	if (is_command)
@@ -31,7 +31,7 @@ t_node	*new_node(int is_command)
 	else
 	{
 		node->is_command = 0;
-		node->operand = malloc(sizeof(t_command));
+		node->operand = malloc(sizeof(t_operand));
 		if (!node->operand)
 			return (NULL);
 		node->operand->l_child = NULL;

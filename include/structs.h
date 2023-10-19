@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/18 14:04:06 by taospa           ###   ########.fr       */
+/*   Updated: 2023/10/19 22:24:31 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,19 @@ typedef struct s_command
 	t_rdlist	*redirects;
 }	t_command;
 
-struct s_operand
+typedef struct s_operand
 {
 	t_toktype		optype;
 	struct s_node	*l_child;
 	struct s_node	*r_child;
-};
+}	t_operand;
 
 typedef struct s_node
 {
-	int					is_command;
-	int					subshell;
-	struct s_operand	*operand;
-	t_command			*command;
+	int			is_command;
+	int			subshell;
+	t_operand	*operand;
+	t_command	*command;
 } 	t_node;
 
 typedef struct s_data
