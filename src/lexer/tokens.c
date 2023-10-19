@@ -6,11 +6,23 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:52:47 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/17 17:05:45 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/19 20:03:15 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+t_token	*freengonextok(t_token *token)
+{
+	t_token	*next_tok;
+
+	if (!token)
+		return (NULL);
+	next_tok = token->next;
+	free(token->string);
+	free(token);
+	return (next_tok);
+}
 
 t_toktype	ft_gettype(char *string)
 {

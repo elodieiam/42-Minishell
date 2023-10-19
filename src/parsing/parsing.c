@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/19 13:33:42 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/19 22:39:04 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,30 @@ int	check_word(char *str)
 	return (dquotes + squotes);
 }
 
+void	add_nodeontop(t_node *node, t_data *data)
+{
+	printf("node to add = %p\n", node);
+	if (!data || !node)
+		return ;
+	if (!(node->is_command))
+		node->operand->l_child = data->tree;
+	data->tree = node;
+}
+
 int	parse(t_data *data)
 {
 	int		parenth;
-	t_token	*current_tok;
 	
 	parenth = 0;
-	current_tok = data->tokens;
-	while (current_tok)
+	while (data->tokens)
 	{
-		handlepar(current_tok, &parenth);
-		if (current_tok->type == T_WORD)
-			handlecommand(data, current_tok);
-		current_tok = current_tok->next;
+		handlepar(data->tokens, &parenth);
+		if (data->tokens->type == T_WORD)
+			add_nodeontop(handlecommand(data), data);
+		data->tokens = freengonextok(data->tokens);
 	}
 	if (parenth)
 		return (printf("wrong parenthesis patern\n"));
+	print_tree(data->tree, 0);
 	return (0);
 }

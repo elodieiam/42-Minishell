@@ -6,49 +6,47 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/19 13:33:46 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/19 22:35:38 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_node	*init_cmd_node(t_token *cmd_tok, int malloc_size)
+t_node	*init_cmd_node(t_token **tokens, int malloc_size)
 {
 	t_node	*res;
-	t_token	*curr;
 	int		arg_cpt;
 
 	arg_cpt = 0;
 	res = new_node(1);
+	printf("newnode = %p\n", res);
 	if (!res)
 		return (NULL);
 	res->command->arguments = malloc(malloc_size * sizeof(char *));
 	if (!res->command->arguments)
 		return (NULL);
-	curr = cmd_tok;
-	while (curr && curr->type != T_PIPE && curr->type != T_OR && curr->type != T_AND)
+	while ((*tokens) && (*tokens)->type != T_PIPE && (*tokens)->type != T_OR && (*tokens)->type != T_AND)
 	{
-		if (curr->type == T_WORD)
+		if ((*tokens)->type == T_WORD)
+			res->command->arguments[arg_cpt++] = ft_strdup((*tokens)->string);
+		else if ((*tokens)->type > 6 && (*tokens)->type < 11)
 		{
-			res->command->arguments[arg_cpt++] = ft_strdup(curr->string);
+			rdlist_add_back(&(res->command->redirects),
+				new_rd(((*tokens)->type), (*tokens)->next->string));
+			(*tokens) = freengonextok((*tokens));
 		}
-		else if (curr->type > 6 && curr->type < 11)
-		{
-			rdlist_add_back(&(res->command->redirects), new_rd((curr->type), curr->next->string));
-			curr = curr->next;
-		}
-		curr = curr->next;
+		(*tokens) = freengonextok((*tokens));
 	}
 	res->command->arguments[arg_cpt] = NULL;
 	return (res);
 }
 
-t_node	*handlecommand(t_data *data, t_token *current_tok)
+t_node	*handlecommand(t_data *data)
 {
 	t_token	*curr;
 	int		malloc_size;
 
-	curr = current_tok;
+	curr = data->tokens;
 	malloc_size = 0;
 	while (curr && curr->type != T_PIPE && curr->type != T_OR && curr->type != T_AND)
 	{
@@ -62,7 +60,7 @@ t_node	*handlecommand(t_data *data, t_token *current_tok)
 		}
 		curr = curr->next;
 	}
-	return (init_cmd_node(current_tok, malloc_size));
+	return (init_cmd_node(&(data->tokens), ++malloc_size));
 }
 
 

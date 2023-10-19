@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/19 13:19:41 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/19 21:24:34 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	main(void)
 		data->tokens = ft_lexer(line);
 		print_tokens(data->tokens);
 		parse(data);
-		print_tree(data->tree, 0);
+		//print_tree(data->tree, 0);
 		free(line);
 		exit_line(data, 0);
 	}
