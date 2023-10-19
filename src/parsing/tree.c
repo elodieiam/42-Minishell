@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:38:44 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/17 18:19:05 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/19 11:55:12 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,18 @@ t_node	*new_node(int is_command)
 	if (is_command)
 	{
 		node->is_command = 1;
+		node->command = malloc(sizeof(t_command));
+		if (!node->command)
+			return (NULL);
 		node->command->arguments = NULL;
 		node->command->redirects = NULL;
 	}
 	else
 	{
 		node->is_command = 0;
+		node->operand = malloc(sizeof(t_command));
+		if (!node->operand)
+			return (NULL);
 		node->operand->l_child = NULL;
 		node->operand->r_child = NULL;
 		node->operand->optype = 0;

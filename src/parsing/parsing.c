@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/18 18:25:06 by taospa           ###   ########.fr       */
+/*   Updated: 2023/10/19 13:33:42 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	check_word(char *str)
 	}
 	return (dquotes + squotes);
 }
+
 int	parse(t_data *data)
 {
 	int		parenth;

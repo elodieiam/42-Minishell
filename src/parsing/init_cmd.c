@@ -6,7 +6,7 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/18 19:07:10 by taospa           ###   ########.fr       */
+/*   Updated: 2023/10/19 13:33:46 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_node	*init_cmd_node(t_token *cmd_tok, int malloc_size)
 	res->command->arguments = malloc(malloc_size * sizeof(char *));
 	if (!res->command->arguments)
 		return (NULL);
-	//iterate over tok until separator
 	curr = cmd_tok;
 	while (curr && curr->type != T_PIPE && curr->type != T_OR && curr->type != T_AND)
 	{
