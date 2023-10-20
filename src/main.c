@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/19 21:24:34 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:22:20 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	main(void)
 {
 	char	*line;
 	t_data	*data;
+	int		exit_val;
 
 	while (1)
 	{
@@ -74,5 +75,7 @@ int	main(void)
 		free(line);
 		exit_line(data, 0);
 	}
-	return (data->err_code);
+	exit_val = data->err_code;
+	free(data);
+	return (exit_val);
 }

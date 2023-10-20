@@ -6,11 +6,24 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/19 22:35:38 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:59:28 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	free_args(char ***args)
+{
+	int	i;
+
+	i = -1;
+	if (!args || !*args)
+		return ;
+	while ((*args)[++i])
+		free((*args)[i]);
+	free(*args);
+	*args = NULL;
+}
 
 t_node	*init_cmd_node(t_token **tokens, int malloc_size)
 {
@@ -62,5 +75,3 @@ t_node	*handlecommand(t_data *data)
 	}
 	return (init_cmd_node(&(data->tokens), ++malloc_size));
 }
-
-

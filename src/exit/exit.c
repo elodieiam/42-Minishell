@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/17 17:28:17 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:42:55 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	exit_line(t_data *data, int exit_code)
 		return (exit_code);
 	if (data->tokens)
 		free_tokens(&(data->tokens));
-	//TODO : free tree
+	if (data->tree)
+		free_tree(data);
 	data->err_code = exit_code;
 	return (exit_code);
 }

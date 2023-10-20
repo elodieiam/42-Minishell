@@ -6,11 +6,39 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:38:44 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/19 22:27:11 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:25:13 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	free_node(t_node *node)
+{
+	if (!node)
+		return (0);
+	if (node->is_command)
+	{
+		free_args(&(node->command->arguments));
+		free_rdlist(&(node->command->redirects));
+		free(node->command);
+		free(node);
+	}
+	else
+	{
+		free_node(node->operand->r_child);
+		free_node(node->operand->l_child);
+		free(node);
+	}
+	return (1);
+}
+
+void	free_tree(t_data *data)
+{
+	if (!data->tree)
+		return ;
+	free_node(data->tree);
+	data->tree = NULL;
+}
 
 t_node	*new_node(int is_command)
 {
