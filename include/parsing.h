@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:28:57 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/23 16:49:01 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/23 19:05:07 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,8 @@ void		free_args(char ***args);
 
 /*----------------cmd_node.c---------------*/
 t_node		*handleoperator(t_data *data);
+
+/*----------------parsing.c---------------*/
+t_node		*handlepar(t_data *data);
 
 #endif

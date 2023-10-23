@@ -6,7 +6,7 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/23 13:57:44 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/23 19:03:26 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ t_node	*handlecommand(t_data *data)
 
 	curr = data->tokens;
 	malloc_size = 0;
+	if (curr && curr->type == T_OPPAR)
+		return (handlepar(data));
 	while (curr && curr->type != T_PIPE && curr->type != T_OR && curr->type != T_AND)
 	{
 		if (curr->type == T_WORD)

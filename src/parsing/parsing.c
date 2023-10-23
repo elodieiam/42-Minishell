@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/23 16:48:52 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/23 19:01:18 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	parse(t_data *data)
 	while (data->tokens)
 	{
 		handlepar(data->tokens, &parenth);
-		if (data->tokens->type == T_WORD)
+		if (data->tokens->type == T_WORD || data->tokens->type == T_OPPAR)
 			add_nodeontop(handlecommand(data), data);
 		else if (data->tokens->type > 3 && data->tokens->type < 7)
 			add_nodeontop(handleoperator(data), data);
