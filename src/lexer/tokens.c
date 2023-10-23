@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:52:47 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/19 20:03:15 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:11:35 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,13 @@ void	ft_addtokback(t_token **tok_list, t_token *token)
 	while (current_tok->next)
 		current_tok = current_tok->next;
 	current_tok->next = token;
+}
+
+int		is_empty(char *cmd_line)
+{
+	if (!cmd_line)
+		return (-1);
+	while (ft_isspace(*cmd_line))
+		cmd_line++;
+	return (!*cmd_line);
 }

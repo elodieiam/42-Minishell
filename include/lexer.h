@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:30:00 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/19 20:04:47 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:08:59 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_tokens(t_token **tokens);
 void	ft_addtokback(t_token **tok_list, t_token *token);
 t_token	*ft_newtoken(char *string);
 t_token	*freengonextok(t_token *token);
+int		is_empty(char *cmd_line);
 
 /*----------------lexer_utils.c----------*/
 int		ft_isspace(int ch);

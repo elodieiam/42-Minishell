@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:41:50 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/23 16:46:28 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:17:36 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_token	*ft_lexer(char *cmd_line)
 	tok = NULL;
 	if (!cmd_line)
 		return (NULL);
-	while (*cmd_line)
+	while (*cmd_line && !is_empty(cmd_line))
 	{
 		tok = ft_newtoken(ft_getstring(&cmd_line));
 		if (!tok)
