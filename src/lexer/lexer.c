@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:41:50 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/17 17:06:12 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:46:28 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,6 @@ char	*ft_getstring(char **cmd_line)
 	if (!res)
 		return (NULL);
 	return (fill_string(res, cmd_line, quote));
-}
-
-void	printlist(t_token *token)
-{
-	int	i;
-
-	i = 0;
-	while (token)
-	{
-		i++;
-		printf("lst %d = %s\n", i, token->string);
-		token = token->next;
-	}
-	printf("\n");
 }
 
 t_token	*ft_lexer(char *cmd_line)

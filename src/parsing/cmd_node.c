@@ -6,7 +6,7 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/20 18:22:21 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/23 13:57:44 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ t_node	*init_cmd_node(t_token **tokens, int malloc_size)
 
 	arg_cpt = 0;
 	res = new_node(1);
-	printf("newnode = %p\n", res);
-	if (!res)
+	if (!res || !res->command)
 		return (NULL);
 	res->command->arguments = malloc(malloc_size * sizeof(char *));
 	if (!res->command->arguments)

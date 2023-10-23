@@ -4,8 +4,9 @@ SRC_DIR	=	src
 
 SRC		=	main.c \
 			lexer/lexer.c lexer/lexer_utils.c lexer/tokens.c lexer/free_lexer.c \
-			parsing/parsing.c parsing/tree.c parsing/cmd_node.c parsing/rdlist.c\
-			exit/exit.c
+			parsing/parsing.c parsing/tree.c parsing/cmd_node.c parsing/rdlist.c parsing/op_node.c\
+			exit/exit.c \
+			debug.c
 
 OBJ_DIR	=	obj
 

@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/19 22:24:31 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/23 13:16:42 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ typedef enum e_toktype
 	T_WORD,
 	T_OPPAR,
 	T_CLPAR,
-//operators
+//operators 4
 	T_PIPE,
 	T_OR,
 	T_AND,
-//redirection
+//redirection 7
 	T_OPCHEV,
 	T_CLCHEV,
 	T_DOPCHEV,

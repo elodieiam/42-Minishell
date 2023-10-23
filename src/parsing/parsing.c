@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/19 22:39:04 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:48:52 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	handlepar(t_token *token, int *parenth)
 	if (token->type == T_CLPAR)
 		(*parenth)--;
 	return ;
-	
 }
 
 void	check_quotes(int *squotes, int *dquotes, char caracter)
@@ -58,10 +57,9 @@ int	check_word(char *str)
 
 void	add_nodeontop(t_node *node, t_data *data)
 {
-	printf("node to add = %p\n", node);
 	if (!data || !node)
 		return ;
-	if (!(node->is_command))
+	if (!(node->is_command) && node->operand)
 		node->operand->l_child = data->tree;
 	data->tree = node;
 }
@@ -76,10 +74,12 @@ int	parse(t_data *data)
 		handlepar(data->tokens, &parenth);
 		if (data->tokens->type == T_WORD)
 			add_nodeontop(handlecommand(data), data);
-		data->tokens = freengonextok(data->tokens);
+		else if (data->tokens->type > 3 && data->tokens->type < 7)
+			add_nodeontop(handleoperator(data), data);
+		else
+			data->tokens = freengonextok(data->tokens);
 	}
 	if (parenth)
-		return (printf("wrong parenthesis patern\n"));
-	print_tree(data->tree, 0);
+		return (exit_line(data, errnl(2, "wrong parenthesis patern\n")));
 	return (0);
 }

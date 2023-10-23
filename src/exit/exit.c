@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/20 13:42:55 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:28:34 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	errnl(int exit_code, char *error_str)
 {
 	write(2, error_str, ft_strlen(error_str));
+	write(2, "\n", 1);
 	return (exit_code);
 }
 
