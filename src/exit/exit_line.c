@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   exit_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/03 16:04:32 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/03 17:41:10 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	exit_line(t_data *data, int exit_code)
 {
 	if (!data)
 		return (exit_code);
+	if (data->prompt)
+		free(data->prompt);
 	if (data->tokens)
 		free_tokens(&(data->tokens));
 	if (data->tree)

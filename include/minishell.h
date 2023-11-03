@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/03 15:41:14 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:22:17 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "parsing.h"
 # include "exit.h"
 # include "env.h"
+# include "exec.h"
 
 char	*tta(t_toktype int_type);
 void    pretty_print_ast(t_node *node, char *prefix);

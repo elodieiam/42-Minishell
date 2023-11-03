@@ -6,8 +6,9 @@ SRC		=	main.c \
 			lexer/lexer.c lexer/lexer_utils.c lexer/tokens.c lexer/free_lexer.c \
 			parsing/parsing.c parsing/tree.c parsing/cmd_node.c parsing/rdlist.c parsing/op_node.c \
 			parsing/parenthesis.c \
-			exit/exit.c \
+			exit/exit_line.c \
 			env/env.c \
+			exec/exec.c exec/execve.c exec/exit.c \
 			debug.c
 
 OBJ_DIR	=	obj

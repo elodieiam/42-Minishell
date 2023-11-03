@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/03 15:09:07 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/03 18:39:46 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,12 @@ typedef struct s_node
 
 typedef struct s_data
 {
-	int		err_code;
-	t_token *tokens;
-	t_node	*tree;
-	t_node	*tmp_tree;
-	t_env	*lst_env;
+	char			*prompt;
+	unsigned char	err_code;
+	t_token 		*tokens;
+	t_node			*tree;
+	t_node			*tmp_tree;
+	t_env			*lst_env;
 }	t_data;
 
 #endif
