@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/03 14:50:33 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:40:36 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,16 @@ void    pretty_print_ast(t_node *node, char *prefix)
     else
         printf("%s└── Right: NULL\n", prefix);
     free(new_prefix);
+}
+
+void	print_env_list(t_env *var_list)
+{
+	t_env	*current;
+
+	current = var_list;
+	while (current)
+	{
+		printf("%s\n",current->element);
+		current = current->next;
+	}
 }

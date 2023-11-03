@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/03 16:04:32 by elrichar         ###   ########.fr       */
+/*   Created: 2023/11/03 15:25:18 by elrichar          #+#    #+#             */
+/*   Updated: 2023/11/03 16:01:53 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef ENV_H
+# define ENV_H
 
-int	errnl(int exit_code, char *error_str)
-{
-	write(2, error_str, ft_strlen(error_str));
-	write(2, "\n", 1);
-	return (exit_code);
-}
+# include "structs.h"
 
-int	exit_line(t_data *data, int exit_code)
-{
-	if (!data)
-		return (exit_code);
-	if (data->tokens)
-		free_tokens(&(data->tokens));
-	if (data->tree)
-		free_tree(data);
-	data->err_code = exit_code;
-	return (exit_code);
-}
+/*------------------env.c-----------------*/
+int		get_env(char *env[], t_data *data);
+void	free_env(t_env **lst_env);
+
+#endif

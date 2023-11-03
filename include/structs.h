@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/03 13:31:30 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:09:07 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ typedef enum e_toktype
 	T_DOPCHEV,
 	T_DCLCHEV
 }	t_toktype;
+
+typedef struct s_env
+{
+	char			*element;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_token
 {
@@ -71,6 +77,7 @@ typedef struct s_data
 	t_token *tokens;
 	t_node	*tree;
 	t_node	*tmp_tree;
+	t_env	*lst_env;
 }	t_data;
 
 #endif
