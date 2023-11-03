@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/03 13:49:45 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/03 14:50:33 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	print_tokens(t_token *tokens)
 	printf("TOKENS :\n");
 	while (tokens)
 	{
-		printf("string %d: \"%s\" type : %s\n", i++, tokens->string, tta(tokens->type));
+		printf("type : %s\tstring %d: \"%s\"\n", tta(tokens->type), i++, tokens->string);
 		fflush(stdout);
 		tokens = tokens->next;
 	}

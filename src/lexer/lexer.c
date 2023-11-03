@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:41:50 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/23 17:55:22 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/03 14:47:41 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	*get_sepstring(char **cmd_line)
 	char	*res;
 
 	i = 0;
-	printf("%s\n", *cmd_line);
 	first_sep = **cmd_line;
 	if (first_sep == ')' || first_sep == '(')
 	{
