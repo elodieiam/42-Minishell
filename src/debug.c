@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/23 15:20:15 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:49:45 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void    pretty_print_ast(t_node *node, char *prefix)
 		return ;
 	if (node->is_command)
 		return (print_cmd(node, prefix));
-	printf("%s├── Type: %s\n", prefix, tta(node->operand->optype));
+	printf("%s├── Type: %s	subshell : %d\n", prefix, tta(node->operand->optype), node->subshell);
 	len = strlen(prefix);
 	new_prefix = malloc(len + 5);
 	strcpy(new_prefix, prefix);

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:28:57 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/23 19:05:07 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:35:34 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 /*----------------parsing.c---------------*/
 int			parse(t_data *data);
+void		add_nodeontop(t_node *node, t_node **head);
 
 /*-----------------tree.c----------------*/
 t_node		*new_node(int is_command);
