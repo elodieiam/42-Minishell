@@ -4,8 +4,10 @@ SRC_DIR	=	src
 
 SRC		=	main.c \
 			lexer/lexer.c lexer/lexer_utils.c lexer/tokens.c lexer/free_lexer.c \
-			parsing/parsing.c parsing/tree.c parsing/init_cmd.c parsing/rdlist.c\
-			exit/exit.c
+			parsing/parsing.c parsing/tree.c parsing/cmd_node.c parsing/rdlist.c parsing/op_node.c \
+			parsing/parenthesis.c \
+			exit/exit.c \
+			debug.c
 
 OBJ_DIR	=	obj
 
@@ -17,7 +19,7 @@ OBJS	=	$(addprefix $(OBJ_DIR)/, $(OBJ))
 
 CC		=	cc
 
-CFLAGS	=	-Wall -Wextra -Werror -I./include -g3 #-fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -I./include -g3 -fsanitize=address
 
 ########		LIBFT		########
 

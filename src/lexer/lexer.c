@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:41:50 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/17 17:06:12 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/03 14:47:41 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,28 @@
 char	*get_sepstring(char **cmd_line)
 {
 	int		i;
-	int		first_sep;
+	char	first_sep;
 	char	*res;
 
 	i = 0;
 	first_sep = **cmd_line;
-	while ((*cmd_line)[i] && (*cmd_line)[i] == first_sep)
-		i++;
-	res = ft_calloc(i + 1, sizeof(char));
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (**cmd_line && **cmd_line == first_sep)
-		res[i++] = *((*cmd_line)++);
+	if (first_sep == ')' || first_sep == '(')
+	{
+		res = malloc(2 * sizeof(char));
+		ft_strlcpy(res, &first_sep, 2);
+		(*cmd_line)++;
+	}
+	else
+	{
+		while ((*cmd_line)[i] == first_sep && i < 2)
+			i++;
+		res = ft_calloc(i + 1, sizeof(char));
+		if (!res)
+			return (NULL);
+		i = 0;
+		while (**cmd_line == first_sep && i < 2)
+			res[i++] = *((*cmd_line)++);
+	}
 	return (res);
 }
 
@@ -79,20 +88,6 @@ char	*ft_getstring(char **cmd_line)
 	return (fill_string(res, cmd_line, quote));
 }
 
-void	printlist(t_token *token)
-{
-	int	i;
-
-	i = 0;
-	while (token)
-	{
-		i++;
-		printf("lst %d = %s\n", i, token->string);
-		token = token->next;
-	}
-	printf("\n");
-}
-
 t_token	*ft_lexer(char *cmd_line)
 {
 	t_token	*tok_list;
@@ -102,7 +97,7 @@ t_token	*ft_lexer(char *cmd_line)
 	tok = NULL;
 	if (!cmd_line)
 		return (NULL);
-	while (*cmd_line)
+	while (*cmd_line && !is_empty(cmd_line))
 	{
 		tok = ft_newtoken(ft_getstring(&cmd_line));
 		if (!tok)
