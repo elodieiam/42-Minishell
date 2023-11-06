@@ -7,8 +7,7 @@ SRC		=	main.c \
 			parsing/parsing.c parsing/tree.c parsing/cmd_node.c parsing/rdlist.c parsing/op_node.c \
 			parsing/parenthesis.c \
 			exit/exit_line.c \
-			env/env.c \
-			exec/exec.c exec/execve.c exec/exit.c \
+			exec/exec.c exec/execve.c exec/exit.c exec/exec_utils.c\
 			debug.c
 
 OBJ_DIR	=	obj

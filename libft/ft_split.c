@@ -6,11 +6,24 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:21:27 by marvin            #+#    #+#             */
-/*   Updated: 2023/05/04 19:37:26 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/06 15:30:56 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+char	**freetab(char **tab, int max_i)
+{
+	int	i;
+
+	i = 0;
+	if (!tab)
+		return (NULL);
+	while (i < max_i)
+		free(tab[i++]);
+	free(tab);
+	return (NULL);
+}
 
 static int	len_word(const char *beg_word, char separator)
 {
@@ -80,7 +93,7 @@ char	**ft_split(char const *src, char separator)
 		{
 			splitted_tab[cpt] = fill_word(src, separator);
 			if (!splitted_tab[cpt++])
-				return (NULL);
+				return (freetab(splitted_tab, --cpt));
 		}
 		while (*src && *src != separator)
 			++src;

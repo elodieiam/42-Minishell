@@ -6,13 +6,13 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/03 18:57:43 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:24:56 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_data	*init_data(void)
+t_data	*init_data(char **env)
 {
 	t_data	*data;
 
@@ -24,21 +24,24 @@ t_data	*init_data(void)
 	data->tokens = NULL;
 	data->tree = NULL;
 	data->tmp_tree = NULL;
-	data->lst_env = NULL;
+	data->env = malloc(sizeof(t_env));
+	if (!data->env)
+		return (free(data), NULL);
+	data->env->envtab = env;
+	data->env->malloced = 0;
 	return (data);
 }
 
 //init data ?
-int	main(int ac, char *av[], char *env[])
+int	main(int ac, char *av[], char **env)
 {
 	t_data	*data;
-	int		exit_val;
 	
 	if (ac != 1)
 		return (errnl(1, "Error : no arguments required"));
 	(void)av;
-	data = init_data();
-	if (!data || get_env(env, data))
+	data = init_data(env);
+	if (!data)
 		return (-1);
 	while (1)
 	{
@@ -46,12 +49,8 @@ int	main(int ac, char *av[], char *env[])
 		add_history(data->prompt);
 		data->tokens = ft_lexer(data->prompt);
 		parse(data);
-		exec(data);
+		data->err_code = exec(data);
 		exit_line(data, 0);
 	}
-	if (data->lst_env)
-		free_env(&(data->lst_env));
-	exit_val = data->err_code;
-	free(data);
-	return (exit_val);
+	return (exit_all(data, data->err_code));
 }

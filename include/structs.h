@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/03 18:39:46 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:35:17 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef enum e_toktype
 
 typedef struct s_env
 {
-	char			*element;
-	struct s_env	*next;
+	int		malloced;
+	char	**envtab;
 }	t_env;
 
 typedef struct s_token
@@ -78,7 +78,7 @@ typedef struct s_data
 	t_token 		*tokens;
 	t_node			*tree;
 	t_node			*tmp_tree;
-	t_env			*lst_env;
+	t_env			*env;
 }	t_data;
 
 #endif
