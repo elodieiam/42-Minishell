@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:22:57 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/03 19:10:06 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/06 10:15:12 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int	exec_exit(t_data *data, t_node *node)
 		if (node->command->arguments[2])
 			return (errnl(1, "minishell: exit: too many arguments"));
 	}
-	exit(exit_line(data, exit_val));
+	exit_line(data, exit_val);
+	free(data);
+	exit(exit_val);
 	return (1);
 }
