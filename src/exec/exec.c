@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/06 17:25:12 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:26:08 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int	srch_builtin(t_data *data, t_node *node)
 	if (!ft_strncmp(node->command->arguments[0], "exit", 5))
 	{
 		exec_exit(data, node);
+		return (1);
+	}
+	if (!ft_strncmp(node->command->arguments[0], "echo", 5))
+	{
+		exec_echo(node);
 		return (1);
 	}
 	return (0);
