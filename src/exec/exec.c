@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/06 17:25:12 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:11:38 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	srch_builtin(t_data *data, t_node *node)
 	}
 	return (0);
 }
-
 
 int	exec_command(t_data *data, t_node *node)
 {
