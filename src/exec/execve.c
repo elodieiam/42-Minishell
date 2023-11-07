@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/07 14:48:28 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:53:24 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	*get_cmd_path(t_data *data, char *command)
 	if (is_path(command))
 		return (ft_strdup(command));
 	paths = ft_split(get_paths(data), ':');
+	if (!paths)
+		return (NULL);
 	while (paths[i])
 	{
 		tmp = bettercat(paths[i], command);
