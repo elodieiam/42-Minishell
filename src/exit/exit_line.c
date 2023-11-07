@@ -6,12 +6,13 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/06 17:17:33 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:27:22 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+// write : minishell: command: arg: error\n
 int	ferrnl(char *command, char *arg, char *error, int ret_val)
 {
 	write(2, "minishell: ", 11);

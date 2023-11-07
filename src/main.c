@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/06 17:24:56 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:53:06 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ t_data	*init_data(char **env)
 	return (data);
 }
 
-//init data ?
 int	main(int ac, char *av[], char **env)
 {
 	t_data	*data;
-	
+
 	if (ac != 1)
 		return (errnl(1, "Error : no arguments required"));
 	(void)av;
@@ -50,7 +49,7 @@ int	main(int ac, char *av[], char **env)
 		data->tokens = ft_lexer(data->prompt);
 		parse(data);
 		data->err_code = exec(data);
-		exit_line(data, 0);
+		exit_line(data, data->err_code);
 	}
 	return (exit_all(data, data->err_code));
 }

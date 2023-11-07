@@ -6,7 +6,7 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 17:27:32 by taospa            #+#    #+#             */
-/*   Updated: 2023/10/23 10:49:51 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:14:49 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_rdlist	*new_rd(t_toktype rd_type, char *file)
 void	rdlist_add_back(t_rdlist **list, t_rdlist *new_rd)
 {
 	if (!list)
-		return ; //possible ?
+		return ;
 	if (!*list)
 		*list = new_rd;
 	else
@@ -38,7 +38,7 @@ void	rdlist_add_back(t_rdlist **list, t_rdlist *new_rd)
 			*list = (*list)->next;
 		}
 		(*list)->next = new_rd;
-		new_rd->next = NULL; //useful ?
+		new_rd->next = NULL;
 	}
 }
 

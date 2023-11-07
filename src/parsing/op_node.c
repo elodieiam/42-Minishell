@@ -6,13 +6,13 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:12:40 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/23 16:48:25 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:12:36 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_node		*handleoperator(t_data *data)
+t_node	*handleoperator(t_data *data)
 {
 	t_node	*op_node;
 
@@ -21,7 +21,7 @@ t_node		*handleoperator(t_data *data)
 	if (!data->tokens->next || data->tokens->next->type > 3)
 	{
 		exit_line(data, errnl(2,
-			"syntax error : wrong argument after operator"));
+				"syntax error : wrong argument after operator"));
 		return (NULL);
 	}
 	op_node = new_node(0);
