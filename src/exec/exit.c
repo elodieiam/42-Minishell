@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:22:57 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/06 17:14:10 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:14:26 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ int	exec_exit(t_data *data, t_node *node)
 	{
 		if (is_number(node->command->arguments[1])
 			&& is_longlong(node->command->arguments[1]))
-			exit_val = (unsigned char)ft_atoll(node->command->arguments[1]) % 256;
+			exit_val = (unsigned char)
+				ft_atoll(node->command->arguments[1]) % 256;
 		else
 			exit_all(data, ferrnl("exit", node->command->arguments[1],
 					"numeric argument required", 1));

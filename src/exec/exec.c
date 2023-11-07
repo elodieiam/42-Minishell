@@ -29,12 +29,14 @@ int	srch_builtin(t_data *data, t_node *node)
 	return (0);
 }
 
-
 int	exec_command(t_data *data, t_node *node)
 {
-	if (!srch_builtin(data, node))
-		execute(data, node);
-	return (0);
+	int	err_code;
+
+	err_code = srch_builtin(data, node);
+	if (!err_code)
+		err_code = execute(data, node);
+	return (err_code);
 }
 
 int	exec(t_data *data)
