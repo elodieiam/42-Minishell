@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/06 18:32:44 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:51:25 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	main(int ac, char *av[], char **env)
 	while (1)
 	{
 		data->prompt = readline("minishell>");
+		if (!data->prompt)
+			break ;
 		add_history(data->prompt);
 		data->tokens = ft_lexer(data->prompt);
 		parse(data);
