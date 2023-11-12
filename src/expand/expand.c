@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/10 19:44:35 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/12 23:30:50 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ char	*apply_exp(char *str, char **env)
 	res = ft_strdup("");
 	quote = 0;
 	i = 0;
+	printf("str to expand = %s\n", str);
 	while (str[i])
 	{
 		tmp = res;
 		res = ft_strjoin(res, get_nonvarstr(str, &i, &quote));	
+		printf("%c\n", str[i]);
 		if (tmp)
 			free(tmp);
 		if (!res)
@@ -33,7 +35,9 @@ char	*apply_exp(char *str, char **env)
 		tmp = res;
 		if (quote != 39)
 		{
+			printf("res before exp %s\n", res);
 			res = ft_strjoin(res, get_varstr(str, &i, env));
+			printf("\nres after exp %s\n", res);
 			free(tmp);
 		}
 		if (!res)
