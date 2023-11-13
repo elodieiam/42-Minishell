@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/13 15:56:55 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:42:16 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ int	var_already_set(t_data *data, t_node *node)
 	i = 0;
 	j = 0;
 	tmp = NULL;
-	while (node->command->arguments[1][i] != '=')
+	while (node->command->arguments[1][i] && node->command->arguments[1][i] != '=')
 		i++;
 	while (data->env->envtab[j])
 	{
-		if (!ft_strncmp(node->command->arguments[1], data->env->envtab[j], i + 1))
+		if (!ft_strncmp(node->command->arguments[1], data->env->envtab[j], i))
 		{
 			tmp = malloc(sizeof(char) * ft_strlen(node->command->arguments[1]) + 1);
 			if (!tmp)
@@ -68,6 +68,54 @@ int	var_already_set(t_data *data, t_node *node)
 	return (0);
 }
 
+void	sort_display_env(int nb_arg, char **new_env)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < nb_arg - 1)
+	{
+		j = i + 1;
+		while (j < nb_arg)
+		{
+			if (ft_strcmp(new_env[i], new_env[j]) > 0)
+				swap_strings(&new_env[i], &new_env[j]);
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	while (new_env[i])
+	{
+		printf("%s\n", new_env[i]);
+		i++;
+	}
+}
+
+int	display_env(t_data *data)
+{
+	int	nb_arg;
+	char	**new_env;
+
+	new_env = NULL;
+	nb_arg = 0;
+	while (data->env->envtab[nb_arg])
+		nb_arg++;
+	new_env = malloc(sizeof(char *) * (nb_arg + 1));
+	if (!new_env)
+		return (0);
+	nb_arg = 0;
+	while (data->env->envtab[nb_arg])
+	{
+		new_env[nb_arg] = ft_strdup(data->env->envtab[nb_arg]);
+		nb_arg++;
+	}
+	new_env[nb_arg] = NULL;
+	sort_display_env(nb_arg, new_env);
+	free_dchartab(new_env);
+	return (1);
+}
 
 int	exec_export(t_data *data, t_node *node)
 {
@@ -75,8 +123,8 @@ int	exec_export(t_data *data, t_node *node)
 	int	set;
 
 	i = 1;
-	// if (!node->command->arguments[i])
-	// 	return (display_env(data), 0);
+	if (!node->command->arguments[i])
+		return (display_env(data), 0);
 	while (node->command->arguments[i])
 	{
 		if (is_valid_arg(node->command->arguments[i]))
@@ -92,13 +140,7 @@ int	exec_export(t_data *data, t_node *node)
 			}
 		}
 		else
-			return (1);
-		i++;
-	}
-	i = 0;
-	while (data->env->envtab[i])
-	{
-		printf("%s\n", data->env->envtab[i]);
+			printf("export : '%s' : not a valid identifier\n", node->command->arguments[i]);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/10 17:47:11 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/13 17:55:44 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,6 @@ int		exec_export(t_data *data, t_node *node);
 
 /*----------------export_utils.c---------------*/
 int		is_valid_arg(char *str);
+int		ft_strcmp(char *s1, char *s2);
+void	swap_strings(char **s1, char **s2);
 #endif
