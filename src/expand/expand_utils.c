@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:27:10 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/12 23:30:53 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/14 19:02:17 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,25 @@ char	*get_varstr(char *str, int *i, char **env)
 	}
 	j = 0;
 	(*i)++;
-	while(!is_varsep(str[*i + j]))
+	while (!is_varsep(str[*i + j]))
 		j++;
 	k = 0;
 	while (env[k] && (ft_strncmp(&str[*i], env[k], j) || env[k][j] != '='))
-			k++;
+		k++;
 	*i = *i + j;
-	//printf("env[%d][%d] = %s", k, j, &env[k][j]);
 	if (env[k])
 		return (ft_strdup(&env[k][j + 1]));
 	return (ft_strdup(""));
 }
 
 //not 100% sure about this function
-int	nonvarlen(char *str)
+int	nonvarlen(char *str, int quote)
 {
 	int		i;
 	int		nb_quotes;
-	int		quote;
 
 	i = 0;
 	nb_quotes = 0;
-	quote = 0;
 	if (!str)
 		return (0);
 	while (str[i] && (quote == 39 || str[i] != '$'))
@@ -87,25 +84,22 @@ char	*get_nonvarstr(char *str, int *i, int *quote)
 	int		j;
 
 	j = 0;
-	res = malloc(sizeof(char) * nonvarlen(str));
+	res = malloc(sizeof(char) * nonvarlen(str, *quote));
 	if (!res)
 		return (NULL);
 	while (str[*i] && (*quote == 39 || str[*i] != '$'))
 	{
 		if (str[*i] == *quote)
+			*quote = 0;
+		else
 		{
-			quote = 0;
-			(*i)++;
+			if (!*quote && (str[*i] == 34 || str[*i] == 39))
+				*quote = str[*i];
+			else
+				res[j++] = str[*i];
 		}
-		else if (!quote && (str[*i] == 34 || str[*i] == 39))
-		{
-			*quote = str[*i];
-			(*i)++;
-		}
-		res[*i] = str[j++];
 		(*i)++;
 	}
 	res[j] = '\0';
-	printf("res of nonvarstr : %s\n", res);
-	return (str);
+	return (res);
 }

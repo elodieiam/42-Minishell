@@ -6,40 +6,55 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/12 23:30:50 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/14 22:00:08 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+char	*getnvarvar(char *res, char *str, int *i, char **env)
+{
+	char		*str_to_join;
+	char		*tmp;
+	static int	quote;
+
+	str_to_join = get_nonvarstr(str, i, &quote);
+	if (!str_to_join)
+		return (NULL);
+	res = ft_strjoin(res, str_to_join);
+	free(str_to_join);
+	if (!res)
+		return (free(str_to_join), NULL);
+	if (quote != 39)
+	{
+		str_to_join = get_varstr(str, i, env);
+		if (!str_to_join)
+			return (free(res), NULL);
+		tmp = res;
+		res = ft_strjoin(res, str_to_join);
+		free(str_to_join);
+		free(tmp);
+		if (!res)
+			return (NULL);
+	}
+	return (res);
+}
+
 char	*apply_exp(char *str, char **env)
 {
 	char	*res;
 	char	*tmp;
-	int		quote;
 	int		i;
 
 	res = ft_strdup("");
-	quote = 0;
+	if (!res)
+		return (NULL);
 	i = 0;
-	printf("str to expand = %s\n", str);
 	while (str[i])
 	{
 		tmp = res;
-		res = ft_strjoin(res, get_nonvarstr(str, &i, &quote));	
-		printf("%c\n", str[i]);
-		if (tmp)
-			free(tmp);
-		if (!res)
-			return (NULL);
-		tmp = res;
-		if (quote != 39)
-		{
-			printf("res before exp %s\n", res);
-			res = ft_strjoin(res, get_varstr(str, &i, env));
-			printf("\nres after exp %s\n", res);
-			free(tmp);
-		}
+		res = getnvarvar(res, str, &i, env);
+		free(tmp);
 		if (!res)
 			return (NULL);
 	}
@@ -75,8 +90,8 @@ int	expand(t_node *node, char **env)
 	if (!node)
 		return (0);
 	if (!node->is_command && node->operand)
-		return (expand(node->operand->l_child, env) +
-			expand(node->operand->r_child, env));
+		return (expand(node->operand->l_child, env)
+			+ expand(node->operand->r_child, env));
 	if (exp_args(node->command->arguments, env)
 		/*|| exp_rds(node->command->redirects, env)*/)
 		return (-1);
