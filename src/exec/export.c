@@ -6,38 +6,11 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/13 18:42:16 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/15 16:09:55 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-int	update_env(t_data *data, t_node *node)
-{
-	char	**new_env;
-	int		nb_arg;
-
-	new_env = NULL;
-	nb_arg = 0;
-	while (data->env->envtab[nb_arg])
-		nb_arg++;
-	new_env = malloc(sizeof(char *) * (nb_arg + 2));
-	if (!new_env)
-		return (0);
-	nb_arg = 0;
-	while (data->env->envtab[nb_arg])
-	{
-		new_env[nb_arg] = ft_strdup(data->env->envtab[nb_arg]);
-		nb_arg++;
-	}
-	new_env[nb_arg] = ft_strdup(node->command->arguments[1]);
-	new_env[nb_arg + 1] = NULL;
-	if (data->env->malloced == 1)
-		free_dchartab(data->env->envtab);
-	data->env->envtab = new_env;
-	data->env->malloced = 1;
-	return (1);
-}
 
 int	var_already_set(t_data *data, t_node *node)
 {
@@ -68,55 +41,6 @@ int	var_already_set(t_data *data, t_node *node)
 	return (0);
 }
 
-void	sort_display_env(int nb_arg, char **new_env)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < nb_arg - 1)
-	{
-		j = i + 1;
-		while (j < nb_arg)
-		{
-			if (ft_strcmp(new_env[i], new_env[j]) > 0)
-				swap_strings(&new_env[i], &new_env[j]);
-			j++;
-		}
-		i++;
-	}
-	i = 0;
-	while (new_env[i])
-	{
-		printf("%s\n", new_env[i]);
-		i++;
-	}
-}
-
-int	display_env(t_data *data)
-{
-	int	nb_arg;
-	char	**new_env;
-
-	new_env = NULL;
-	nb_arg = 0;
-	while (data->env->envtab[nb_arg])
-		nb_arg++;
-	new_env = malloc(sizeof(char *) * (nb_arg + 1));
-	if (!new_env)
-		return (0);
-	nb_arg = 0;
-	while (data->env->envtab[nb_arg])
-	{
-		new_env[nb_arg] = ft_strdup(data->env->envtab[nb_arg]);
-		nb_arg++;
-	}
-	new_env[nb_arg] = NULL;
-	sort_display_env(nb_arg, new_env);
-	free_dchartab(new_env);
-	return (1);
-}
-
 int	exec_export(t_data *data, t_node *node)
 {
 	int	i;
@@ -130,17 +54,17 @@ int	exec_export(t_data *data, t_node *node)
 		if (is_valid_arg(node->command->arguments[i]))
 		{
 			set = var_already_set(data, node);
-			printf("is valid arg\n");
 			if (set == -1)
 				return (1);
 			else if (set == 0)
 			{
 				if (!update_env(data, node))
-					return (1);		
+					return (1);
 			}
 		}
 		else
-			printf("export : '%s' : not a valid identifier\n", node->command->arguments[i]);
+			printf("export : '%s' : not a valid identifier\n", \
+					node->command->arguments[i]);
 		i++;
 	}
 	return (0);
