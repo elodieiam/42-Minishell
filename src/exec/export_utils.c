@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 17:44:59 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/17 20:17:53 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/18 16:25:37 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,18 @@ static int	check_equal_sign(char *str)
 	return (0);
 }
 
-// static int	check_valid_string(char *str)
-// {
-		
-// }
+static int	check_valid_string(char *str)
+{
+	if (!ft_isalpha(*str) && *str != '_')
+		return (0);
+	while (*str && *str != '=')
+	{
+		if (*str == '?' || *str == '!' || *str == '*' || *str == '-' || *str == '/') // + - 
+			return (0);
+		str++;
+	}
+	return (1);
+}
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -55,7 +63,7 @@ int	is_valid_arg(char *str)
 {
 	if (!check_equal_sign(str))
 		return (0);
-	// if (!check_valid_string(str))
-	// 	return (0);
+	if (!check_valid_string(str))
+		return (0);
 	return (1);
 }
