@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:45:13 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/20 19:35:59 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/20 22:49:26 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_echo_opt(char *str)
 		str++;
 	if (*str)
 		return (0);
-	return (1);		
+	return (1);
 }
 
 int	exec_echo(t_node *node)

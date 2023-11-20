@@ -6,12 +6,11 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/20 17:02:21 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/20 22:47:15 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
 
 int	check_var(t_data *data, t_node *node, int index, int i)
 {
@@ -45,10 +44,8 @@ int	var_already_set(t_data *data, t_node *node, int index)
 {
 	int		i;
 	int		check;
-	char	*tmp;
 
 	i = 0;
-	tmp = NULL;
 	while (node->command->arguments[index][i] &&
 			node->command->arguments[index][i] != '=')
 		i++;
@@ -80,8 +77,9 @@ int	exec_export(t_data *data, t_node *node)
 					return (1);
 		}
 		else
-			printf("export : '%s' : not a valid identifier\n", \
-					node->command->arguments[i]);
+			return (exit_line(data, ferrnl
+					("export", node->command->arguments[i],
+						"not a valid identifier", 1)));
 		i++;
 	}
 	return (0);
