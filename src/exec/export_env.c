@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 16:08:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/17 20:26:00 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:10:49 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,14 @@ void	sort_env(int nb_arg, char **new_env)
 	print_env(new_env, i);
 }
 
-int	update_env(t_data *data, t_node *node)
+int	update_env(t_data *data, t_node *node, int index)
 {
 	char	**new_env;
 	int		nb_arg;
 
 	new_env = NULL;
 	nb_arg = 0;
+	printf("%s\n", node->command->arguments[index]);
 	while (data->env->envtab[nb_arg])
 		nb_arg++;
 	new_env = malloc(sizeof(char *) * (nb_arg + 2));
@@ -79,7 +80,7 @@ int	update_env(t_data *data, t_node *node)
 		new_env[nb_arg] = ft_strdup(data->env->envtab[nb_arg]);
 		nb_arg++;
 	}
-	new_env[nb_arg] = ft_strdup(node->command->arguments[1]);
+	new_env[nb_arg] = ft_strdup(node->command->arguments[index]);
 	new_env[nb_arg + 1] = NULL;
 	if (data->env->malloced == 1)
 		free_dchartab(data->env->envtab);

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/12 19:48:53 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:01:56 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	pretty_print_ast(t_node *node, char *prefix)
 	free(new_prefix);
 }
 
-void	print_env(char **env)
+void	print_env_debug(char **env)
 {
 	int	i;
 

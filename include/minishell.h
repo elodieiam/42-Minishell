@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/12 19:49:09 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:02:11 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include "expand.h"
 
 char	*tta(t_toktype int_type);
-void    pretty_print_ast(t_node *node, char *prefix);
+void	pretty_print_ast(t_node *node, char *prefix);
 void	print_tokens(t_token *tokens);
-void	print_env(char **env);
+void	print_env_debug(char **env);
 
 #endif
