@@ -31,6 +31,11 @@ int	srch_builtin(t_data *data, t_node *node)
 		data->err_code = exec_export(data, node);
 		return (1);
 	}
+	if (!ft_strncmp(node->command->arguments[0], "env", 4))
+	{
+		data->err_code = exec_env(data);
+		return (1);
+	}
 	return (0);
 }
 
