@@ -7,7 +7,9 @@ SRC		=	main.c \
 			parsing/parsing.c parsing/tree.c parsing/cmd_node.c parsing/rdlist.c parsing/op_node.c \
 			parsing/parenthesis.c \
 			exit/exit_line.c \
-			exec/exec.c exec/execve.c exec/exit.c exec/exec_utils.c exec/echo.c exec/export.c exec/export_utils.c exec/export_env.c exec/exec_env.c\
+			exec/exec.c exec/execve.c exec/exec_utils.c exec/exec_env.c \
+			exec/builtins/echo.c exec/builtins/export.c exec/builtins/export_utils.c \
+			exec/builtins/export_env.c exec/builtins/exit.c \
 			expand/expand.c expand/expand_utils.c \
 			debug.c
 
