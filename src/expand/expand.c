@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/14 22:00:08 by taospa           ###   ########.fr       */
+/*   Updated: 2023/11/20 18:42:03 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,21 @@ int	exp_args(char **args, char **env)
 }
 
 //care if malloc fails
-//t_rdlist	*exp_rds(t_rdlist *rdlist, char **env)
-//{
+int	exp_rds(t_rdlist *rdlist, char **env)
+{
+	char	*tmp;
 
-//}
+	while (rdlist)
+	{
+		tmp = rdlist->file;
+		rdlist->file = apply_exp(rdlist->file, env);
+		free(tmp);
+		if (!rdlist->file)
+			return (-1);
+		rdlist = rdlist->next;
+	}
+	return (0);
+}
 
 int	expand(t_node *node, char **env)
 {
@@ -93,7 +104,7 @@ int	expand(t_node *node, char **env)
 		return (expand(node->operand->l_child, env)
 			+ expand(node->operand->r_child, env));
 	if (exp_args(node->command->arguments, env)
-		/*|| exp_rds(node->command->redirects, env)*/)
+		|| exp_rds(node->command->redirects, env))
 		return (-1);
 	return (0);
 }

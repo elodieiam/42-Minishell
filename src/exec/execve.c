@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/07 15:53:24 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:17:51 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,16 @@ char	*get_cmd_path(t_data *data, char *command)
 	return (tmp);
 }
 
+void	check_file(t_data *data, char *file_path, char *cmd)
+{
+	if (!file_path)
+		exit(exit_all(data, ferrnl(cmd, NULL, "command not found", 127)));
+	if (access(file_path, F_OK) == -1)
+		exit(exit_all(data, ferrnl(cmd, NULL, "No such file or directory", 127)));
+	if (access(file_path, X_OK) == -1)
+		exit(exit_all(data, ferrnl(cmd, NULL, "Permission denied", 126)));
+}
+
 int	execute(t_data *data, t_node *node)
 {
 	char	*cmd_path;
@@ -66,9 +76,7 @@ int	execute(t_data *data, t_node *node)
 	if (!pid)
 	{
 		cmd_path = get_cmd_path(data, node->command->arguments[0]);
-		if (!cmd_path)
-			exit(exit_all(data, ferrnl(node->command->arguments[0], NULL,
-						"command not found", 127)));
+		check_file(data, cmd_path, node->command->arguments[0]);
 		execve(cmd_path, node->command->arguments, data->env->envtab);
 		free(cmd_path);
 		exit(exit_line(data, errnl(-1, "minishell: execve failed")));
