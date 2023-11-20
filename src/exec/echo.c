@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:45:13 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/07 16:42:53 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/20 19:35:59 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_echo_opt(char *str)
 {
-	if (!*str || *str != '-')
+	if (!str || !*str || *str != '-')
 		return (0);
 	str++;
 	while (*str && *str == 'n')
