@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 17:44:59 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/18 16:25:37 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:20:17 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	check_valid_string(char *str)
 		return (0);
 	while (*str && *str != '=')
 	{
-		if (*str == '?' || *str == '!' || *str == '*' || *str == '-' || *str == '/') // + - 
+		if (is_varsep(*str))
 			return (0);
 		str++;
 	}
