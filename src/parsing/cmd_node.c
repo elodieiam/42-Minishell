@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/07 13:15:59 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/10 15:39:43 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	free_args(char ***args)
 	if (!args || !*args)
 		return ;
 	while ((*args)[++i])
+	{
 		free((*args)[i]);
+		(*args)[i] = NULL;
+	}
 	free(*args);
 	*args = NULL;
 }

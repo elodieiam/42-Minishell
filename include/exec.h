@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/07 16:26:14 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/15 16:11:52 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ char	*bettercat(char *s1, char *s2);
 void	free_dchartab(char **tab);
 
 /*----------------echo.c---------------*/
-int	exec_echo(t_node *node);
+int		exec_echo(t_node *node);
 
+/*----------------export.c---------------*/
+int		exec_export(t_data *data, t_node *node);
+
+/*----------------export_utils.c---------------*/
+int		is_valid_arg(char *str);
+int		ft_strcmp(char *s1, char *s2);
+void	swap_strings(char **s1, char **s2);
+
+/*----------------export_env.c---------------*/
+int		display_env(t_data *data);
+int		update_env(t_data *data, t_node *node);
 #endif
