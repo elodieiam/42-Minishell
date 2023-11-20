@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/06 15:33:00 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:26:14 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,8 @@ int		execute(t_data *data, t_node *node);
 int		is_path(const char *str);
 char	*bettercat(char *s1, char *s2);
 void	free_dchartab(char **tab);
+
+/*----------------echo.c---------------*/
+int	exec_echo(t_node *node);
 
 #endif
