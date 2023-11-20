@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/20 14:08:51 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:58:32 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,7 @@ void	swap_strings(char **s1, char **s2);
 /*----------------export_env.c---------------*/
 int		display_env(t_data *data);
 int		update_env(t_data *data, t_node *node, int index);
+
+/*----------------exec_env.c---------------*/
+int		exec_env(t_data *data);
 #endif

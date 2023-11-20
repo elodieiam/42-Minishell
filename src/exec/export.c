@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/20 15:56:26 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:02:21 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	exec_export(t_data *data, t_node *node)
 		{
 			set = var_already_set(data, node, i);
 			if (set == -1)
-				return (1);
+				return (-1);
 			else if (set == 0)
 				if (!update_env(data, node, i))
 					return (1);

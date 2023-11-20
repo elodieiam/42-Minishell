@@ -6,13 +6,13 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 16:08:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/20 15:56:59 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:29:19 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env(char **new_env, int i)
+void	print_sorted_env(char **new_env, int i)
 {
 	int	j;
 
@@ -58,7 +58,7 @@ void	sort_env(int nb_arg, char **new_env)
 		i++;
 	}
 	i = 0;
-	print_env(new_env, i);
+	print_sorted_env(new_env, i);
 }
 
 int	update_env(t_data *data, t_node *node, int index)
