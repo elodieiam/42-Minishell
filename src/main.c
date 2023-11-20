@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/06 18:32:44 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:40:27 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	main(int ac, char *av[], char **env)
 		add_history(data->prompt);
 		data->tokens = ft_lexer(data->prompt);
 		parse(data);
+		expand(data->tree, env);
 		data->err_code = exec(data);
 		exit_line(data, data->err_code);
 	}
