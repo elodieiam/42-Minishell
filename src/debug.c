@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/07 13:20:28 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/12 19:48:53 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,19 @@ void	pretty_print_ast(t_node *node, char *prefix)
 	else
 		printf("%s└── Right: NULL\n", prefix);
 	free(new_prefix);
+}
+
+void	print_env(char **env)
+{
+	int	i;
+
+	i = 0;
+	printf("env: %p\n", env);
+	if (!env)
+		return ;
+	while (env[i])
+	{
+		printf("env[%d] = %s\n", i, env[i]);
+		i++;
+	}
 }

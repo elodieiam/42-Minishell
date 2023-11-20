@@ -50,6 +50,7 @@ int	main(int ac, char *av[], char **env)
 		add_history(data->prompt);
 		data->tokens = ft_lexer(data->prompt);
 		parse(data);
+		expand(data->tree, env);
 		data->err_code = exec(data);
 		exit_line(data, data->err_code);
 	}
