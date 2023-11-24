@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/22 01:54:55 by taospa           ###   ########.fr       */
+/*   Updated: 2023/11/24 13:40:42 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,21 @@ int	changevar(t_data *data, char *argument, int i)
 	char	*new_var;
 	char	**tmp_env;
 
-	new_var = NULL;
 	j = -1;
 	while (data->env->envtab[++j])
 		if (!ft_strncmp(argument,data->env->envtab[j], i))
 		{
-			tmp_env = cpy_env(data->env->envtab);
-			if (!tmp_env)
-				return (MALLOC_ERR);
 			new_var = ft_strdup(argument);
 			if (!new_var)
 				return (MALLOC_ERR);
-			if (data->env->malloced)
-				free_dchartab(data->env->envtab);
-			data->env->malloced = 1;
-			data->env->envtab = tmp_env;
+			if (!data->env->malloced)
+			{
+				tmp_env = cpy_env(data->env->envtab);
+				if (!tmp_env)
+					return (MALLOC_ERR);
+				data->env->malloced = 1;
+				data->env->envtab = tmp_env;
+			}	
 			free(data->env->envtab[j]);
 			data->env->envtab[j] = new_var;
 			return (1);
