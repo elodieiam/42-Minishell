@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/22 01:54:55 by taospa           ###   ########.fr       */
+/*   Updated: 2023/11/24 14:52:13 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	changevar(t_data *data, char *argument, int i)
 	new_var = NULL;
 	j = -1;
 	while (data->env->envtab[++j])
-		if (!ft_strncmp(argument,data->env->envtab[j], i))
+		if (!ft_strncmp(argument, data->env->envtab[j], i))
 		{
 			tmp_env = cpy_env(data->env->envtab);
 			if (!tmp_env)
