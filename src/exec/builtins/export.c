@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/24 14:52:13 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:10:23 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,37 @@ char	**cpy_env(char **env)
 	return (res);
 }
 
-int	changevar(t_data *data, char *argument, int i)
+int	change_var(t_data *data, char *argument, int j)
 {
-	int		j;
 	char	*new_var;
 	char	**tmp_env;
 
+	new_var = ft_strdup(argument);
+	if (!new_var)
+		return (MALLOC_ERR);
+	if (!data->env->malloced)
+	{
+		tmp_env = cpy_env(data->env->envtab);
+		if (!tmp_env)
+			return (MALLOC_ERR);
+		data->env->malloced = 1;
+		data->env->envtab = tmp_env;
+	}	
+	free(data->env->envtab[j]);
+	data->env->envtab[j] = new_var;
+	return (1);
+}
+
+int	search_var(t_data *data, char *argument, int i)
+{
+	int		j;
+
 	j = -1;
 	while (data->env->envtab[++j])
+	{
 		if (!ft_strncmp(argument, data->env->envtab[j], i))
-		{
-			new_var = ft_strdup(argument);
-			if (!new_var)
-				return (MALLOC_ERR);
-			if (!data->env->malloced)
-			{
-				tmp_env = cpy_env(data->env->envtab);
-				if (!tmp_env)
-					return (MALLOC_ERR);
-				data->env->malloced = 1;
-				data->env->envtab = tmp_env;
-			}	
-			free(data->env->envtab[j]);
-			data->env->envtab[j] = new_var;
-			return (1);
-		}
+			change_var(data, argument, j);
+	}
 	return (0);
 }
 
@@ -74,7 +80,7 @@ int	var_already_set(t_data *data, char **arguments, int index)
 	while (arguments[index][i] &&
 			arguments[index][i] != '=')
 		i++;
-	changed = changevar(data, arguments[index], i);
+	changed = search_var(data, arguments[index], i);
 	if (changed == MALLOC_ERR)
 		return (MALLOC_ERR);
 	else if (changed == 1)

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/27 13:58:36 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:09:50 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int		exec_echo(t_node *node);
 
 /*------------------export.c-----------------*/
 int		exec_export(t_data *data, char **arguments);
-int		changevar(t_data *data, char *argument, int i);
 
 /*----------------export_utils.c-------------*/
 int		is_valid_arg(char *str);
