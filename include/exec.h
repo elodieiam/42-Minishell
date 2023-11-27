@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/24 15:13:36 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/27 13:58:36 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		exec_exit(t_data *data, t_node *node);
 
 /*------------------execve.c-----------------*/
 int		execute(t_data *data, t_node *node);
+void	check_file(t_data *data, char *file_path, char *cmd);
 
 /*----------------exec_utils.c---------------*/
 int		is_path(const char *str);
@@ -50,7 +51,12 @@ int		update_env(t_data *data, char **arguments, int index);
 int		exec_env(t_data *data);
 
 /*-------------------cd.c--------------------*/
+int		exec_cd(t_data *data, t_node *node);
+
+/*-------------------pwd.c-------------------*/
+int		exec_pwd(t_data *data, t_node * node);
 
 /*-------------------unset.c--------------------*/
 int	exec_unset(t_data *data, char **args);
+
 #endif

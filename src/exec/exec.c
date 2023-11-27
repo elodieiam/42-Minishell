@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/25 14:40:45 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/27 13:57:22 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int	srch_builtin(t_data *data, t_node *node)
 		data->err_code = exec_export(data, node->command->arguments);
 	else if (!ft_strncmp(node->command->arguments[0], "env", 4))
 		data->err_code = exec_env(data);
+	else if (!ft_strncmp(node->command->arguments[0], "cd", 3))
+		data->err_code = exec_cd(data, node);
+	else if (!ft_strncmp(node->command->arguments[0], "pwd", 4))
+		data->err_code = exec_pwd(data, node);
 	else if (!ft_strncmp(node->command->arguments[0], "unset", 6))
 		data->err_code = exec_unset(data, node->command->arguments);
 	else
