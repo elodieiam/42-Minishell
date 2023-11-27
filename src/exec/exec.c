@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/20 18:48:22 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/25 14:40:45 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,18 @@ int	srch_builtin(t_data *data, t_node *node)
 	if (!node || !node->is_command || !node->command->arguments)
 		return (0);
 	if (!ft_strncmp(node->command->arguments[0], "exit", 5))
-	{
-		exec_exit(data, node);
-		return (1);
-	}
-	if (!ft_strncmp(node->command->arguments[0], "echo", 5))
-	{
+		return (exec_exit(data, node));
+	else if (!ft_strncmp(node->command->arguments[0], "echo", 5))
 		data->err_code = exec_echo(node);
-		return (1);
-	}
-	if (!ft_strncmp(node->command->arguments[0], "export", 7))
-	{
-		data->err_code = exec_export(data, node);
-		return (1);
-	}
-	if (!ft_strncmp(node->command->arguments[0], "env", 4))
-	{
+	else if (!ft_strncmp(node->command->arguments[0], "export", 7))
+		data->err_code = exec_export(data, node->command->arguments);
+	else if (!ft_strncmp(node->command->arguments[0], "env", 4))
 		data->err_code = exec_env(data);
-		return (1);
-	}
-	return (0);
+	else if (!ft_strncmp(node->command->arguments[0], "unset", 6))
+		data->err_code = exec_unset(data, node->command->arguments);
+	else
+		return (0);
+	return (1);
 }
 
 int	exec_command(t_data *data, t_node *node)
