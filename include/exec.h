@@ -56,4 +56,7 @@ int		exec_cd(t_data *data, t_node *node);
 /*-------------------pwd.c-------------------*/
 int		exec_pwd(t_data *data, t_node * node);
 
+/*-------------------unset.c--------------------*/
+int	exec_unset(t_data *data, char **args);
+
 #endif

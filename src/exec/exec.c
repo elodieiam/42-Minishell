@@ -16,7 +16,7 @@ int	srch_builtin(t_data *data, t_node *node)
 {
 	if (!node || !node->is_command || !node->command->arguments)
 		return (0);
-	else if (!ft_strncmp(node->command->arguments[0], "exit", 5))
+	if (!ft_strncmp(node->command->arguments[0], "exit", 5))
 		return (exec_exit(data, node));
 	else if (!ft_strncmp(node->command->arguments[0], "echo", 5))
 		data->err_code = exec_echo(node);
@@ -28,6 +28,8 @@ int	srch_builtin(t_data *data, t_node *node)
 		data->err_code = exec_cd(data, node);
 	else if (!ft_strncmp(node->command->arguments[0], "pwd", 4))
 		data->err_code = exec_pwd(data, node);
+	else if (!ft_strncmp(node->command->arguments[0], "unset", 6))
+		data->err_code = exec_unset(data, node->command->arguments);
 	else
 		return (0);
 	return (1);
