@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/20 18:29:52 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:12:23 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,24 @@ t_data	*init_data(char **env)
 	data->env->malloced = 0;
 	return (data);
 }
+void	ft_handler(int signum, siginfo_t *siginfo, void *context)
+{
+	(void)context;
+	(void)siginfo;
+	if (signum == SIGINT)
+	{
+		printf("ooo");
+	}
+}
+
+int	init_signal(void)
+{
+	struct sigaction	sigint;
+	
+	sigint.sa_sigaction = ft_handler;
+	sigint.sa_flags = SA_SIGINFO;
+	return (0);
+}
 
 int	main(int ac, char *av[], char **env)
 {
@@ -40,13 +58,17 @@ int	main(int ac, char *av[], char **env)
 		return (errnl(1, "Error : no arguments required"));
 	(void)av;
 	data = init_data(env);
+	init_signal();
 	if (!data)
 		return (-1);
 	while (1)
 	{
 		data->prompt = readline("minishell>");
 		if (!data->prompt)
+		{
+			printf("exit\n");
 			break ;
+		}
 		add_history(data->prompt);
 		data->tokens = ft_lexer(data->prompt);
 		parse(data);
