@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/24 12:46:31 by taospa           ###   ########.fr       */
+/*   Updated: 2023/11/27 12:29:17 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ int		update_env(t_data *data, char **arguments, int index);
 int		exec_env(t_data *data);
 
 /*-------------------cd.c--------------------*/
-
+int		exec_cd(t_data *data, t_node *node);
 
 #endif

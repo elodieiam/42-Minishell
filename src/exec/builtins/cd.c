@@ -6,7 +6,7 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:31:59 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/24 20:43:40 by taospa           ###   ########.fr       */
+/*   Updated: 2023/11/27 12:58:44 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	cd_specific(t_data *data, t_node *node, char **newpwd)
 	if (!node->command->arguments[1])
 	{
 		*newpwd = get_varstr("$HOME", &i, data->env->envtab);
-		if (*newpwd && ft_strncmp(*newpwd, "", 2))
+		if (*newpwd && !ft_strncmp(*newpwd, "", 2))
 			return (free(newpwd), exit_line(data,
 						errnl(1, "minishell: cd: HOME not set")));
 		return (1);
@@ -49,7 +49,9 @@ int	cd_specific(t_data *data, t_node *node, char **newpwd)
 	else if (!ft_strncmp(node->command->arguments[1], "-", 2))
 	{
 		*newpwd = get_varstr("$OLDPWD", &i, data->env->envtab);
-		if (*newpwd && ft_strncmp(*newpwd, "", 2))
+		if (!newpwd)
+			return (exit_line(data, errnl(MALLOC_ERR, "malloc failed")));
+		if (!ft_strncmp(*newpwd, "", 2))
 			return (free(*newpwd), exit_line(data,
 						errnl(1, "minishell: cd: OLDPWD not set")));
 		printf("%s\n", *newpwd);
@@ -62,15 +64,39 @@ int	exec_cd(t_data *data, t_node *node)
 {
 	char	oldpwd[PATH_MAX];
 	char	*newpwd;
-	// char	*export_str;
+	char	**export_tab;
 
 	if (!cd_specific(data, node, &newpwd))
 		newpwd = ft_strdup(node->command->arguments[1]);
+	else if (!newpwd)
+		return (MALLOC_ERR);
 	if (!getcwd(oldpwd, PATH_MAX))
 		return (exit_line(data, errnl(UNKNOWN_ERR, "fatal: getcwd failed")));
 	if (check_access(newpwd) == -1)
 		return (free(newpwd), 1);
 	chdir(newpwd);
-	// export newpwd and oldpwd
+	export_tab = malloc(sizeof(char *) * 4);
+	if (!export_tab)
+		return (free(newpwd), exit_line(data, errnl(MALLOC_ERR, "fatal: malloc failed")));
+	export_tab[0] = "export";
+	export_tab[1] = ft_strjoin("PWD=", newpwd);
+	if (!export_tab[1])
+	{
+		free(export_tab);
+		return (free(newpwd), exit_line(data, errnl(MALLOC_ERR, "fatal: malloc failed")));
+	}
+	export_tab[2] = ft_strjoin("OLDPWD=", oldpwd);
+	if (!export_tab[2])
+	{
+		free(export_tab[1]);
+		free(export_tab);
+		return (free(newpwd), exit_line(data, errnl(MALLOC_ERR, "fatal: malloc failed")));
+	}
+	export_tab[3] = NULL;
+	exec_export(data, export_tab);
+	free(newpwd);
+	free(export_tab[1]);
+	free(export_tab[2]);
+	free(export_tab);
 	return (0);
 }
