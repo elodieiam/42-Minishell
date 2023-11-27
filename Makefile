@@ -9,7 +9,8 @@ SRC		=	main.c \
 			exit/exit_line.c \
 			exec/exec.c exec/execve.c exec/exec_utils.c exec/exec_env.c \
 			exec/builtins/echo.c exec/builtins/export.c exec/builtins/export_utils.c \
-			exec/builtins/export_env.c exec/builtins/exit.c exec/builtins/cd.c\
+			exec/builtins/export_env.c exec/builtins/exit.c exec/builtins/cd.c \
+			exec/builtins/pwd.c \
 			expand/expand.c expand/expand_utils.c \
 			debug.c
 
