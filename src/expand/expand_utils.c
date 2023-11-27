@@ -6,10 +6,11 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:27:10 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/20 16:19:43 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/27 16:27:51 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <ctype.h>
 #include <minishell.h>
 
 int	is_varsep(char c)
@@ -33,7 +34,8 @@ char	*get_varstr(char *str, int *i, char **env)
 		return (NULL);
 	if (str[*i] != '$')
 		return (ft_strdup(""));
-	if ((str[*i] == '$' && ft_isdigit(str[*i + 1])))
+	if (str[*i] == '$' &&
+			(ft_isdigit(str[*i + 1]) || is_varsep(str[*i + 1])))
 	{
 		*i += 2;
 		return (ft_strdup(""));
@@ -84,7 +86,7 @@ char	*get_nonvarstr(char *str, int *i, int *quote)
 	int		j;
 
 	j = 0;
-	res = malloc(sizeof(char) * nonvarlen(str, *quote));
+	res = malloc(sizeof(char) * (nonvarlen(str, *quote) + 1));
 	if (!res)
 		return (NULL);
 	while (str[*i] && (*quote == 39 || str[*i] != '$'))
