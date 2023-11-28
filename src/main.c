@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/28 16:32:26 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:41:52 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_data	*init_data(char **env)
 	if (!data->env)
 		return (free(data), NULL);
 	data->env->envtab = env;
+	data->env->malloced = 0;
 	return (data);
 }
 void	ft_handler(int signum)
