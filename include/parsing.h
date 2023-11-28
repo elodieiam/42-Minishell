@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:28:57 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/03 17:35:17 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/28 12:04:17 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ t_node		*init_cmd_node(t_token **tokens, int malloc_size);
 t_node		*handlecommand(t_data *data);
 void		free_args(char ***args);
 
-/*----------------cmd_node.c---------------*/
+/*----------------op_node.c---------------*/
 t_node		*handleoperator(t_data *data);
+int			handlepipe(t_data *data);
 
 /*----------------parsing.c---------------*/
 t_node		*handlepar(t_data *data);
