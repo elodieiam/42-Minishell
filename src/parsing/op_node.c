@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:12:40 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/28 13:13:29 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/28 13:55:38 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,14 @@ int	add_pipenode(t_data *data, t_node *pipe_node)
 {
 	t_node	*current_node;
 
+	if (!data->tree || data->tree->is_command || data->tree->subshell)
+		return (add_nodeontop(pipe_node, &(data->tree)), 0);
 	printf("i'm in add_pipenode\n");
 	fflush(stdout);
 	current_node = data->tree;
-	while (current_node->operand->r_child && !current_node->operand->r_child->is_command)
+	while (current_node->operand->r_child && \
+	!current_node->operand->r_child->is_command && \
+	!current_node->operand->r_child->subshell)
 		current_node = current_node->operand->r_child;
 	pipe_node->operand->l_child = current_node->operand->r_child;
 	current_node->operand->r_child = pipe_node;
@@ -74,7 +78,5 @@ int	handlepipe(t_data *data)
 		free(pipe_node->operand);
 		return (free(pipe_node), MALLOC_ERR);
 	}
-	if (data->tree->is_command)
-		return (add_nodeontop(pipe_node, &(data->tree)), 0);
 	return (add_pipenode(data, pipe_node));
 }

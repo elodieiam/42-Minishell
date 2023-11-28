@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/28 13:14:27 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/28 15:33:28 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	add_nodeontop(t_node *node, t_node **head)
 {
 	if (!head || !node)
 		return ;
-	if (!(node->is_command) && node->operand)
+	if (!(node->is_command) && node->operand && !node->operand->l_child)
 		node->operand->l_child = *head;
 	*head = node;
 }
@@ -58,7 +58,7 @@ void	add_nodeontop(t_node *node, t_node **head)
 //TODO: check return value of malloc using functions
 int	parse(t_data *data)
 {
-	while (data->tokens && data->tokens->type != T_CLPAR)
+	while (data->tokens)
 	{
 		if (data->tokens->type == T_WORD || data->tokens->type == T_OPPAR)
 			add_nodeontop(handlecommand(data), &(data->tree));
@@ -66,8 +66,6 @@ int	parse(t_data *data)
 			add_nodeontop(handleoperator(data), &(data->tree));
 		else if (data->tokens->type == T_PIPE)
 			handlepipe(data);
-		else
-			data->tokens = freengonextok(data->tokens);
 	}
 	return (0);
 }

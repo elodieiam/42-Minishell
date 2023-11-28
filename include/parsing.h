@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:28:57 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/28 12:04:17 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/28 13:30:02 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		free_args(char ***args);
 t_node		*handleoperator(t_data *data);
 int			handlepipe(t_data *data);
 
-/*----------------parsing.c---------------*/
+/*--------------parenthesis.c-------------*/
 t_node		*handlepar(t_data *data);
 
 #endif

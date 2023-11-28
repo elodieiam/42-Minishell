@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/10 15:39:43 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/28 14:27:44 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_node	*init_cmd_node(t_token **tokens, int malloc_size)
 	res->command->arguments = malloc(malloc_size * sizeof(char *));
 	if (!res->command->arguments)
 		return (NULL);
-	while ((*tokens) && (*tokens)->type != T_PIPE
+	while ((*tokens) && (*tokens)->type != T_PIPE && (*tokens)->type != T_CLPAR
 		&& (*tokens)->type != T_OR && (*tokens)->type != T_AND)
 	{
 		if ((*tokens)->type == T_WORD)
@@ -66,7 +66,7 @@ t_node	*handlecommand(t_data *data)
 	malloc_size = 0;
 	if (curr && curr->type == T_OPPAR)
 		return (handlepar(data));
-	while (curr && curr->type != T_PIPE
+	while (curr && curr->type != T_PIPE && data->tokens->type != T_CLPAR
 		&& curr->type != T_OR && curr->type != T_AND)
 	{
 		if (curr->type == T_WORD)
