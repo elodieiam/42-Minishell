@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/20 14:01:56 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/28 14:16:38 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	print_tokens(t_token *tokens)
 
 	i = 1;
 	printf("TOKENS :\n");
+	if (!tokens)
+		printf("NULL\n");
 	while (tokens)
 	{
 		printf("type : %s\tstring %d: \"%s\"\n",

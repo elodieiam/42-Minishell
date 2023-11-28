@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/28 12:50:52 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/28 13:04:56 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	main(int ac, char *av[], char **env)
 		data->tokens = ft_lexer(data->prompt);
 		parse(data);
 		expand(data->tree, data->env->envtab);
+		pretty_print_ast(data->tree, "");
 		data->err_code = exec(data);
 		exit_line(data, data->err_code);
 	}
