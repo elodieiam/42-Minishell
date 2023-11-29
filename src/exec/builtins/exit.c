@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:22:57 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/07 13:14:26 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:28:23 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	exec_exit(t_data *data, t_node *node)
 {
 	unsigned char	exit_val;
 
-	exit_val = data->err_code;
+	exit_val = g_err_code;
 	ft_putstr_fd("exit\n", 2);
 	if (node->command->arguments[1])
 	{

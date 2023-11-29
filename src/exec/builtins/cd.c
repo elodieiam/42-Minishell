@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:31:59 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/27 15:35:36 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:28:23 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	exec_cd(t_data *data, t_node *node)
 	if (!cd_specific(data, node, &newpwd))
 		newpwd = ft_strdup(node->command->arguments[1]);
 	else if (!newpwd || !data->prompt)
-		return (data->err_code);
+		return (g_err_code);
 	if (!getcwd(oldpwd, PATH_MAX))
 		return (exit_line(data, errnl(UNKNOWN_ERR, "fatal: getcwd failed")));
 	if (check_access(newpwd) == -1)

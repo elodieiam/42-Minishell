@@ -6,11 +6,13 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/28 13:04:56 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:28:54 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+unsigned char	g_err_code;
 
 t_data	*init_data(char **env)
 {
@@ -20,7 +22,6 @@ t_data	*init_data(char **env)
 	if (!data)
 		return (NULL);
 	data->prompt = NULL;
-	data->err_code = 0;
 	data->tokens = NULL;
 	data->tree = NULL;
 	data->tmp_tree = NULL;
@@ -28,16 +29,20 @@ t_data	*init_data(char **env)
 	if (!data->env)
 		return (free(data), NULL);
 	data->env->envtab = env;
+	data->env->malloced = 0;
+	g_err_code = 0;
 	return (data);
 }
+
 void	ft_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
 		printf("\n");
-		rll_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		g_err_code = 130;
 	}
 }
 
@@ -71,9 +76,8 @@ int	main(int ac, char *av[], char **env)
 		data->tokens = ft_lexer(data->prompt);
 		parse(data);
 		expand(data->tree, data->env->envtab);
-		pretty_print_ast(data->tree, "");
-		data->err_code = exec(data);
-		exit_line(data, data->err_code);
+		g_err_code = exec(data);
+		exit_line(data, g_err_code);
 	}
-	return (exit_all(data, data->err_code));
+	return (exit_all(data, g_err_code));
 }
