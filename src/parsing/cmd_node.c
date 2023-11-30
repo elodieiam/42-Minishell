@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/28 14:27:44 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/30 16:45:07 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,30 @@ void	free_args(char ***args)
 	*args = NULL;
 }
 
+t_node	*fill_cmd_node(t_token *token, t_node *res, int arg_cpt)
+{
+	t_rdlist	*rd;
+
+	if (token->type == T_WORD)
+		res->command->arguments[arg_cpt++] = ft_strdup(token->string);
+	else if (token->type > 6 && token->type < 11)
+	{
+		rd = new_rd((token->type), token->next->string);
+		if (!rd)
+		{
+			free_dchartab(res->command->arguments);
+			free_rdlist(&(res->command->redirects));
+			free(res->command);
+			free(res);
+			return (NULL);
+		}
+		rdlist_add_back(&(res->command->redirects), rd);
+		token = freengonextok(token);
+	}
+	token = freengonextok(token);
+	return (res);
+}
+
 t_node	*init_cmd_node(t_token **tokens, int malloc_size)
 {
 	t_node	*res;
@@ -43,15 +67,8 @@ t_node	*init_cmd_node(t_token **tokens, int malloc_size)
 	while ((*tokens) && (*tokens)->type != T_PIPE && (*tokens)->type != T_CLPAR
 		&& (*tokens)->type != T_OR && (*tokens)->type != T_AND)
 	{
-		if ((*tokens)->type == T_WORD)
-			res->command->arguments[arg_cpt++] = ft_strdup((*tokens)->string);
-		else if ((*tokens)->type > 6 && (*tokens)->type < 11)
-		{
-			rdlist_add_back(&(res->command->redirects),
-				new_rd(((*tokens)->type), (*tokens)->next->string));
-			(*tokens) = freengonextok((*tokens));
-		}
-		(*tokens) = freengonextok((*tokens));
+		if (!fill_cmd_node(*tokens, res, arg_cpt))
+			return (NULL);
 	}
 	res->command->arguments[arg_cpt] = NULL;
 	return (res);

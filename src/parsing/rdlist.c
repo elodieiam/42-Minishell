@@ -6,7 +6,7 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 17:27:32 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/07 13:14:49 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:59:19 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_rdlist	*new_rd(t_toktype rd_type, char *file)
 		return (NULL);
 	new_rd->next = NULL;
 	new_rd->file = ft_strdup(file);
+	if (!new_rd->file)
+		return (free(new_rd), NULL);
 	new_rd->rdtype = rd_type;
 	return (new_rd);
 }

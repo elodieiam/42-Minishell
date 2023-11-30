@@ -6,12 +6,13 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 19:04:21 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/28 15:30:45 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/11/30 16:30:14 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+// TODO : protect handlecommand return value in case of malloc fail
 t_node	*handlepar(t_data *data)
 {
 	if (!data->tokens && data->tokens->type != T_OPPAR)
