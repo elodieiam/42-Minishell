@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/30 15:00:23 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:15:53 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,14 @@ void	check_file(t_data *data, char *file_path, char *cmd)
 		exit(exit_all(data, ferrnl(cmd, NULL, "Permission denied", 126)));
 }
 
-int	handle_child_sigs(int childval, t_data *data)
+int	handle_child_sigs(int childval)
 {
 	if (WIFSIGNALED(childval))
 	{
 		if (WTERMSIG(childval) == SIGQUIT)
-		{
 			printf("Quit (core dumped)\n");
-			exit_line(data, 131);
-		}
+		// else if (WTERMSIG(childval) == SIGINT)
+		// 	printf("Qsigint\n");			
 		return (1);
 	}
 	return (0);
@@ -98,6 +97,7 @@ int	execute(t_data *data, t_node *node)
 		cmd_path = get_cmd_path(data, node->command->arguments[0]);
 		check_file(data, cmd_path, node->command->arguments[0]);
 		signal(SIGQUIT, sig_handler_child);
+		/* signal(SIGINT, SIG_IGN); */
 		execve(cmd_path, node->command->arguments, data->env->envtab);
 		free(cmd_path);
 		exit(exit_line(data, errnl(-1, "minishell: execve failed")));
@@ -105,7 +105,7 @@ int	execute(t_data *data, t_node *node)
 	waitval = waitpid(pid, &childval, 0);
 	if (waitval == -1)
 		return (exit_line(data, errnl(-1, "minishell: waitpid failed")));
-	if (handle_child_sigs(childval, data))
-		return (WTERMSIG(childval));
+	if (handle_child_sigs(childval))
+		return (WTERMSIG(childval) + 128);
 	return (WEXITSTATUS(childval));
 }
