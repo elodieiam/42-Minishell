@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/27 15:10:23 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/01 14:04:43 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	change_var(t_data *data, char *argument, int j)
 			return (MALLOC_ERR);
 		data->env->malloced = 1;
 		data->env->envtab = tmp_env;
-	}	
+	}
 	free(data->env->envtab[j]);
 	data->env->envtab[j] = new_var;
 	return (1);

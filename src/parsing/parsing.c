@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/28 15:33:28 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/01 13:39:28 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,35 @@ int	check_word(char *str)
 	return (dquotes + squotes);
 }
 
-void	add_nodeontop(t_node *node, t_node **head)
+int	add_nodeontop(t_node *node, t_node **head)
 {
 	if (!head || !node)
-		return ;
+		return (1);
 	if (!(node->is_command) && node->operand && !node->operand->l_child)
 		node->operand->l_child = *head;
 	*head = node;
+	return (0);
 }
 
-//TODO: check return value of malloc using functions
 int	parse(t_data *data)
 {
 	while (data->tokens)
 	{
 		if (data->tokens->type == T_WORD || data->tokens->type == T_OPPAR)
-			add_nodeontop(handlecommand(data), &(data->tree));
+		{
+			if (add_nodeontop(handlecommand(data), &(data->tree)))
+				return (1);
+		}
 		else if (data->tokens->type > 4 && data->tokens->type < 7)
-			add_nodeontop(handleoperator(data), &(data->tree));
+		{
+			if (add_nodeontop(handleoperator(data), &(data->tree)))
+				return (1);
+		}
 		else if (data->tokens->type == T_PIPE)
-			handlepipe(data);
+		{
+			if (handlepipe(data))
+				return (1);
+		}
 	}
 	return (0);
 }

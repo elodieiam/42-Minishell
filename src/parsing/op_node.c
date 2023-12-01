@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:12:40 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/28 13:55:38 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/01 14:03:07 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_node	*handleoperator(t_data *data)
 	}
 	op_node->operand->optype = data->tokens->type;
 	data->tokens = freengonextok(data->tokens);
+	// protect handlecommand
 	op_node->operand->r_child = handlecommand(data);
 	return (op_node);
 }
@@ -60,9 +61,11 @@ int	handlepipe(t_data *data)
 	t_node	*pipe_node;
 
 	if (!data->tokens->next)
-		return (exit_line(data, errnl(2, "minishell: syntax error near token 'newline'")));
+		return (exit_line(data, errnl(2, \
+			"minishell: syntax error near token 'newline'")));
 	if (data->tokens->next->type > 3)
-		return (exit_line(data, errnl(2, "minishell: syntax error near token '|'")));
+		return (exit_line(data, errnl(2, \
+			"minishell: syntax error near token '|'")));
 	pipe_node = new_node(0);
 	if (!pipe_node || !pipe_node->operand)
 	{
@@ -72,6 +75,7 @@ int	handlepipe(t_data *data)
 	}
 	pipe_node->operand->optype = data->tokens->type;
 	data->tokens = freengonextok(data->tokens);
+	// protect handlecommand
 	pipe_node->operand->r_child = handlecommand(data);
 	if (!pipe_node->operand->r_child)
 	{

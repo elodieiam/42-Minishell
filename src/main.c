@@ -53,9 +53,26 @@ int	init_signal(void)
 	return (0);
 }
 
+int	process_line(t_data *data)
+{
+  signal(SIGINT, ft_handler);
+	data->prompt = readline("minishell>");
+	if (!data->prompt)
+		return (1);
+	add_history(data->prompt);
+	data->tokens = ft_lexer(data->prompt);
+	if (!data->tokens || parse(data))
+		return (1);
+	expand(data->tree, data->env->envtab);
+	g_err_code = exec(data);
+	exit_line(data, g_err_code);
+	return (0);
+}
+
 int	main(int ac, char *av[], char **env)
 {
 	t_data	*data;
+	int		exit;
 
 	if (ac != 1)
 		return (errnl(1, "Error : no arguments required"));
@@ -64,21 +81,9 @@ int	main(int ac, char *av[], char **env)
 	if (!data)
 		return (-1);
 	init_signal();
-	while (1)
-	{
-		signal(SIGINT, ft_handler);
-		data->prompt = readline("minishell>");
-		if (!data->prompt)
-		{
-			printf("exit\n");
-			break ;
-		}
-		add_history(data->prompt);
-		data->tokens = ft_lexer(data->prompt);
-		parse(data);
-		expand(data->tree, data->env->envtab);
-		g_err_code = exec(data);
-		exit_line(data, g_err_code);
-	}
-	return (exit_all(data, g_err_code));
+	exit = 0;
+	while (!exit)
+		exit = process_line(data);
+  printf("exit\n);
+	return (exit_all(data, data->err_code));
 }

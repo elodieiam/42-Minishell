@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:27:10 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/27 16:27:51 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/01 14:03:45 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ char	*get_varstr(char *str, int *i, char **env)
 		return (NULL);
 	if (str[*i] != '$')
 		return (ft_strdup(""));
-	if (str[*i] == '$' &&
-			(ft_isdigit(str[*i + 1]) || is_varsep(str[*i + 1])))
+	if (str[*i] == '$' && \
+		(ft_isdigit(str[*i + 1]) || is_varsep(str[*i + 1])))
 	{
 		*i += 2;
 		return (ft_strdup(""));
