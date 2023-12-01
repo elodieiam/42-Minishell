@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/30 17:15:53 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/01 14:53:03 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int	handle_child_sigs(int childval)
 	{
 		if (WTERMSIG(childval) == SIGQUIT)
 			printf("Quit (core dumped)\n");
-		// else if (WTERMSIG(childval) == SIGINT)
-		// 	printf("Qsigint\n");			
+		else if (WTERMSIG(childval)== SIGINT)
+			printf("\n");		
 		return (1);
 	}
 	return (0);
@@ -92,12 +92,13 @@ int	execute(t_data *data, t_node *node)
 	pid = fork();
 	if (pid == -1)
 		return (exit_line(data, errnl(-1, "minishell: fork failed")));
+	signal(SIGINT, SIG_IGN);
 	if (!pid)
 	{
 		cmd_path = get_cmd_path(data, node->command->arguments[0]);
 		check_file(data, cmd_path, node->command->arguments[0]);
 		signal(SIGQUIT, sig_handler_child);
-		/* signal(SIGINT, SIG_IGN); */
+		signal(SIGINT, sig_handler_child);
 		execve(cmd_path, node->command->arguments, data->env->envtab);
 		free(cmd_path);
 		exit(exit_line(data, errnl(-1, "minishell: execve failed")));

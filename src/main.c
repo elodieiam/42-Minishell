@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/30 15:57:32 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/01 14:34:36 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,12 @@ int	main(int ac, char *av[], char **env)
 		return (errnl(1, "Error : no arguments required"));
 	(void)av;
 	data = init_data(env);
-	init_signal();
 	if (!data)
 		return (-1);
+	init_signal();
 	while (1)
 	{
+		signal(SIGINT, ft_handler);
 		data->prompt = readline("minishell>");
 		if (!data->prompt)
 		{
