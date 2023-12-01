@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/27 14:31:38 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:27:04 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define NOTFOUND_ERROR 127
 # define SIGINT_ERR 128
 # define UNKNOWN_ERR 255
+
+extern unsigned char	g_err_code;
 
 char	*tta(t_toktype int_type);
 void	pretty_print_ast(t_node *node, char *prefix);

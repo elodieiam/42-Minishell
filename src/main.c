@@ -6,11 +6,13 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/01 14:05:08 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/01 14:34:36 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+unsigned char	g_err_code;
 
 t_data	*init_data(char **env)
 {
@@ -20,7 +22,6 @@ t_data	*init_data(char **env)
 	if (!data)
 		return (NULL);
 	data->prompt = NULL;
-	data->err_code = 0;
 	data->tokens = NULL;
 	data->tree = NULL;
 	data->tmp_tree = NULL;
@@ -29,6 +30,7 @@ t_data	*init_data(char **env)
 		return (free(data), NULL);
 	data->env->envtab = env;
 	data->env->malloced = 0;
+	g_err_code = 0;
 	return (data);
 }
 
@@ -36,10 +38,11 @@ void	ft_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+			printf("\n");
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			rl_redisplay();
+			g_err_code = 130;
 	}
 }
 
@@ -52,6 +55,7 @@ int	init_signal(void)
 
 int	process_line(t_data *data)
 {
+  signal(SIGINT, ft_handler);
 	data->prompt = readline("minishell>");
 	if (!data->prompt)
 		return (1);
@@ -60,8 +64,8 @@ int	process_line(t_data *data)
 	if (!data->tokens || parse(data))
 		return (1);
 	expand(data->tree, data->env->envtab);
-	data->err_code = exec(data);
-	exit_line(data, data->err_code);
+	g_err_code = exec(data);
+	exit_line(data, g_err_code);
 	return (0);
 }
 
@@ -80,5 +84,6 @@ int	main(int ac, char *av[], char **env)
 	exit = 0;
 	while (!exit)
 		exit = process_line(data);
+  printf("exit\n);
 	return (exit_all(data, data->err_code));
 }
