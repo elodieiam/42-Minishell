@@ -6,9 +6,21 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:42:46 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/01 14:04:13 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/01 17:30:40 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+char	*expand_exceptions(char *str, int *i)
+{
+	(*i)++;
+	if (str[*i] == '?')
+	{
+		(*i)++;
+		return (ft_itoa(g_err_code));
+	}
+	(*i)++;
+	printf("%d\n", *i);
+	return (ft_strdup(""));
+}

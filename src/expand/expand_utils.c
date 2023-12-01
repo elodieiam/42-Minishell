@@ -6,11 +6,10 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:27:10 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/01 14:03:45 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/01 17:44:05 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ctype.h>
 #include <minishell.h>
 
 int	is_varsep(char c)
@@ -36,10 +35,7 @@ char	*get_varstr(char *str, int *i, char **env)
 		return (ft_strdup(""));
 	if (str[*i] == '$' && \
 		(ft_isdigit(str[*i + 1]) || is_varsep(str[*i + 1])))
-	{
-		*i += 2;
-		return (ft_strdup(""));
-	}
+		return (expand_exceptions(str, i));
 	j = 0;
 	(*i)++;
 	while (!is_varsep(str[*i + j]))
@@ -54,12 +50,10 @@ char	*get_varstr(char *str, int *i, char **env)
 }
 
 //not 100% sure about this function
-int	nonvarlen(char *str, int quote)
+int	nonvarlen(char *str, int quote, int i)
 {
-	int		i;
 	int		nb_quotes;
 
-	i = 0;
 	nb_quotes = 0;
 	if (!str)
 		return (0);
@@ -86,7 +80,7 @@ char	*get_nonvarstr(char *str, int *i, int *quote)
 	int		j;
 
 	j = 0;
-	res = malloc(sizeof(char) * (nonvarlen(str, *quote) + 1));
+	res = malloc(sizeof(char) * (nonvarlen(str, *quote, *i) + 1));
 	if (!res)
 		return (NULL);
 	while (str[*i] && (*quote == 39 || str[*i] != '$'))

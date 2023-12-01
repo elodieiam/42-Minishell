@@ -6,12 +6,13 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/20 18:42:03 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:23:39 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+//leak on res ??
 char	*getnvarvar(char *res, char *str, int *i, char **env)
 {
 	char		*str_to_join;

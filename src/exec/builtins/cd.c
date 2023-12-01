@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:31:59 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/29 16:28:23 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:45:01 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_access(char *path)
 	{
 		write(2, "minishell: cd : ", 16);
 		write(2, path, ft_strlen(path));
-		write(2, " : no suck file or directory\n", 29);
+		write(2, " : no such file or directory\n", 29);
 	}
 	else if (access(path, X_OK) == -1 && access(path, R_OK) == -1
 		&& access(path, W_OK) == -1)

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/01 14:34:36 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:05:50 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	ft_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
-			printf("\n");
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
-			g_err_code = 130;
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		g_err_code = 130;
 	}
 }
 
@@ -55,7 +55,7 @@ int	init_signal(void)
 
 int	process_line(t_data *data)
 {
-  signal(SIGINT, ft_handler);
+	signal(SIGINT, ft_handler);
 	data->prompt = readline("minishell>");
 	if (!data->prompt)
 		return (1);
@@ -84,6 +84,6 @@ int	main(int ac, char *av[], char **env)
 	exit = 0;
 	while (!exit)
 		exit = process_line(data);
-  printf("exit\n);
-	return (exit_all(data, data->err_code));
+	printf("exit\n");
+	return (exit_all(data, g_err_code));
 }
