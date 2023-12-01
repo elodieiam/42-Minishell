@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/01 13:31:35 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/01 14:05:08 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_data	*init_data(char **env)
 	data->env->malloced = 0;
 	return (data);
 }
+
 void	ft_handler(int signum)
 {
 	if (signum == SIGINT)
