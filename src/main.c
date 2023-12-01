@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/28 16:41:52 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/01 13:31:35 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,32 +49,35 @@ int	init_signal(void)
 	return (0);
 }
 
+int	process_line(t_data *data)
+{
+	data->prompt = readline("minishell>");
+	if (!data->prompt)
+		return (1);
+	add_history(data->prompt);
+	data->tokens = ft_lexer(data->prompt);
+	if (!data->tokens || parse(data))
+		return (1);
+	expand(data->tree, data->env->envtab);
+	data->err_code = exec(data);
+	exit_line(data, data->err_code);
+	return (0);
+}
+
 int	main(int ac, char *av[], char **env)
 {
 	t_data	*data;
+	int		exit;
 
 	if (ac != 1)
 		return (errnl(1, "Error : no arguments required"));
 	(void)av;
 	data = init_data(env);
-	init_signal();
 	if (!data)
 		return (-1);
-	while (1)
-	{
-		data->prompt = readline("minishell>");
-		if (!data->prompt)
-		{
-			printf("exit\n");
-			break ;
-		}
-		add_history(data->prompt);
-		data->tokens = ft_lexer(data->prompt);
-		parse(data);
-		expand(data->tree, data->env->envtab);
-		pretty_print_ast(data->tree, "");
-		data->err_code = exec(data);
-		exit_line(data, data->err_code);
-	}
+	init_signal();
+	exit = 0;
+	while (!exit)
+		exit = process_line(data);
 	return (exit_all(data, data->err_code));
 }
