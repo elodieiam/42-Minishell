@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/01 14:53:03 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/03 19:14:32 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,22 @@ void	check_file(t_data *data, char *file_path, char *cmd)
 		exit(exit_all(data, ferrnl(cmd, NULL, "Permission denied", 126)));
 }
 
-int	handle_child_sigs(int childval)
-{
-	if (WIFSIGNALED(childval))
-	{
-		if (WTERMSIG(childval) == SIGQUIT)
-			printf("Quit (core dumped)\n");
-		else if (WTERMSIG(childval)== SIGINT)
-			printf("\n");		
-		return (1);
-	}
-	return (0);
-}
-
-void sig_handler_child(int sig)
-{
-	(void)sig;
-}
-
-int	execute(t_data *data, t_node *node)
+int	child_exec(t_data *data, t_node *node)
 {
 	char	*cmd_path;
+
+	cmd_path = get_cmd_path(data, node->command->arguments[0]);
+	check_file(data, cmd_path, node->command->arguments[0]);
+	signal(SIGQUIT, sig_handler_child);
+	signal(SIGINT, sig_handler_child);
+	execve(cmd_path, node->command->arguments, data->env->envtab);
+	free(cmd_path);
+	return (exit_line(data, errnl(-1, "minishell: execve failed")));
+}
+
+//TODO : protect execute callers from execve fail
+int	execute(t_data *data, t_node *node)
+{
 	pid_t	pid;
 	pid_t	waitval;
 	int		childval;
@@ -95,13 +90,8 @@ int	execute(t_data *data, t_node *node)
 	signal(SIGINT, SIG_IGN);
 	if (!pid)
 	{
-		cmd_path = get_cmd_path(data, node->command->arguments[0]);
-		check_file(data, cmd_path, node->command->arguments[0]);
-		signal(SIGQUIT, sig_handler_child);
-		signal(SIGINT, sig_handler_child);
-		execve(cmd_path, node->command->arguments, data->env->envtab);
-		free(cmd_path);
-		exit(exit_line(data, errnl(-1, "minishell: execve failed")));
+		if (child_exec(data, node))
+			return (UNKNOWN_ERR);
 	}
 	waitval = waitpid(pid, &childval, 0);
 	if (waitval == -1)

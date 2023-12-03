@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/29 16:27:04 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/03 19:07:29 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,17 @@
 # define UNKNOWN_ERR 255
 
 extern unsigned char	g_err_code;
-
+/*---------------debug.c------------*/
 char	*tta(t_toktype int_type);
 void	pretty_print_ast(t_node *node, char *prefix);
 void	print_tokens(t_token *tokens);
 void	print_env_debug(char **env);
+
+/*---------------signals.c---------*/
+void	ft_handler(int signum);
+int		init_signal(void);
+int		handle_child_sigs(int childval);
+void	sig_handler_child(int sig);
+
 
 #endif

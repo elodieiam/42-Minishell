@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/03 13:55:41 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/03 19:05:34 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,6 @@ t_data	*init_data(char **env)
 	data->env->malloced = 0;
 	g_err_code = 0;
 	return (data);
-}
-
-void	ft_handler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-		g_err_code = 130;
-	}
-}
-
-int	init_signal(void)
-{
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, ft_handler);
-	return (0);
 }
 
 int	process_line(t_data *data)
