@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/27 15:09:50 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/03 13:54:24 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "structs.h"
 
 /*-------------------exec.c------------------*/
-int		exec(t_data *data);
+int		exec(t_data *data, t_node *node);
 int		exec_command(t_data *data, t_node *node);
 
 /*-------------------exit.c------------------*/

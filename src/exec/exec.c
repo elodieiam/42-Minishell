@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/29 16:28:23 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/03 14:00:14 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,32 @@ int	exec_command(t_data *data, t_node *node)
 	return (g_err_code);
 }
 
-int	exec(t_data *data)
+int	exec_or(t_data *data, t_node *tree)
 {
-	if (!data->tree)
+	if (exec(data, tree->operand->l_child))
+		return (exec(data, tree->operand->r_child));
+	return (g_err_code);
+}
+
+int	exec_and(t_data *data, t_node *tree)
+{
+	if (!exec(data, tree->operand->l_child))
+		return (exec(data, tree->operand->r_child));
+	return (g_err_code);
+}
+
+int	exec(t_data *data, t_node *node)
+{
+	if (!node)
 		return (g_err_code);
-	if (data->tree->is_command)
-		g_err_code = exec_command(data, data->tree);
+	if (node->is_command)
+		g_err_code = exec_command(data, node);
+	else
+	{
+		if (node->operand->optype == T_OR)
+			g_err_code = exec_or(data, node);
+		if (node->operand->optype == T_AND)
+			g_err_code = exec_and(data, node);
+	}
 	return (g_err_code);
 }

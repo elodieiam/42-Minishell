@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:12:40 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/01 14:03:07 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/03 13:20:08 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_node	*handleoperator(t_data *data)
 	}
 	op_node->operand->optype = data->tokens->type;
 	data->tokens = freengonextok(data->tokens);
-	// protect handlecommand
+	//TODO: protect handlecommand
 	op_node->operand->r_child = handlecommand(data);
 	return (op_node);
 }
@@ -44,8 +44,6 @@ int	add_pipenode(t_data *data, t_node *pipe_node)
 
 	if (!data->tree || data->tree->is_command || data->tree->subshell)
 		return (add_nodeontop(pipe_node, &(data->tree)), 0);
-	printf("i'm in add_pipenode\n");
-	fflush(stdout);
 	current_node = data->tree;
 	while (current_node->operand->r_child && \
 	!current_node->operand->r_child->is_command && \

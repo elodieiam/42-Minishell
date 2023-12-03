@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/01 13:39:28 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/03 13:26:29 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,7 @@ int	parse(t_data *data)
 				return (1);
 		}
 		else if (data->tokens->type == T_PIPE)
-		{
-			if (handlepipe(data))
-				return (1);
-		}
+			return (handlepipe(data));
 	}
 	return (0);
 }
