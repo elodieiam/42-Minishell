@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:42:46 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/04 16:16:27 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/05 00:07:40 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,96 @@ int	asterisk(char *file, char *exp)
 	return (0);
 }
 
-char	*expand_wildcard(char **tab)
+char	**sumtab(char **t1, char **t2)
+{
+	int		i;
+	int		j;
+	char	**res;
+
+	if (!t2)
+		return (free_dchartab(t1), NULL);
+	i = 0;
+	j = 0;
+	while (t1[i])
+		i++;
+	while (t2[j])
+		j++;
+	res = malloc(sizeof(char *) * (i + j + 1));
+	if (!res)
+		return (free_dchartab(t1), free_dchartab(t2), NULL);
+	i = -1;
+	j = -1;
+	while (t1[++i])
+		res[i] = t1[i];
+	while (t2[++j])
+		res[i + j] = t2[j];
+	res[i + j] = 0;
+	return (free(t1), free(t2), res);
+}
+
+char	**tab_addback(char **tab, char *new)
+{
+	int		i;
+	char	**res;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	res = malloc(sizeof(char *) * (i + 2));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (tab[i])
+	{
+		res[i] = ft_strdup(tab[i]);
+		if (!res[i])
+			return (free_dchartab(res), free_dchartab(tab), NULL);
+		i++;
+	}
+	res[i] = ft_strdup(new);
+	if (!res[i])
+		return (free_dchartab(res), free_dchartab(tab), NULL);
+	res[i + 1] = NULL;
+	free_dchartab(tab);
+	return (res);
+}
+
+char	**expand_wildcard(char *str)
 {
 	struct dirent	*dir;
-	char			*res;
+	char			**res;
 	DIR				*d;
 	int				i;
 
-	res = ft_strdup("");
+	i = 0;
+	d = opendir(".");
+	res = malloc(sizeof(char *) * 2);
 	if (!res)
 		return (NULL);
-	d = opendir(".");
-	if (!d)
+	res[0] = ft_strdup(str);
+	if (!res[0])
 		return (free(res), NULL);
+	res[1] = NULL;
+	if (!d)
+		return (NULL);
 	dir = readdir(d);
 	while (dir != NULL)
 	{
-		if ((dir->d_name[0] != '.' || tab[0][0] == '.') && asterisk(dir->d_name, str))
+		if ((dir->d_name[0] != '.' || str[0] == '.') && asterisk(dir->d_name, str))
 		{
-			res = ft_strjoin(res, " ");
-			res = ft_strjoin(res, dir->d_name);
+			if (i == 0)
+			{
+				free(res[0]);
+				res[0] = NULL;
+			}
+			res = tab_addback(res, dir->d_name);
 			if (!res)
-				return ((void)closedir(d), NULL);
+				return (NULL);
+			i++;
 		}
 		dir = readdir(d);
 	}
 	closedir(d);
+	// print_dchartab(res);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/04 14:20:06 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:55:34 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ extern unsigned char	g_err_code;
 char	*tta(t_toktype int_type);
 void	pretty_print_ast(t_node *node, char *prefix);
 void	print_tokens(t_token *tokens);
-void	print_env_debug(char **env);
+void	print_dchartab(char **tab);
 
 /*---------------signals.c---------*/
 void	ft_handler(int signum);

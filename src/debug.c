@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/28 14:16:38 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/05 00:18:49 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,11 @@ void	print_tokens(t_token *tokens)
 void	print_cmd(t_node *node, char *prefix)
 {
 	int			i;
+	int			j;
 	t_rdlist	*curr;
 
 	i = -1;
+	j = 0;
 	printf("%s├── Type: CMD\n", prefix);
 	printf("%s|   ├── Args: ", prefix);
 	while (node->command->arguments[++i])
@@ -69,7 +71,9 @@ void	print_cmd(t_node *node, char *prefix)
 	printf("\n%s|   ├── Redir: ", prefix);
 	while (curr)
 	{
-		printf("file : %s, type : %s,\t", curr->file, tta(curr->rdtype));
+		printf("type : %s :", tta(curr->rdtype));
+		while (curr->files[j])
+			printf("file : %s\t", curr->files[j++]);
 		curr = curr->next;
 	}
 	printf("\n");
@@ -107,17 +111,16 @@ void	pretty_print_ast(t_node *node, char *prefix)
 	free(new_prefix);
 }
 
-void	print_env_debug(char **env)
+void	print_dchartab(char **tab)
 {
 	int	i;
 
 	i = 0;
-	printf("env: %p\n", env);
-	if (!env)
+	if (!tab)
 		return ;
-	while (env[i])
+	while (tab[i])
 	{
-		printf("env[%d] = %s\n", i, env[i]);
+		printf("tab[%d] = %s\n", i, tab[i]);
 		i++;
 	}
 }

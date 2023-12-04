@@ -6,7 +6,7 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 17:27:32 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/30 15:59:19 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/05 00:19:33 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,13 @@ t_rdlist	*new_rd(t_toktype rd_type, char *file)
 	if (!new_rd)
 		return (NULL);
 	new_rd->next = NULL;
-	new_rd->file = ft_strdup(file);
-	if (!new_rd->file)
+	new_rd->files = malloc(sizeof(char *) * 2);
+	if (!new_rd->files)
 		return (free(new_rd), NULL);
+	new_rd->files[0] = ft_strdup(file);
+	new_rd->files[1] = NULL;
+	if (!new_rd->files[0])
+		return (free(new_rd), free(new_rd->files), NULL);
 	new_rd->rdtype = rd_type;
 	return (new_rd);
 }
@@ -53,7 +57,7 @@ void	free_rdlist(t_rdlist **list)
 	while (*list)
 	{
 		next_rd = (*list)->next;
-		free((*list)->file);
+		free_dchartab((*list)->files);
 		free(*list);
 		*list = next_rd;
 	}

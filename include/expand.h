@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:45 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/04 15:51:56 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/04 22:46:00 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ int		expand(t_node *node, char **env);
 
 /*------------exceptions.c------------*/
 char	*expand_exceptions(char *str, int *i);
-char	*expand_wildcard(char **tab);
+char	**expand_wildcard(char *str);
+char	**sumtab(char **t1, char **t2);
+char	**tab_addback(char **tab, char *new);
 
 /*-----------expand_utils.c-----------*/
 int		is_varsep(char c);
