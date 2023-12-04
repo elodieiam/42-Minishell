@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/03 19:07:29 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/04 14:20:06 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <stdio.h>
 # include <signal.h>
+# include <dirent.h>
 
 # include "../libft/libft.h"
 # include "parsing.h"

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/29 16:27:24 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/04 15:49:33 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_token
 
 typedef struct s_rdlist
 {
-	char			*file;
+	char			**files;
 	t_toktype		rdtype;
 	struct s_rdlist	*next;
 }	t_rdlist;

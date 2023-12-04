@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/01 17:23:39 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/04 16:16:29 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ int	exp_args(char **args, char **env)
 	i = 0;
 	while (args[i])
 	{
+		if (ft_strchr(args[i], '*'))
+		{
+			tmp = args[i];
+			args[i] = expand_wildcard(args[i]);
+			printf("files : %s\n", args[i]);
+			free(tmp);
+			if (!args[i])
+				return (MALLOC_ERR);
+		}
 		tmp = args[i];
 		args[i] = apply_exp(args[i], env);
 		free(tmp);
@@ -87,11 +96,20 @@ int	exp_rds(t_rdlist *rdlist, char **env)
 
 	while (rdlist)
 	{
-		tmp = rdlist->file;
-		rdlist->file = apply_exp(rdlist->file, env);
+		if (ft_strchr(rdlist->files, '*'))
+		{
+			tmp = rdlist->files;
+			rdlist->files = expand_wildcard(rdlist->files);
+			printf("files : %s\n", rdlist->files);
+			free(tmp);
+			if (!rdlist->files)
+				return (MALLOC_ERR);
+		}
+		tmp = rdlist->files;
+		rdlist->files = apply_exp(rdlist->files, env);
 		free(tmp);
-		if (!rdlist->file)
-			return (-1);
+		if (!rdlist->files)
+			return (MALLOC_ERR);
 		rdlist = rdlist->next;
 	}
 	return (0);
