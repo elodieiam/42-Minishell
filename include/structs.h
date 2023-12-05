@@ -6,24 +6,24 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/04 15:49:33 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/05 12:52:59 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+//operators 4
+//redirection 7
 typedef enum e_toktype
 {
 	T_START = 0,
 	T_WORD,
 	T_OPPAR,
 	T_CLPAR,
-//operators 4
 	T_PIPE,
 	T_OR,
 	T_AND,
-//redirection 7
 	T_OPCHEV,
 	T_CLCHEV,
 	T_DOPCHEV,
@@ -69,12 +69,12 @@ typedef struct s_node
 	int			subshell;
 	t_operand	*operand;
 	t_command	*command;
-} 	t_node;
+}	t_node;
 
 typedef struct s_data
 {
 	char			*prompt;
-	t_token 		*tokens;
+	t_token			*tokens;
 	t_node			*tree;
 	t_node			*tmp_tree;
 	t_env			*env;

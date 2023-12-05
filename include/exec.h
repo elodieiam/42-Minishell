@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/03 13:54:24 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/05 12:53:37 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int		exec_env(t_data *data);
 int		exec_cd(t_data *data, t_node *node);
 
 /*-------------------pwd.c-------------------*/
-int		exec_pwd(t_data *data, t_node * node);
+int		exec_pwd(t_data *data, t_node *node);
 
 /*-------------------unset.c--------------------*/
-int	exec_unset(t_data *data, char **args);
+int		exec_unset(t_data *data, char **args);
 
 #endif
