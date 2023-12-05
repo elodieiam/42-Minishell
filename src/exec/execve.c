@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/03 19:14:32 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/05 18:56:39 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,11 @@ int	execute(t_data *data, t_node *node)
 	signal(SIGINT, SIG_IGN);
 	if (!pid)
 	{
+		if (!node->command->arguments)
+		{
+			printf("only have redirections\n");
+		return (exit_line(data, errnl(-1, "redirects still trying")));
+		}
 		if (child_exec(data, node))
 			return (UNKNOWN_ERR);
 	}
