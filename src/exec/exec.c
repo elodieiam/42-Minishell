@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/03 14:00:14 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/05 14:40:47 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	srch_builtin(t_data *data, t_node *node)
 
 int	exec_command(t_data *data, t_node *node)
 {
-	if (!srch_builtin(data, node))
+	if (!export_lastarg(data, node) && !srch_builtin(data, node))
 		g_err_code = execute(data, node);
 	return (g_err_code);
 }

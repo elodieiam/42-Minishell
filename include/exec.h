@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/05 12:53:37 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/05 14:39:49 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	check_file(t_data *data, char *file_path, char *cmd);
 int		is_path(const char *str);
 char	*bettercat(char *s1, char *s2);
 void	free_dchartab(char **tab);
+int		export_lastarg(t_data *data, t_node *node);
 
 /*-------------------echo.c------------------*/
 int		exec_echo(t_node *node);
