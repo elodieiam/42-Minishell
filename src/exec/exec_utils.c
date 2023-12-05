@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 15:21:16 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/05 14:32:17 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:10:59 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ char	*bettercat(char *s1, char *s2)
 }
 
 // what if arg[0] == NULL ?
+// print error ? exit line ?
 int	export_lastarg(t_data *data, t_node *node)
 {
 	char	**tab;
 	int		cpt;
 
 	tab = ft_calloc(3, sizeof(char *));
-	// print error ? exit line ?
 	if (!tab)
 		return (MALLOC_ERR);
 	cpt = 0;

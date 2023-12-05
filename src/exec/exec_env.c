@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:45:59 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/04 12:57:14 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:10:26 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_printable(char *str)
 	int	i;
 
 	i = 0;
-	while(str[i] && str[i] != '=')
+	while (str[i] && str[i] != '=')
 		i++;
 	if (str[i] == '=')
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/05 15:59:19 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:09:44 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	increment_shlvl(t_data *data)
 
 	i = 0;
 	tab = ft_calloc(3, sizeof(char *));
-	while (data->env->envtab[i] &&\
+	while (data->env->envtab[i] && \
 			ft_strncmp(data->env->envtab[i], "SHLVL=", 6))
 		i++;
 	if (!data->env->envtab[i])
