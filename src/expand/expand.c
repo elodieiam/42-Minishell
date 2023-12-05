@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/01 17:23:39 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/05 00:19:44 by taospa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ char	*apply_exp(char *str, char **env)
 	char	*tmp;
 	int		i;
 
+	if (!str)
+		return (NULL);
 	res = ft_strdup("");
 	if (!res)
-		return (NULL);
+		return (free(str), NULL);
 	i = 0;
 	while (str[i])
 	{
@@ -57,23 +59,30 @@ char	*apply_exp(char *str, char **env)
 		res = getnvarvar(res, str, &i, env);
 		free(tmp);
 		if (!res)
-			return (NULL);
+			return (free(str), NULL);
 	}
-	return (res);
+	return (free(str), res);
 }
 
-int	exp_args(char **args, char **env)
+int	exp_args(char ***args, char **env)
 {
 	int		i;
-	char	*tmp;
+	char	**tmp;
 
 	i = 0;
-	while (args[i])
+	while ((*args)[i])
 	{
-		tmp = args[i];
-		args[i] = apply_exp(args[i], env);
-		free(tmp);
-		if (!args[i])
+		if (ft_strchr((*args)[i], '*'))
+		{
+			tmp = expand_wildcard((*args)[i]);
+			free((*args)[i]);
+			(*args)[i] = 0;
+			(*args) = sumtab((*args), tmp);
+			if (!(*args))
+				return (MALLOC_ERR);
+		}
+		(*args)[i] = apply_exp((*args)[i], env);
+		if (!(*args)[i])
 			return (-1);
 		i++;
 	}
@@ -83,15 +92,21 @@ int	exp_args(char **args, char **env)
 //care if malloc fails
 int	exp_rds(t_rdlist *rdlist, char **env)
 {
-	char	*tmp;
+	char	**tmp;
 
 	while (rdlist)
 	{
-		tmp = rdlist->file;
-		rdlist->file = apply_exp(rdlist->file, env);
-		free(tmp);
-		if (!rdlist->file)
-			return (-1);
+		if (ft_strchr(rdlist->files[0], '*'))
+		{
+			tmp = rdlist->files;
+			rdlist->files = expand_wildcard(rdlist->files[0]);
+			free_dchartab(tmp);
+			if (!rdlist->files)
+				return (MALLOC_ERR);
+		}
+		rdlist->files[0] = apply_exp(rdlist->files[0], env);
+		if (!rdlist->files[0])
+			return (MALLOC_ERR);
 		rdlist = rdlist->next;
 	}
 	return (0);
@@ -104,7 +119,7 @@ int	expand(t_node *node, char **env)
 	if (!node->is_command && node->operand)
 		return (expand(node->operand->l_child, env)
 			+ expand(node->operand->r_child, env));
-	if (exp_args(node->command->arguments, env)
+	if (exp_args(&node->command->arguments, env)
 		|| exp_rds(node->command->redirects, env))
 		return (-1);
 	return (0);

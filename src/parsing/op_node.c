@@ -6,12 +6,13 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:12:40 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/03 13:20:08 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/05 12:51:05 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+//TODO: protect handlecommand
 t_node	*handleoperator(t_data *data)
 {
 	t_node	*op_node;
@@ -33,7 +34,6 @@ t_node	*handleoperator(t_data *data)
 	}
 	op_node->operand->optype = data->tokens->type;
 	data->tokens = freengonextok(data->tokens);
-	//TODO: protect handlecommand
 	op_node->operand->r_child = handlecommand(data);
 	return (op_node);
 }
@@ -54,6 +54,7 @@ int	add_pipenode(t_data *data, t_node *pipe_node)
 	return (0);
 }
 
+//TODO: protect handlecommand
 int	handlepipe(t_data *data)
 {
 	t_node	*pipe_node;
@@ -73,7 +74,6 @@ int	handlepipe(t_data *data)
 	}
 	pipe_node->operand->optype = data->tokens->type;
 	data->tokens = freengonextok(data->tokens);
-	// protect handlecommand
 	pipe_node->operand->r_child = handlecommand(data);
 	if (!pipe_node->operand->r_child)
 	{

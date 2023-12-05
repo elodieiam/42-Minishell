@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/03 19:07:29 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/05 12:54:09 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <stdio.h>
 # include <signal.h>
+# include <dirent.h>
 
 # include "../libft/libft.h"
 # include "parsing.h"
@@ -37,17 +38,17 @@
 # define UNKNOWN_ERR 255
 
 extern unsigned char	g_err_code;
+
 /*---------------debug.c------------*/
 char	*tta(t_toktype int_type);
 void	pretty_print_ast(t_node *node, char *prefix);
 void	print_tokens(t_token *tokens);
-void	print_env_debug(char **env);
+void	print_dchartab(char **tab);
 
 /*---------------signals.c---------*/
 void	ft_handler(int signum);
 int		init_signal(void);
 int		handle_child_sigs(int childval);
 void	sig_handler_child(int sig);
-
 
 #endif
