@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/05 00:27:14 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/05 15:59:19 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,33 @@ int	process_line(t_data *data)
 	return (0);
 }
 
+int	increment_shlvl(t_data *data)
+{
+	int		i;
+	char	*currlvl;
+	char	**tab;
+
+	i = 0;
+	tab = ft_calloc(3, sizeof(char *));
+	while (data->env->envtab[i] &&\
+			ft_strncmp(data->env->envtab[i], "SHLVL=", 6))
+		i++;
+	if (!data->env->envtab[i])
+		currlvl = ft_strdup("1");
+	else
+		currlvl = ft_itoa(ft_atoi(&(data->env->envtab[i][6])) + 1);
+	if (!currlvl)
+		return (free(tab), MALLOC_ERR);
+	tab[1] = ft_strjoin("SHLVL=", currlvl);
+	free(currlvl);
+	if (!tab[1])
+		return (free(tab), MALLOC_ERR);
+	g_err_code = exec_export(data, tab);
+	free(tab[1]);
+	free(tab);
+	return (g_err_code);
+}
+
 int	main(int ac, char *av[], char **env)
 {
 	t_data	*data;
@@ -63,6 +90,8 @@ int	main(int ac, char *av[], char **env)
 		return (-1);
 	init_signal();
 	exit = 0;
+	if (increment_shlvl(data))
+		return (exit_line(data, g_err_code));
 	while (!exit)
 		exit = process_line(data);
 	printf("exit\n");
