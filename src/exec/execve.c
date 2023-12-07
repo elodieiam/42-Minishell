@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/07 15:42:57 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:46:13 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,14 @@ int	execute(t_data *data, t_node *node)
 	pid_t	pid;
 	pid_t	waitval;
 	int		childval;
+	int		red;
 
 	childval = 0;
 	waitval = 0;
-	if (handle_redirections(data, node))
+	red = handle_redirections(data, node);
+	if (red == 1)
 		return (UNKNOWN_ERR);
-	else
+	else if (red == 0)
 		return (0);
 	pid = fork();
 	if (pid == -1)

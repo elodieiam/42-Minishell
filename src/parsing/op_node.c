@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_node.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:12:40 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/05 17:48:48 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:53:19 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_node	*handleoperator(t_data *data)
 
 	if (!data || !data->tokens)
 		return (NULL);
-	if (!data->tokens->next || data->tokens->next->type > 3)
+	if (!data->tokens->next || (data->tokens->next->type > 3
+			&& data->tokens->next->type < 8))
 	{
 		exit_line(data, errnl(2,
 				"syntax error : wrong argument after operator"));

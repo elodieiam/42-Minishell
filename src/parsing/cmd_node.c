@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/05 19:05:43 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:50:17 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,13 @@ t_node	*init_cmd_node(t_token **tokens, int malloc_size, int indicator)
 	{
 		free(res->command->arguments);
 		res->command->arguments = NULL;
-		while ((*tokens) && (*tokens)->type != T_PIPE && (*tokens)->type != T_CLPAR
+	}
+	while ((*tokens) && (*tokens)->type != T_PIPE && (*tokens)->type != T_CLPAR
 		&& (*tokens)->type != T_OR && (*tokens)->type != T_AND)
 		if (!fill_cmd_node(tokens, res, &arg_cpt))
 			return (NULL);
-	}
-	else
-	{
-		while ((*tokens) && (*tokens)->type != T_PIPE && (*tokens)->type != T_CLPAR
-			&& (*tokens)->type != T_OR && (*tokens)->type != T_AND)
-			if (!fill_cmd_node(tokens, res, &arg_cpt))
-				return (NULL);
+	if (indicator == 0)
 		res->command->arguments[arg_cpt] = NULL;
-			
-	}
 	return (res);
 }
 
@@ -96,7 +89,7 @@ t_node	*handlecommand(t_data *data)
 	indicator = 0;
 	if (curr && curr->type == T_OPPAR)
 		return (handlepar(data));
-	if (curr && (curr->type >= 7 && curr->type <= 10))
+	if (curr && (curr->type >= 8 && curr->type <= 10))
 		indicator = 1;
 	while (curr && curr->type != T_PIPE && data->tokens->type != T_CLPAR
 		&& curr->type != T_OR && curr->type != T_AND)
