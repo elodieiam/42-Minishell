@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/07 15:39:04 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/07 20:36:31 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		exec_exit(t_data *data, t_node *node);
 /*------------------execve.c-----------------*/
 int		execute(t_data *data, t_node *node);
 void	check_file(t_data *data, char *file_path, char *cmd);
-
+char	*get_cmd_path(t_data *data, char *command);
 /*----------------exec_utils.c---------------*/
 int		is_path(const char *str);
 char	*bettercat(char *s1, char *s2);

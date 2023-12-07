@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/07 16:50:17 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/07 19:10:11 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ t_node	*handlecommand(t_data *data)
 		else if (curr->type > 6 && curr->type < 11)
 		{
 			if (!curr->next || (curr->next && curr->next->type != T_WORD))
-				exit_line(data,
-					errnl(2, "syntax error, no file after redirection"));
+				return (exit_line(data,
+					errnl(2, "syntax error, no file after redirection")), NULL);
 			curr = curr->next;
 		}
 		curr = curr->next;

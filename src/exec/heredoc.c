@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/07 15:40:05 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/07 20:53:22 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	exec_simple_heredoc(char *lim)
 			free (line);
 			break ;
 		}
+		write(fd, line, ft_strlen(line));
 		free (line);
 	}
 	close(fd);
