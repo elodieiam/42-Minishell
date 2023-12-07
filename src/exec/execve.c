@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/05 18:56:39 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:41:14 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,44 @@ int	child_exec(t_data *data, t_node *node)
 	return (exit_line(data, errnl(-1, "minishell: execve failed")));
 }
 
+int	exec_heredoc(char *lim)
+{
+	int		fd;
+	int		i;
+	char	*buff;
+
+	buff = malloc(sizeof(char) * ft_strlen(lim) + 1);
+	if (!buff)
+		return (1);
+	fd = open("Heredoc", O_CREAT | O_WRONLY, 0700);
+	if (fd == (-1))
+		return (1);
+	i = read(0, buff, ft_strlen(lim));
+	if (i < 0)
+		return (close(fd), free(buff), 1);
+	while (i > 0 && strncmp(buff, lim, ft_strlen(lim)))
+	{
+		write(fd, buff, ft_strlen(lim));
+		i = read(0, buff, ft_strlen(lim));
+		if (i < 0)
+			return (close(fd), free(buff), 1);
+		buff[i] = '\0';
+	}
+	close(fd);
+	unlink("Heredoc");
+	free(buff);
+	return (0);
+}
+
+int	only_red_exec(t_node *node)
+{
+	if (node->command->redirects->rdtype == 9
+		&& node->command->redirects->files[0])
+		if (exec_heredoc(node->command->redirects->files[0]))
+			return (1);
+	return (0);
+}
+
 //TODO : protect execute callers from execve fail
 int	execute(t_data *data, t_node *node)
 {
@@ -90,13 +128,21 @@ int	execute(t_data *data, t_node *node)
 	signal(SIGINT, SIG_IGN);
 	if (!pid)
 	{
-		if (!node->command->arguments)
+		if (node->command->arguments && !node->command->redirects)
 		{
-			printf("only have redirections\n");
-		return (exit_line(data, errnl(-1, "redirects still trying")));
+			if (child_exec(data, node))
+				return (UNKNOWN_ERR);
 		}
-		if (child_exec(data, node))
-			return (UNKNOWN_ERR);
+		if (node->command->redirects)
+		{
+			if (!node->command->arguments)
+			{
+				if (only_red_exec(node))
+					return (UNKNOWN_ERR);
+				else
+					return (printf("worked\n"), UNKNOWN_ERR);
+			}
+		}
 	}
 	waitval = waitpid(pid, &childval, 0);
 	if (waitval == -1)
