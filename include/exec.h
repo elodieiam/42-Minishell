@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/05 14:39:49 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:39:04 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,11 @@ int		exec_pwd(t_data *data, t_node *node);
 
 /*-------------------unset.c--------------------*/
 int		exec_unset(t_data *data, char **args);
+
+/*-------------------heredoc.c--------------------*/
+int		exec_simple_heredoc(char *lim);
+
+/*-------------------redirections.c--------------------*/
+int		handle_redirections(t_data *data, t_node *node);
 
 #endif

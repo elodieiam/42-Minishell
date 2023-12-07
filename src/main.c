@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/07 11:41:50 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:37:03 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	process_line(t_data *data)
 	if (!data->tokens || parse(data))
 		return (1);
 	expand(data->tree, data->env->envtab);
-	//pretty_print_ast(data->tree, "");
 	g_err_code = exec(data, data->tree);
 	exit_line(data, g_err_code);
 	return (0);
