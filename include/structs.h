@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/08 18:16:06 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:44:37 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_rdlist
 {
 	char			**files;
 	int				fd;
+	char			*heredoc_name;
 	t_toktype		rdtype;
 	struct s_rdlist	*next;
 }	t_rdlist;

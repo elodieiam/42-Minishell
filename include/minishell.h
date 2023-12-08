@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/05 12:54:09 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:32:11 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define UNKNOWN_ERR 255
 
 extern unsigned char	g_err_code;
+
+int	check_heredoc(t_data *data, t_node *node);
 
 /*---------------debug.c------------*/
 char	*tta(t_toktype int_type);

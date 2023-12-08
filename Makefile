@@ -4,7 +4,7 @@ SRC_DIR	=	src
 
 SRC		=	main.c signals.c \
 			lexer/lexer.c lexer/lexer_utils.c lexer/tokens.c lexer/free_lexer.c \
-			parsing/parsing.c parsing/tree.c parsing/cmd_node.c parsing/rdlist.c parsing/op_node.c \
+			parsing/parsing.c parsing/tree.c parsing/cmd_node.c parsing/rdlist.c parsing/op_node.c parsing/heredoc_parsing.c \
 			parsing/parenthesis.c \
 			exit/exit_line.c \
 			exec/exec.c exec/execve.c exec/exec_utils.c exec/exec_env.c exec/heredoc.c exec/redirections.c\
