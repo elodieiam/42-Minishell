@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rdlist.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 17:27:32 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/05 00:19:33 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/08 18:17:14 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_rdlist	*new_rd(t_toktype rd_type, char *file)
 	if (!new_rd->files[0])
 		return (free(new_rd), free(new_rd->files), NULL);
 	new_rd->rdtype = rd_type;
+	new_rd->fd = -1;
 	return (new_rd);
 }
 

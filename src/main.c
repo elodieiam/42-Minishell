@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/07 20:38:19 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/08 18:30:42 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_data	*init_data(char **env)
 	g_err_code = 0;
 	return (data);
 }
+
 
 int	process_line(t_data *data)
 {
