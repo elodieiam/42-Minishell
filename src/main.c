@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/08 21:10:37 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:22:11 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	process_line(t_data *data)
 		return (1);
 	expand(data->tree, data->env->envtab);
 	//pretty_print_ast(data->tree, "");
-	check_heredoc(data, data->tree);
+	if (check_heredoc(data, data->tree))
+		return (0);
 	g_err_code = exec(data, data->tree);
 	exit_line(data, g_err_code);
 	return (0);

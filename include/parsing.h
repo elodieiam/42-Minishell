@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:28:57 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/08 21:11:20 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/09 21:52:55 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,7 @@ t_node		*handlepar(t_data *data);
 /*--------------heredoc_parsing.c-------------*/
 int			check_heredoc(t_data *data, t_node *node);
 
+/*--------------heredoc_parsing2.c-------------*/
+char		*get_heredoc_name(void);
+int			exit_heredoc(t_data *data, t_node *node, int fd);
 #endif

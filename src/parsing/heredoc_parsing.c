@@ -6,55 +6,89 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 21:09:32 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/08 21:23:48 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/09 21:51:47 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*get_heredoc_name(void)
+void	ft_handler_heredoc(int signum)
 {
-	static int	i;
-	char		*heredoc_number;
-	char		*heredoc_name;
-
-	heredoc_number = ft_itoa(i++);
-	heredoc_name = ft_strjoin(".tmp_heredoc_", heredoc_number);
-	free (heredoc_number);
-	return (heredoc_name);
+	(void)signum;
+	if (signum == SIGINT)
+	{
+		printf("Je suis sigint\n");
+		g_err_code = 130;
+	}
 }
 
-int	check_heredoc2(t_node *node)
+int	handle_heredoc_sigs(int childval)
 {
-	char	*lim;
-	int		fd;
+	if (WIFSIGNALED(childval))
+	{
+		if (WTERMSIG(childval) == SIGINT)
+		{
+			g_err_code = 130;
+		}
+			return (1);
+	}
+	return (0);
+}
+
+int	check_heredoc2(t_data *data, t_node *node, int fd)
+{
+	int		pid;
+	int		childval;
 	char	*line;
 	char	*res;
+	char	*lim;
 
-	lim = node->command->redirects->files[0];
+	childval = 0;
+	line = NULL;
+	res = NULL;
+	if (!node->command->redirects)
+		return (0);
 	if (node->command->redirects->rdtype == 9)
 	{
-		node->command->redirects->heredoc_name = get_heredoc_name();
-		line = NULL;
+		lim = node->command->redirects->files[0];
+		pid = fork();
+		if (pid == (-1))
+			return (1);
+		signal(SIGINT, SIG_IGN);
+		if (pid == 0)
+		{
+			node->command->redirects->heredoc_name = get_heredoc_name();
 		fd = open(node->command->redirects->heredoc_name,
 				O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if (fd == (-1))
-			return (1);
-		node->command->redirects->fd = fd;
-		while (1)
-		{
-			line = readline("> ");
-			if (!ft_strncmp(line, lim, ft_strlen(lim) + 1))
-			{
-				free (line);
-				break ;
-			}
-			res = ft_strjoin(line, "\n");
-			if (!res)
+			if (fd == (-1))
 				return (1);
-			write(fd, res, ft_strlen(res));
-			free (line);
-			free (res);
+			signal(SIGINT, SIG_DFL);
+			while (1)
+			{
+				line = readline("> ");
+				if (!line)
+					return (exit_heredoc(data, node, fd));
+				if (!ft_strncmp(line, lim, ft_strlen(lim) + 1))
+				{
+					free (line);
+					break ;
+				}
+				res = ft_strjoin(line, "\n");
+				if (!res)
+					return (1);
+				write(fd, res, ft_strlen(res));
+				free (line);
+				free (res);
+				free(node->command->redirects->heredoc_name);
+			}
+			return (exit_all(data, g_err_code));
+		}
+		waitpid(pid, &childval, 0);
+		if (handle_heredoc_sigs(childval))
+		{
+			close(fd);
+			unlink(node->command->redirects->heredoc_name);
+			return (WTERMSIG(childval) + 128);
 		}
 	}
 	return (0);
@@ -77,7 +111,7 @@ int	do_and(t_data *data, t_node *tree)
 int	check_heredoc(t_data *data, t_node *node)
 {
 	if (node->is_command)
-		g_err_code = check_heredoc2(node);
+		g_err_code = check_heredoc2(data, node, node->command->redirects->fd);
 	else
 	{
 		if (node->operand->optype == T_OR)
