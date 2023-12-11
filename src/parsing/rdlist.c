@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 17:27:32 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/11 11:57:44 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/11 19:02:18 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_rdlist	*new_rd(t_toktype rd_type, char *file)
 	new_rd->files[0] = ft_strdup(file);
 	new_rd->files[1] = NULL;
 	if (!new_rd->files[0])
-		return (free(new_rd), free(new_rd->files), NULL);
+		return (free(new_rd->files), free(new_rd), NULL);
 	new_rd->rdtype = rd_type;
 	new_rd->heredoc_name = NULL;
 	new_rd->fd = -1;

@@ -6,19 +6,19 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/11 14:37:36 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/11 19:01:16 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <linux/limits.h>
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <string.h>
-# include <stdio.h>
 # include <signal.h>
 # include <dirent.h>
 

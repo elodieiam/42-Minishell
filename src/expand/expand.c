@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/05 18:50:09 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/11 19:03:18 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*getnvarvar(char *res, char *str, int *i, char **env)
 	res = ft_strjoin(res, str_to_join);
 	free(str_to_join);
 	if (!res)
-		return (free(str_to_join), NULL);
+		return (NULL);
 	if (quote != 39)
 	{
 		str_to_join = get_varstr(str, i, env);
