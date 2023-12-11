@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 17:27:32 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/08 20:45:05 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/11 11:57:44 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	free_rdlist(t_rdlist **list)
 	{
 		next_rd = (*list)->next;
 		free_dchartab((*list)->files);
+		if ((*list)->heredoc_name)
+			free((*list)->heredoc_name);
 		free(*list);
 		*list = next_rd;
 	}

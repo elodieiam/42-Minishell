@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/08 21:17:50 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:06:07 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,76 @@ int	exec_child_heredoc(t_data *data, t_node *node)
 		return (exit_line(data, errnl(-1, "minishell: execve failed")));
 	}
 	waitpid(pid, NULL, 0);
-	close(fd);
-	unlink(node->command->redirects->heredoc_name);
-	free(node->command->redirects->heredoc_name);
+	return (close(fd), unlink(node->command->redirects->heredoc_name), 0);
+}
+
+int	child_process(t_node *node, t_data *data, char *lim)
+{
+	char	*line;
+	char	*res;
+
+	line = NULL;
+	res = NULL;
+	while (1)
+	{
+		line = readline("> ");
+		if (g_err_code == 130)
+			break ;
+		if (!line)
+			return (exit_heredoc(node));
+		if (!ft_strncmp(line, lim, ft_strlen(lim) + 1))
+		{
+			free (line);
+			break ;
+		}
+		res = ft_strjoin(line, "\n");
+		if (!res)
+			return (free(line), MALLOC_ERR);
+		write(node->command->redirects->fd, res, ft_strlen(res));
+		free (line);
+		free (res);
+	}
+	return (close(node->command->redirects->fd), exit_all(data, g_err_code));
+}
+
+int	open_heredoc(t_data *data, t_node *node)
+{
+	int		pid;
+	int		childval;
+
+	childval = 0;
+	node->command->redirects->heredoc_name = get_heredoc_name();
+	node->command->redirects->fd = open(node->command->redirects->heredoc_name,
+			O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (node->command->redirects->fd == (-1))
+		return (UNKNOWN_ERR);
+	pid = fork();
+	if (pid == (-1))
+		return (UNKNOWN_ERR);
+	signal(SIGINT, SIG_IGN);
+	if (pid == 0)
+	{
+		signal(SIGINT, ft_handler_heredoc);
+		return (child_process(node, data, node->command->redirects->files[0]));
+	}
+	waitpid(pid, &childval, 0);
+	if (WEXITSTATUS(childval) == 130)
+	{
+		close(node->command->redirects->fd);
+		return (unlink(node->command->redirects->heredoc_name), SIGINT_ERR);
+	}
 	return (0);
 }
 
-int	exec_heredoc_and_command(t_node *node, t_data *data)
+int	open_heredocs(t_data *data, t_node *node)
 {
-	close(node->command->redirects->fd);
-	if (exec_child_heredoc(data, node))
-		return (1);
-	return (0);
-}
-
-int	exec_simple_heredoc(t_node *node)
-{
-	close(node->command->redirects->fd);
-	unlink(node->command->redirects->heredoc_name);
-	free(node->command->redirects->heredoc_name);
+	if (node->is_command && node->command->redirects
+		&& node->command->redirects->rdtype == 9)
+		g_err_code = open_heredoc(data, node);
+	else if (!node->is_command)
+	{
+		open_heredocs(data, node->operand->l_child);
+		open_heredocs(data, node->operand->r_child);
+	}
 	return (0);
 }

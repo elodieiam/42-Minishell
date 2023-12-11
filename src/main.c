@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/11 11:21:10 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:07:50 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_data	*init_data(char **env)
 	return (data);
 }
 
+//TODO: move heredocs to exec
 int	process_line(t_data *data)
 {
 	signal(SIGINT, ft_handler);
@@ -42,11 +43,10 @@ int	process_line(t_data *data)
 		return (1);
 	add_history(data->prompt);
 	data->tokens = ft_lexer(data->prompt);
-	if (!data->tokens || parse(data))
-		return (1);
+	parse(data);
 	expand(data->tree, data->env->envtab);
 	//pretty_print_ast(data->tree, "");
-	if (check_heredoc(data, data->tree))
+	if (open_heredocs(data, data->tree))
 		return (0);
 	g_err_code = exec(data, data->tree);
 	exit_line(data, g_err_code);
@@ -83,6 +83,8 @@ int	increment_shlvl(t_data *data)
 int	main(int ac, char *av[], char **env)
 {
 	t_data	*data;
+	int		exit;
+
 	if (ac != 1)
 		return (errnl(1, "Error : no arguments required"));
 	(void)av;
@@ -92,8 +94,9 @@ int	main(int ac, char *av[], char **env)
 	init_signal();
 	if (increment_shlvl(data))
 		return (exit_line(data, g_err_code));
-	while (1)
-		process_line(data);
+	exit = 0;
+	while (!exit)
+		exit = process_line(data);
 	printf("exit\n");
 	return (exit_all(data, g_err_code));
 }

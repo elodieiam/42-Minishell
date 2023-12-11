@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_parsing2.c                                 :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/09 21:20:57 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/09 21:51:52 by elrichar         ###   ########.fr       */
+/*   Created: 2023/12/11 14:35:58 by elrichar          #+#    #+#             */
+/*   Updated: 2023/12/11 14:36:07 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ char	*get_heredoc_name(void)
 	return (heredoc_name);
 }
 
-int	exit_heredoc(t_data *data, t_node *node, int fd)
+int	exit_heredoc(t_node *node)
 {
 	printf("minishell: warning: heredoc delimited by EOF\n");
-	close(fd);
+	close(node->command->redirects->fd);
 	unlink(node->command->redirects->heredoc_name);
-	free(node->command->redirects->heredoc_name);
-	return (exit_all(data, g_err_code));
+	return (0);
 }
-
