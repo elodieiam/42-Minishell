@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/11 14:36:46 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:16:07 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ int		handle_redirections(t_data *data, t_node *node);
 
 /*-------------------heredoc_utils.c--------------------*/
 char	*get_heredoc_name(void);
-int		exit_heredoc(t_node *node);
+void	exit_heredoc(t_node *node);
 
 #endif
