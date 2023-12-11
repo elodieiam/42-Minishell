@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 19:02:42 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/03 19:05:30 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/11 14:34:19 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	ft_handler_heredoc(int signum)
+{
+	if (signum == SIGINT)
+	{
+		close(0);
+		printf("\n");
+		g_err_code = 130;
+	}
+}
 
 void	ft_handler(int signum)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/05 00:19:44 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/05 18:50:09 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	exp_args(char ***args, char **env)
 	char	**tmp;
 
 	i = 0;
+	if (!(*args))
+		return (0);
 	while ((*args)[i])
 	{
 		if (ft_strchr((*args)[i], '*'))

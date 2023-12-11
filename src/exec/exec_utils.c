@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 15:21:16 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/05 16:10:59 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/05 19:00:20 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	export_lastarg(t_data *data, t_node *node)
 	char	**tab;
 	int		cpt;
 
+	if (!node->command->arguments)
+		return (g_err_code);
 	tab = ft_calloc(3, sizeof(char *));
 	if (!tab)
 		return (MALLOC_ERR);

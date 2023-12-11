@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/05 12:54:09 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:37:36 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 # define SYNTAX_ERR 2
 # define MALLOC_ERR 125
 # define PERM_ERR 126
-# define NOTFOUND_ERROR 127
-# define SIGINT_ERR 128
+# define NOTFOUND_ERR 127
+# define SIGINT_ERR 130
 # define UNKNOWN_ERR 255
 
 extern unsigned char	g_err_code;
@@ -50,5 +50,6 @@ void	ft_handler(int signum);
 int		init_signal(void);
 int		handle_child_sigs(int childval);
 void	sig_handler_child(int sig);
+void	ft_handler_heredoc(int signum);
 
 #endif

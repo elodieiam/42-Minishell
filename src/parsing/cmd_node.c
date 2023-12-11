@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/01 13:58:58 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/11 15:07:23 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_node	*fill_cmd_node(t_token **token, t_node *res, int *arg_cpt)
 	return (res);
 }
 
-t_node	*init_cmd_node(t_token **tokens, int malloc_size)
+t_node	*init_cmd_node(t_token **tokens, int malloc_size, int indicator)
 {
 	t_node	*res;
 	int		arg_cpt;
@@ -64,11 +64,17 @@ t_node	*init_cmd_node(t_token **tokens, int malloc_size)
 	res->command->arguments = malloc(malloc_size * sizeof(char *));
 	if (!res->command->arguments)
 		return (NULL);
+	if (indicator == 1)
+	{
+		free(res->command->arguments);
+		res->command->arguments = NULL;
+	}
 	while ((*tokens) && (*tokens)->type != T_PIPE && (*tokens)->type != T_CLPAR
 		&& (*tokens)->type != T_OR && (*tokens)->type != T_AND)
 		if (!fill_cmd_node(tokens, res, &arg_cpt))
 			return (NULL);
-	res->command->arguments[arg_cpt] = NULL;
+	if (indicator == 0)
+		res->command->arguments[arg_cpt] = NULL;
 	return (res);
 }
 
@@ -76,11 +82,15 @@ t_node	*handlecommand(t_data *data)
 {
 	t_token	*curr;
 	int		malloc_size;
+	int		indicator;
 
 	curr = data->tokens;
 	malloc_size = 0;
+	indicator = 0;
 	if (curr && curr->type == T_OPPAR)
 		return (handlepar(data));
+	if (curr && (curr->type >= 8 && curr->type <= 10))
+		indicator = 1;
 	while (curr && curr->type != T_PIPE && data->tokens->type != T_CLPAR
 		&& curr->type != T_OR && curr->type != T_AND)
 	{
@@ -89,11 +99,11 @@ t_node	*handlecommand(t_data *data)
 		else if (curr->type > 6 && curr->type < 11)
 		{
 			if (!curr->next || (curr->next && curr->next->type != T_WORD))
-				exit_line(data,
-					errnl(2, "syntax error, no file after redirection"));
+				return (exit_line(data,
+						errnl(2, "syntax error, no file after redirection")), NULL);
 			curr = curr->next;
 		}
 		curr = curr->next;
 	}
-	return (init_cmd_node(&(data->tokens), ++malloc_size));
+	return (init_cmd_node(&(data->tokens), ++malloc_size, indicator));
 }

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/05 14:39:49 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:36:46 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		exec_exit(t_data *data, t_node *node);
 /*------------------execve.c-----------------*/
 int		execute(t_data *data, t_node *node);
 void	check_file(t_data *data, char *file_path, char *cmd);
-
+char	*get_cmd_path(t_data *data, char *command);
 /*----------------exec_utils.c---------------*/
 int		is_path(const char *str);
 char	*bettercat(char *s1, char *s2);
@@ -58,5 +58,16 @@ int		exec_pwd(t_data *data, t_node *node);
 
 /*-------------------unset.c--------------------*/
 int		exec_unset(t_data *data, char **args);
+
+/*-------------------heredoc.c--------------------*/
+int		exec_child_heredoc(t_data *data, t_node *node);
+int		open_heredocs(t_data *data, t_node *node);
+
+/*-------------------redirections.c--------------------*/
+int		handle_redirections(t_data *data, t_node *node);
+
+/*-------------------heredoc_utils.c--------------------*/
+char	*get_heredoc_name(void);
+int		exit_heredoc(t_node *node);
 
 #endif

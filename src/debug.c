@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/05 00:18:49 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/05 18:53:36 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,13 @@ void	print_cmd(t_node *node, char *prefix)
 	j = 0;
 	printf("%s├── Type: CMD\n", prefix);
 	printf("%s|   ├── Args: ", prefix);
-	while (node->command->arguments[++i])
-		printf("%s, ", node->command->arguments[i]);
+	if (!node->command->arguments)
+		printf("NO CMD");
+	else
+	{
+		while (node->command->arguments[++i])
+		printf("%s, ", node->command->arguments[i]);	
+	}
 	curr = node->command->redirects;
 	printf("\n%s|   ├── Redir: ", prefix);
 	while (curr)
