@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/08 15:21:21 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/11 19:24:34 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,32 +79,25 @@ int	child_exec(t_data *data, t_node *node)
 int	execute(t_data *data, t_node *node)
 {
 	pid_t	pid;
-	pid_t	waitval;
 	int		childval;
 	int		red;
 
 	childval = 0;
-	waitval = 0;
 	red = handle_redirections(data, node);
 	if (red == 1)
 		return (UNKNOWN_ERR);
 	else if (red == 0)
 		return (0);
-	else
-	{
-		pid = fork();
-		if (pid == -1)
-			return (exit_line(data, errnl(-1, "minishell: fork failed")));
-		signal(SIGINT, SIG_IGN);
-		if (!pid)
-			if (child_exec(data, node))
-				return (UNKNOWN_ERR);
-		waitval = waitpid(pid, &childval, 0);
-		if (waitval == -1)
-			return (exit_line(data, errnl(-1, "minishell: waitpid failed")));
-		if (handle_child_sigs(childval))
-			return (WTERMSIG(childval) + 128);
-		return (WEXITSTATUS(childval));
-	}
-	return (0);
+	pid = fork();
+	if (pid == -1)
+		return (exit_line(data, errnl(-1, "minishell: fork failed")));
+	signal(SIGINT, SIG_IGN);
+	if (!pid)
+		if (child_exec(data, node))
+			return (UNKNOWN_ERR);
+	if (waitpid(pid, &childval, 0) == -1)
+		return (exit_line(data, errnl(-1, "minishell: waitpid failed")));
+	if (handle_child_sigs(childval))
+		return (WTERMSIG(childval) + 128);
+	return (WEXITSTATUS(childval));
 }

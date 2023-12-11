@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/11 15:07:23 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/11 19:31:33 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,16 +91,15 @@ t_node	*handlecommand(t_data *data)
 		return (handlepar(data));
 	if (curr && (curr->type >= 8 && curr->type <= 10))
 		indicator = 1;
-	while (curr && curr->type != T_PIPE && data->tokens->type != T_CLPAR
-		&& curr->type != T_OR && curr->type != T_AND)
+	while (curr && (curr->type < 4 || curr->type > 6) && curr->type != T_CLPAR)
 	{
 		if (curr->type == T_WORD)
 			malloc_size++;
 		else if (curr->type > 6 && curr->type < 11)
 		{
 			if (!curr->next || (curr->next && curr->next->type != T_WORD))
-				return (exit_line(data,
-						errnl(2, "syntax error, no file after redirection")), NULL);
+				return (exit_line(data, \
+					errnl(2, "syntax error, no file after redirection")), NULL);
 			curr = curr->next;
 		}
 		curr = curr->next;
