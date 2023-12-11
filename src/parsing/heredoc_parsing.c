@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 21:09:32 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/09 21:51:47 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/11 11:19:54 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ int	check_heredoc2(t_data *data, t_node *node, int fd)
 				write(fd, res, ft_strlen(res));
 				free (line);
 				free (res);
-				free(node->command->redirects->heredoc_name);
 			}
+			free(node->command->redirects->heredoc_name);
 			return (exit_all(data, g_err_code));
 		}
 		waitpid(pid, &childval, 0);
@@ -110,9 +110,9 @@ int	do_and(t_data *data, t_node *tree)
 
 int	check_heredoc(t_data *data, t_node *node)
 {
-	if (node->is_command)
+	if (node->is_command && node->command->redirects)
 		g_err_code = check_heredoc2(data, node, node->command->redirects->fd);
-	else
+	else if (!node->is_command)
 	{
 		if (node->operand->optype == T_OR)
 			g_err_code = do_or(data, node);

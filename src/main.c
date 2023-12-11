@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/09 17:22:11 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/11 11:21:10 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ int	increment_shlvl(t_data *data)
 int	main(int ac, char *av[], char **env)
 {
 	t_data	*data;
-	int		exit;
-
 	if (ac != 1)
 		return (errnl(1, "Error : no arguments required"));
 	(void)av;
@@ -92,11 +90,10 @@ int	main(int ac, char *av[], char **env)
 	if (!data)
 		return (-1);
 	init_signal();
-	exit = 0;
 	if (increment_shlvl(data))
 		return (exit_line(data, g_err_code));
-	while (!exit)
-		exit = process_line(data);
+	while (1)
+		process_line(data);
 	printf("exit\n");
 	return (exit_all(data, g_err_code));
 }
