@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/12 11:57:11 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:31:32 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	exec(t_data *data, t_node *node)
 			g_err_code = exec_or(data, node);
 		if (node->operand->optype == T_AND)
 			g_err_code = exec_and(data, node);
+		if (node->operand->optype == T_PIPE)
+			g_err_code = exec_pipe(data, node);
 	}
 	return (g_err_code);
 }

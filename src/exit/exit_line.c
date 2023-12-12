@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/08 21:15:17 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/12 19:07:49 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	exit_line(t_data *data, int exit_code)
 		free_tokens(&(data->tokens));
 	if (data->tree)
 		free_tree(data);
+	if (data->pidlist)
+		free_pidlist(&(data->pidlist));
 	g_err_code = exit_code;
 	return (exit_code);
 }

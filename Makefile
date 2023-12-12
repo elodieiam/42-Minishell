@@ -7,7 +7,8 @@ SRC		=	main.c signals.c \
 			parsing/parsing.c parsing/tree.c parsing/cmd_node.c parsing/rdlist.c parsing/op_node.c \
 			parsing/parenthesis.c \
 			exit/exit_line.c \
-			exec/exec.c exec/execve.c exec/exec_utils.c exec/exec_env.c exec/heredoc.c exec/heredoc_utils.c exec/redirections.c\
+			exec/exec.c exec/execve.c exec/exec_utils.c exec/exec_env.c exec/heredoc.c \
+			exec/heredoc_utils.c exec/redirections.c exec/pipe.c exec/pidlist.c \
 			exec/builtins/echo.c exec/builtins/export.c exec/builtins/export_utils.c \
 			exec/builtins/export_env.c exec/builtins/exit.c exec/builtins/cd.c \
 			exec/builtins/pwd.c exec/builtins/unset.c \
@@ -24,8 +25,7 @@ OBJS	=	$(addprefix $(OBJ_DIR)/, $(OBJ))
 
 CC		=	cc
 
-CFLAGS	=	-Wall -Wextra -Werror -I./include -g3 
-#-fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -I./include -g3 #-fsanitize=address
 #CFLAGS	=	-Wall -Wextra -Werror -I./include -g3
 
 ########		LIBFT		########

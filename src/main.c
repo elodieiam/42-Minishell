@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/11 15:07:50 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:17:56 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_data	*init_data(char **env)
 	data->tokens = NULL;
 	data->tree = NULL;
 	data->tmp_tree = NULL;
+	data->pidlist = NULL;
 	data->env = malloc(sizeof(t_env));
 	if (!data->env)
 		return (free(data), NULL);

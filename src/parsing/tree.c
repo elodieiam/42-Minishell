@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:38:44 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/12 12:02:13 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:51:35 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_node	*new_node(int is_command)
 		return (NULL);
 	node->arguments = NULL;
 	node->redirects = NULL;
+	node->parent = NULL;
 	if (is_command)
 	{
 		node->operand = NULL;
