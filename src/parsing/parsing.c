@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/12 12:00:14 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:26:20 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,12 @@ int	check_word(char *str)
 int	add_nodeontop(t_node *node, t_node **head)
 {
 	if (!head || !node)
-		return (1);
+		return (UNKNOWN_ERR);
 	if (!(node->arguments) && node->operand && !node->operand->l_child)
+	{
+		(*head)->parent = node;
 		node->operand->l_child = *head;
+	}
 	*head = node;
 	return (0);
 }
