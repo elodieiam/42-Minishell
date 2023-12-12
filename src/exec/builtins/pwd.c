@@ -6,7 +6,7 @@
 /*   By: taospa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:31:18 by taospa            #+#    #+#             */
-/*   Updated: 2023/11/27 15:37:36 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/12 12:20:31 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	exec_pwd(t_data *data, t_node *node)
 {
 	char	*pwd;
 
-	if (node->command->arguments[1])
+	if (node->arguments[1])
 		return (exit_line(data, errnl(1, "pwd: too many arguments")));
 	pwd = malloc(sizeof(char) * PATH_MAX);
 	if (!pwd)

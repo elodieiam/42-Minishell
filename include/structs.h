@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/08 20:44:37 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/12 11:55:34 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ typedef struct s_rdlist
 
 typedef struct s_command
 {
-	char		**arguments;
-	t_rdlist	*redirects;
 }	t_command;
 
 typedef struct s_operand
@@ -67,10 +65,10 @@ typedef struct s_operand
 
 typedef struct s_node
 {
-	int			is_command;
 	int			subshell;
+	char		**arguments;
 	t_operand	*operand;
-	t_command	*command;
+	t_rdlist	*redirects;
 }	t_node;
 
 typedef struct s_data

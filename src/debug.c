@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/05 18:53:36 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/12 12:03:21 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,14 @@ void	print_cmd(t_node *node, char *prefix)
 	j = 0;
 	printf("%s├── Type: CMD\n", prefix);
 	printf("%s|   ├── Args: ", prefix);
-	if (!node->command->arguments)
+	if (!node->arguments)
 		printf("NO CMD");
 	else
 	{
-		while (node->command->arguments[++i])
-		printf("%s, ", node->command->arguments[i]);	
+		while (node->arguments[++i])
+		printf("%s, ", node->arguments[i]);	
 	}
-	curr = node->command->redirects;
+	curr = node->redirects;
 	printf("\n%s|   ├── Redir: ", prefix);
 	while (curr)
 	{
@@ -91,7 +91,7 @@ void	pretty_print_ast(t_node *node, char *prefix)
 
 	if (!node)
 		return ;
-	if (node->is_command)
+	if (node->arguments)
 		return (print_cmd(node, prefix));
 	printf("%s├── Type: %s	subshell : %d\n",
 		prefix, tta(node->operand->optype), node->subshell);

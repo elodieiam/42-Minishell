@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:38:44 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/03 13:51:53 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/12 12:02:13 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ int	free_node(t_node *node)
 {
 	if (!node)
 		return (0);
-	if (node->is_command)
+	if (node->arguments)
 	{
-		free_args(&(node->command->arguments));
-		free_rdlist(&(node->command->redirects));
-		free(node->command);
+		free_args(&(node->arguments));
+		free_rdlist(&(node->redirects));
 		free(node);
 	}
 	else
@@ -48,18 +47,13 @@ t_node	*new_node(int is_command)
 	node = malloc(sizeof(t_node));
 	if (!node)
 		return (NULL);
-	node->is_command = is_command;
+	node->arguments = NULL;
+	node->redirects = NULL;
 	if (is_command)
 	{
 		node->operand = NULL;
-		node->command = malloc(sizeof(t_command));
-		if (!node->command)
-			return (NULL);
-		node->command->arguments = NULL;
-		node->command->redirects = NULL;
 		return (node);
 	}
-	node->command = NULL;
 	node->operand = malloc(sizeof(t_operand));
 	if (!node->operand)
 		return (NULL);

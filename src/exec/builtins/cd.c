@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:31:59 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/01 17:45:01 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/12 12:06:48 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	cd_specific(t_data *data, t_node *node, char **newpwd)
 	int		i;
 
 	i = 0;
-	if (!node->command->arguments[1])
+	if (!node->arguments[1])
 	{
 		*newpwd = get_varstr("$HOME", &i, data->env->envtab);
 		if (*newpwd && !ft_strncmp(*newpwd, "", 2))
@@ -45,7 +45,7 @@ int	cd_specific(t_data *data, t_node *node, char **newpwd)
 					errnl(1, "minishell: cd: HOME not set")));
 		return (1);
 	}
-	else if (!ft_strncmp(node->command->arguments[1], "-", 2))
+	else if (!ft_strncmp(node->arguments[1], "-", 2))
 	{
 		*newpwd = get_varstr("$OLDPWD", &i, data->env->envtab);
 		if (!newpwd)
@@ -93,7 +93,7 @@ int	exec_cd(t_data *data, t_node *node)
 	char	**export_tab;
 
 	if (!cd_specific(data, node, &newpwd))
-		newpwd = ft_strdup(node->command->arguments[1]);
+		newpwd = ft_strdup(node->arguments[1]);
 	else if (!newpwd || !data->prompt)
 		return (g_err_code);
 	if (!getcwd(oldpwd, PATH_MAX))

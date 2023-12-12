@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/11 14:16:10 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/12 12:20:18 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	handle_redirections(t_data *data, t_node *node)
 {
-	if (!node->command->redirects && node->command->arguments)
+	if (!node->redirects && node->arguments)
 		return (2);
-	if (node->command->redirects && !node->command->arguments)
+	if (node->redirects && !node->arguments)
 	{
-		close(node->command->redirects->fd);
-		unlink(node->command->redirects->heredoc_name);
+		close(node->redirects->fd);
+		unlink(node->redirects->heredoc_name);
 		return (0);
 	}
-	else if (node->command->redirects && node->command->arguments)
+	else if (node->redirects && node->arguments)
 	{
-		close(node->command->redirects->fd);
+		close(node->redirects->fd);
 		if (exec_child_heredoc(data, node))
 			return (1);
 	}

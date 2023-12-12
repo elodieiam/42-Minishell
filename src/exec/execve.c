@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/11 19:24:34 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/12 12:19:06 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ int	child_exec(t_data *data, t_node *node)
 {
 	char	*cmd_path;
 
-	cmd_path = get_cmd_path(data, node->command->arguments[0]);
-	check_file(data, cmd_path, node->command->arguments[0]);
+	cmd_path = get_cmd_path(data, node->arguments[0]);
+	check_file(data, cmd_path, node->arguments[0]);
 	signal(SIGQUIT, sig_handler_child);
 	signal(SIGINT, sig_handler_child);
-	execve(cmd_path, node->command->arguments, data->env->envtab);
+	execve(cmd_path, node->arguments, data->env->envtab);
 	free(cmd_path);
 	return (exit_line(data, errnl(-1, "minishell: execve failed")));
 }

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:12:40 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/07 16:53:19 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/12 11:59:52 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	add_pipenode(t_data *data, t_node *pipe_node)
 {
 	t_node	*current_node;
 
-	if (!data->tree || data->tree->is_command || data->tree->subshell)
+	if (!data->tree || data->tree->arguments || data->tree->subshell)
 		return (add_nodeontop(pipe_node, &(data->tree)), 0);
 	current_node = data->tree;
 	while (current_node->operand->r_child && \
-	!current_node->operand->r_child->is_command && \
+	!current_node->operand->r_child->arguments && \
 	!current_node->operand->r_child->subshell)
 		current_node = current_node->operand->r_child;
 	pipe_node->operand->l_child = current_node->operand->r_child;

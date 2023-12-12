@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/11 19:31:33 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/12 11:58:51 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,18 @@ t_node	*fill_cmd_node(t_token **token, t_node *res, int *arg_cpt)
 	t_rdlist	*rd;
 
 	if ((*token)->type == T_WORD)
-		res->command->arguments[(*arg_cpt)++] = ft_strdup((*token)->string);
+		res->arguments[(*arg_cpt)++] = ft_strdup((*token)->string);
 	else if ((*token)->type > 6 && (*token)->type < 11)
 	{
 		rd = new_rd(((*token)->type), (*token)->next->string);
 		if (!rd)
 		{
-			free_dchartab(res->command->arguments);
-			free_rdlist(&(res->command->redirects));
-			free(res->command);
+			free_dchartab(res->arguments);
+			free_rdlist(&(res->redirects));
 			free(res);
 			return (NULL);
 		}
-		rdlist_add_back(&(res->command->redirects), rd);
+		rdlist_add_back(&(res->redirects), rd);
 		(*token) = freengonextok((*token));
 	}
 	(*token) = freengonextok((*token));
@@ -59,22 +58,22 @@ t_node	*init_cmd_node(t_token **tokens, int malloc_size, int indicator)
 
 	arg_cpt = 0;
 	res = new_node(1);
-	if (!res || !res->command)
+	if (!res)
 		return (NULL);
-	res->command->arguments = malloc(malloc_size * sizeof(char *));
-	if (!res->command->arguments)
+	res->arguments = malloc(malloc_size * sizeof(char *));
+	if (!res->arguments)
 		return (NULL);
 	if (indicator == 1)
 	{
-		free(res->command->arguments);
-		res->command->arguments = NULL;
+		free(res->arguments);
+		res->arguments = NULL;
 	}
 	while ((*tokens) && (*tokens)->type != T_PIPE && (*tokens)->type != T_CLPAR
 		&& (*tokens)->type != T_OR && (*tokens)->type != T_AND)
 		if (!fill_cmd_node(tokens, res, &arg_cpt))
 			return (NULL);
 	if (indicator == 0)
-		res->command->arguments[arg_cpt] = NULL;
+		res->arguments[arg_cpt] = NULL;
 	return (res);
 }
 

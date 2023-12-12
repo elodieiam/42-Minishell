@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/11 19:03:18 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/12 12:04:05 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,11 @@ int	expand(t_node *node, char **env)
 {
 	if (!node)
 		return (0);
-	if (!node->is_command && node->operand)
+	if (!node->arguments && node->operand)
 		return (expand(node->operand->l_child, env)
 			+ expand(node->operand->r_child, env));
-	if (exp_args(&node->command->arguments, env)
-		|| exp_rds(node->command->redirects, env))
+	if (exp_args(&node->arguments, env)
+		|| exp_rds(node->redirects, env))
 		return (-1);
 	return (0);
 }

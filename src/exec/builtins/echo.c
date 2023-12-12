@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:45:13 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/20 22:49:26 by taospa           ###   ########.fr       */
+/*   Updated: 2023/12/12 12:07:16 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	exec_echo(t_node *node)
 
 	is_option = 0;
 	i = 1;
-	while (is_echo_opt(node->command->arguments[i++]))
+	while (is_echo_opt(node->arguments[i++]))
 		is_option = 1;
 	i--;
-	while (node->command->arguments[i])
+	while (node->arguments[i])
 	{
-		printf("%s", node->command->arguments[i++]);
-		if (node->command->arguments[i])
+		printf("%s", node->arguments[i++]);
+		if (node->arguments[i])
 			printf(" ");
 	}
 	if (!is_option)
