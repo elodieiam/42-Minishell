@@ -6,11 +6,31 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/12 12:12:33 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:41:11 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	execute_heredoc(t_data *data, t_node *node)
+{
+	pid_t	pid;
+	int		childval;
+
+	childval = 0;
+	pid = fork();
+	if (pid == -1)
+		return (exit_line(data, errnl(-1, "minishell: fork failed")));
+	signal(SIGINT, SIG_IGN);
+	if (!pid)
+		if (child_exec(data, node))
+			return (UNKNOWN_ERR);
+	if (waitpid(pid, &childval, 0) == -1)
+		return (exit_line(data, errnl(-1, "minishell: waitpid failed")));
+	if (handle_child_sigs(childval))
+		return (WTERMSIG(childval) + 128);
+	return (WEXITSTATUS(childval));
+}
 
 int	exec_child_heredoc(t_data *data, t_node *node)
 {
@@ -25,12 +45,11 @@ int	exec_child_heredoc(t_data *data, t_node *node)
 		return (exit_line(data, errnl(-1, "minishell: fork failed")));
 	if (pid == 0)
 	{
-		printf("oooooooooo");
 		dup2(fd, 0);
 		close(fd);
-		//TODO : FINALIZE
-		exec_command(data, node);
-		return (exit_line(data, errnl(-1, "minishell: execve failed")));
+		if (!export_lastarg(data, node) && !srch_builtin(data, node))
+			g_err_code = execute_heredoc(data, node);
+		return (exit_all(data, g_err_code));
 	}
 	waitpid(pid, NULL, 0);
 	return (close(fd), unlink(node->redirects->heredoc_name), 0);
