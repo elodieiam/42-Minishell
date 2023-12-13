@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/13 14:46:34 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:27:52 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 	close(nread_fd);
 	nread_fd = dup(fd[0]);
 	close(fd[0]);
+	close(fd[1]);
 	if (!append_pid(&(data->pidlist), child_pid))
 		return (exit_line(data, errnl(MALLOC_ERR, "malloc failed")));
 	return (0);
