@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:38:44 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/12 15:51:35 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/14 11:19:50 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	free_node(t_node *node)
 {
 	if (!node)
 		return (0);
-	if (node->arguments)
+	if (node->arguments || (!node->arguments && node->redirects))
 	{
 		free_args(&(node->arguments));
 		free_rdlist(&(node->redirects));

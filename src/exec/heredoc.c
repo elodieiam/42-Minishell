@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/13 14:41:11 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/14 11:17:59 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ int	open_heredocs(t_data *data, t_node *node)
 {
 	if (node->arguments && node->redirects
 		&& node->redirects->rdtype == 9)
+		g_err_code = open_heredoc(data, node);
+	else if (!node->arguments && node->redirects
+			&& node->redirects->rdtype == 9)
 		g_err_code = open_heredoc(data, node);
 	else if (!node->arguments)
 	{

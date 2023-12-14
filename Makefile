@@ -25,7 +25,7 @@ OBJS	=	$(addprefix $(OBJ_DIR)/, $(OBJ))
 
 CC		=	cc
 
-CFLAGS	=	-Wall -Wextra -Werror -I./include -g3 #-fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -I./include -g3 -fsanitize=address
 #CFLAGS	=	-Wall -Wextra -Werror -I./include -g3
 
 ########		LIBFT		########
