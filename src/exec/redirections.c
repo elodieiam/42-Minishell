@@ -6,12 +6,13 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/15 14:06:39 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:45:30 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+// TODO: put ret_val in g_err_code
 int	handle_redirections(t_data *data, t_node *node)
 {
 	t_rdlist	*curr_rd;

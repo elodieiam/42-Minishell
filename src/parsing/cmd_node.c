@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/15 11:46:02 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 20:14:39 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ t_node	*fill_cmd_node(t_token **token, t_node *res, int *arg_cpt)
 		res->arguments[(*arg_cpt)++] = ft_strdup((*token)->string);
 	else if ((*token)->type > 6 && (*token)->type < 11)
 	{
-		printf("%s\n", tta((*token)->type));
-		fflush(stdout);
 		rd = new_rd(((*token)->type), (*token)->next->string);
 		if (!rd)
 		{
@@ -90,7 +88,7 @@ t_node	*handlecommand(t_data *data)
 	indicator = 0;
 	if (curr && curr->type == T_OPPAR)
 		return (handlepar(data));
-	if (curr && (curr->type >= 8 && curr->type <= 10))
+	if (curr && (curr->type >= 7 && curr->type <= 10))
 		indicator = 1;
 	while (curr && (curr->type < 4 || curr->type > 6) && curr->type != T_CLPAR)
 	{
@@ -98,9 +96,9 @@ t_node	*handlecommand(t_data *data)
 			malloc_size++;
 		else if (curr->type > 6 && curr->type < 11)
 		{
-			if (!curr->next || (curr->next && curr->next->type != T_WORD))
-				return (exit_line(data, \
-					errnl(2, "syntax error, no file after redirection")), NULL);
+			// if (!curr->next || curr->next->type != T_WORD)
+			// 	return (exit_line(data, \
+			// 		errnl(2, "syntax error, no file after redirection")), NULL);
 			curr = curr->next;
 		}
 		curr = curr->next;

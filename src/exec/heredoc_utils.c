@@ -6,11 +6,12 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:35:58 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/15 17:31:24 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:50:58 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <unistd.h>
 
 char	*heredoc_urandpath(char **heredoc_name, int fd_urand)
 {
@@ -59,15 +60,15 @@ char	*get_heredoc_name(void)
 		g_err_code = PERM_ERR;
 		return (NULL);
 	}
-	heredoc_name = ft_calloc(15, sizeof(char));
+	heredoc_name = ft_calloc(16, sizeof(char));
 	if (!heredoc_name)
 	{
 		g_err_code = UNKNOWN_ERR;
-		return (NULL);
+		return (close(fd_urand), NULL);
 	}
 	heredoc_name[0] = '.';
 	g_err_code = fill_heredoc_name(fd_urand, &heredoc_name);
-	return (heredoc_name);
+	return (close(fd_urand), heredoc_name);
 }
 
 void	exit_heredoc(t_node *node)

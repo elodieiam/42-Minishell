@@ -6,28 +6,28 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/15 18:44:53 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/15 20:13:19 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-//operators 4
-//redirection 7
+//operators >= 4
+//redirection >= 7
 typedef enum e_toktype
 {
 	T_START = 0,
-	T_WORD,
-	T_OPPAR,
-	T_CLPAR,
-	T_PIPE,
-	T_OR,
-	T_AND,
-	T_OPCHEV,
-	T_CLCHEV,
-	T_DOPCHEV,
-	T_DCLCHEV,
+	T_WORD = 1,
+	T_OPPAR = 2,
+	T_CLPAR = 3,
+	T_PIPE = 4,
+	T_OR = 5,
+	T_AND = 6,
+	T_OPCHEV = 7,
+	T_CLCHEV = 8,
+	T_DOPCHEV = 9,
+	T_DCLCHEV = 10,
 }	t_toktype;
 
 typedef struct s_env

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/15 09:06:12 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 20:06:34 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,8 @@ int	parse(t_data *data)
 {
 	while (data->tokens)
 	{
-		if (data->tokens->type == 7)
-			return (exit_line(data, errnl(2, "syntax error")), 1);
 		if (data->tokens->type == T_WORD || data->tokens->type == T_OPPAR
-			|| (data->tokens->type >= 8 && data->tokens->type <= 10))
+			|| (data->tokens->type >= 7 && data->tokens->type <= 10))
 		{
 			if (add_nodeontop(handlecommand(data), &(data->tree)))
 				return (1);
