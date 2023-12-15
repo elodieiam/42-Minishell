@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/12 19:09:57 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 09:06:00 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 	close(nread_fd);
 	nread_fd = dup(fd[0]);
 	close(fd[0]);
+	close(fd[1]);
 	if (!append_pid(&(data->pidlist), child_pid))
 		return (exit_line(data, errnl(MALLOC_ERR, "malloc failed")));
 	return (0);

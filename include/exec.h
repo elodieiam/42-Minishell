@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/12 18:31:19 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:22:41 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 /*-------------------exec.c------------------*/
 int			exec(t_data *data, t_node *node);
 int			exec_command(t_data *data, t_node *node);
+int			srch_builtin(t_data *data, t_node *node);
 
 /*-------------------exit.c------------------*/
 int			exec_exit(t_data *data, t_node *node);
@@ -26,6 +27,7 @@ int			exec_exit(t_data *data, t_node *node);
 int			execute(t_data *data, t_node *node);
 void		check_file(t_data *data, char *file_path, char *cmd);
 char		*get_cmd_path(t_data *data, char *command);
+int			child_exec(t_data *data, t_node *node);
 
 /*----------------exec_utils.c---------------*/
 int			is_path(const char *str);

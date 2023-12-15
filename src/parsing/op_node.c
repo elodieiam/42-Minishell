@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:12:40 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/12 13:12:12 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 09:03:45 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ t_node	*handleoperator(t_data *data)
 	op_node->operand->optype = data->tokens->type;
 	data->tokens = freengonextok(data->tokens);
 	op_node->operand->r_child = handlecommand(data);
+	if (!op_node->operand->r_child)
+		return (NULL);
+	op_node->operand->r_child->parent = op_node;
 	return (op_node);
 }
 
@@ -82,5 +85,6 @@ int	handlepipe(t_data *data)
 		free(pipe_node->operand);
 		return (free(pipe_node), MALLOC_ERR);
 	}
+	pipe_node->operand->r_child->parent = pipe_node;
 	return (add_pipenode(data, pipe_node));
 }
