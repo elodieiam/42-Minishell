@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/15 19:57:42 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 23:27:32 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,17 @@ int	srch_builtin(t_data *data, t_node *node)
 
 int	exec_command(t_data *data, t_node *node)
 {
+	int	fd[2];
+	int	old_fd[2];
+
+	fd[0] = 0;
+	fd[1] = 1;
 	if (expand(node, data->env->envtab))
 		return (UNKNOWN_ERR);
-	if (handle_redirections(data, node))
-		return (g_err_code);
-	if (!export_lastarg(data, node) && !srch_builtin(data, node))
+	if (!export_lastarg(data, node) &&\
+		!handle_redirections(data, node, fd, old_fd) && !srch_builtin(data, node))
 		g_err_code = execute(data, node);
+	reset_rds(fd, old_fd);
 	return (g_err_code);
 }
 

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/13 14:22:41 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/15 23:28:19 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int			pop_pid(t_pidlist **pidlist_head);
 void		free_pidlist(t_pidlist **pidlist);
 
 /*--------------redirections.c---------------*/
-int			handle_redirections(t_data *data, t_node *node);
+int			handle_redirections(t_data *data, t_node *node, int fd[2], int old_fd[2]);
+int			reset_rds(int fd[2], int old_fd[2]);
 
 /*--------------heredoc_utils.c--------------*/
 char		*get_heredoc_name(void);
