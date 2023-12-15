@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/12 11:58:51 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 11:46:02 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_node	*fill_cmd_node(t_token **token, t_node *res, int *arg_cpt)
 		res->arguments[(*arg_cpt)++] = ft_strdup((*token)->string);
 	else if ((*token)->type > 6 && (*token)->type < 11)
 	{
+		printf("%s\n", tta((*token)->type));
+		fflush(stdout);
 		rd = new_rd(((*token)->type), (*token)->next->string);
 		if (!rd)
 		{

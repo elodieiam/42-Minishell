@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 19:04:21 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/11/30 16:30:14 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 11:16:51 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,5 @@ t_node	*handlepar(t_data *data)
 		data->tokens = freengonextok(data->tokens);
 	if (data->tmp_tree)
 		data->tmp_tree->subshell = 1;
-	pretty_print_ast(data->tmp_tree, "");
-	printf("\n\n");
 	return (data->tmp_tree);
 }

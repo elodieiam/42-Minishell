@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:38:44 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/14 11:19:50 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/15 11:14:13 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_node	*new_node(int is_command)
 	node->arguments = NULL;
 	node->redirects = NULL;
 	node->parent = NULL;
+	node->subshell = 0;
 	if (is_command)
 	{
 		node->operand = NULL;
@@ -61,6 +62,5 @@ t_node	*new_node(int is_command)
 	node->operand->l_child = NULL;
 	node->operand->r_child = NULL;
 	node->operand->optype = 0;
-	node->subshell = 0;
 	return (node);
 }

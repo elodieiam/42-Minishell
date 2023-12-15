@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/15 10:46:38 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 13:04:05 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_data	*init_data(char **env)
 	return (data);
 }
 
-//TODO: move heredocs to exec
 int	process_line(t_data *data)
 {
 	signal(SIGINT, ft_handler);
@@ -46,7 +45,7 @@ int	process_line(t_data *data)
 	data->tokens = ft_lexer(data->prompt);
 	parse(data);
 	expand(data->tree, data->env->envtab);
-	// pretty_print_ast(data->tree, "");
+	pretty_print_ast(data->tree, "");
 	if (open_heredocs(data, data->tree))
 		return (0);
 	g_err_code = exec(data, data->tree);
@@ -91,6 +90,7 @@ int	prep_stdinnout(void)
 	{
 		fd = open("/dev/stdin", O_RDWR);
 		dup2(fd, STDOUT_FILENO);
+		close(fd);
 	}
 	return (0);
 }

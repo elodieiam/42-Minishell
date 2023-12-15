@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/12 12:03:21 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 13:15:40 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	print_cmd(t_node *node, char *prefix)
 
 	i = -1;
 	j = 0;
-	printf("%s├── Type: CMD\n", prefix);
+	printf("%s├── Type: CMD   subshell : %d\n", prefix, node->subshell);
 	printf("%s|   ├── Args: ", prefix);
 	if (!node->arguments)
 		printf("NO CMD");
@@ -91,7 +91,7 @@ void	pretty_print_ast(t_node *node, char *prefix)
 
 	if (!node)
 		return ;
-	if (node->arguments)
+	if (!node->operand)
 		return (print_cmd(node, prefix));
 	printf("%s├── Type: %s	subshell : %d\n",
 		prefix, tta(node->operand->optype), node->subshell);

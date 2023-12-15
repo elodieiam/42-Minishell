@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/12 12:04:05 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 13:14:48 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,17 +98,20 @@ int	exp_rds(t_rdlist *rdlist, char **env)
 
 	while (rdlist)
 	{
-		if (ft_strchr(rdlist->files[0], '*'))
+		if (rdlist->rdtype != T_DOPCHEV)
 		{
-			tmp = rdlist->files;
-			rdlist->files = expand_wildcard(rdlist->files[0]);
-			free_dchartab(tmp);
-			if (!rdlist->files)
+			if (ft_strchr(rdlist->files[0], '*'))
+			{
+				tmp = rdlist->files;
+				rdlist->files = expand_wildcard(rdlist->files[0]);
+				free_dchartab(tmp);
+				if (!rdlist->files)
+					return (MALLOC_ERR);
+			}
+			rdlist->files[0] = apply_exp(rdlist->files[0], env);
+			if (!rdlist->files[0])
 				return (MALLOC_ERR);
 		}
-		rdlist->files[0] = apply_exp(rdlist->files[0], env);
-		if (!rdlist->files[0])
-			return (MALLOC_ERR);
 		rdlist = rdlist->next;
 	}
 	return (0);
@@ -118,11 +121,8 @@ int	expand(t_node *node, char **env)
 {
 	if (!node)
 		return (0);
-	if (!node->arguments && node->operand)
-		return (expand(node->operand->l_child, env)
-			+ expand(node->operand->r_child, env));
 	if (exp_args(&node->arguments, env)
 		|| exp_rds(node->redirects, env))
-		return (-1);
+		return (UNKNOWN_ERR);
 	return (0);
 }
