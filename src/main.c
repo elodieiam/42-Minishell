@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/14 11:16:23 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/15 10:46:38 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,26 @@ int	increment_shlvl(t_data *data)
 	return (g_err_code);
 }
 
+int	prep_stdinnout(void)
+{
+	int		fd;
+
+	if (!isatty(0))
+		exit(0);
+	else
+	{
+		fd = open("/dev/stdin", O_RDWR);
+		dup2(fd, STDOUT_FILENO);
+	}
+	return (0);
+}
+
 int	main(int ac, char *av[], char **env)
 {
 	t_data	*data;
-	int		exit;
+	int		exit_val;
 
+	prep_stdinnout();
 	if (ac != 1)
 		return (errnl(1, "Error : no arguments required"));
 	(void)av;
@@ -95,9 +110,9 @@ int	main(int ac, char *av[], char **env)
 	init_signal();
 	if (increment_shlvl(data))
 		return (exit_line(data, g_err_code));
-	exit = 0;
-	while (!exit)
-		exit = process_line(data);
+	exit_val = 0;
+	while (!exit_val)
+		exit_val = process_line(data);
 	printf("exit\n");
 	return (exit_all(data, g_err_code));
 }

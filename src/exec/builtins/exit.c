@@ -6,11 +6,12 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:22:57 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/12 12:08:51 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 10:07:57 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <unistd.h>
 
 int	is_number(char *str)
 {
@@ -88,7 +89,8 @@ int	exec_exit(t_data *data, t_node *node)
 	unsigned char	exit_val;
 
 	exit_val = g_err_code;
-	ft_putstr_fd("exit\n", 2);
+	if (isatty(0) == 1 && isatty(1) == 1)
+		ft_putstr_fd("exit\n", 1);
 	if (node->arguments[1])
 	{
 		if (is_number(node->arguments[1])
