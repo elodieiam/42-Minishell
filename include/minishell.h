@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/15 15:17:08 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:42:21 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define SUCCESS 0,
 # define UNSPEC_ERR 1
 # define SYNTAX_ERR 2
+# define MALLOC_ERR 125
 # define PERM_ERR 126
 # define NOTFOUND_ERR 127
 # define SIGINT_ERR 130

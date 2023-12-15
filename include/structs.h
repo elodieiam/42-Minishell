@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/15 16:51:57 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:44:53 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef enum e_toktype
 	T_OPCHEV,
 	T_CLCHEV,
 	T_DOPCHEV,
+	T_DCLCHEV,
 }	t_toktype;
 
 typedef struct s_env
