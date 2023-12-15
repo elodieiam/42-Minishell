@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/15 13:15:40 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:12:03 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,9 @@ void	print_tokens(t_token *tokens)
 void	print_cmd(t_node *node, char *prefix)
 {
 	int			i;
-	int			j;
 	t_rdlist	*curr;
 
 	i = -1;
-	j = 0;
 	printf("%s├── Type: CMD   subshell : %d\n", prefix, node->subshell);
 	printf("%s|   ├── Args: ", prefix);
 	if (!node->arguments)
@@ -77,8 +75,7 @@ void	print_cmd(t_node *node, char *prefix)
 	while (curr)
 	{
 		printf("type : %s :", tta(curr->rdtype));
-		while (curr->files[j])
-			printf("file : %s\t", curr->files[j++]);
+		printf("file : %s\t", curr->file);
 		curr = curr->next;
 	}
 	printf("\n");

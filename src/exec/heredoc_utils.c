@@ -6,21 +6,67 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:35:58 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/12 12:19:56 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:31:24 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+char	*heredoc_urandpath(char **heredoc_name, int fd_urand)
+{
+	char	*tmp;
+	char	buffer;
+	int		i;
+
+	i = 0;
+	buffer = '\0';
+	while (++i < 15)
+	{
+		if (read(fd_urand, &buffer, 1) == -1)
+			return (NULL);
+		(*heredoc_name)[i] = ((unsigned char) buffer % 26) + 97;
+	}
+	tmp = *heredoc_name;
+	*heredoc_name = ft_strjoin("/tmp/", *heredoc_name);
+	free(tmp);
+	if (!heredoc_name)
+	{
+		g_err_code = UNKNOWN_ERR;
+		return (NULL);
+	}
+	return (*heredoc_name);
+}
+
+// TODO: print errors 
+int	fill_heredoc_name(int fd_urand, char **heredoc_name)
+{
+	*heredoc_name = heredoc_urandpath(heredoc_name, fd_urand);
+	if (!heredoc_name && g_err_code == UNKNOWN_ERR)
+		return (UNKNOWN_ERR);
+	else if (!heredoc_name)
+		return (UNKNOWN_ERR);
+	return (0);
+}
+
 char	*get_heredoc_name(void)
 {
-	static int	i;
-	char		*heredoc_number;
-	char		*heredoc_name;
+	char	*heredoc_name;
+	int		fd_urand;
 
-	heredoc_number = ft_itoa(i++);
-	heredoc_name = ft_strjoin(".tmp_heredoc_", heredoc_number);
-	free (heredoc_number);
+	fd_urand = open("/dev/urandom", O_RDONLY);
+	if (fd_urand == -1)
+	{
+		g_err_code = PERM_ERR;
+		return (NULL);
+	}
+	heredoc_name = ft_calloc(15, sizeof(char));
+	if (!heredoc_name)
+	{
+		g_err_code = UNKNOWN_ERR;
+		return (NULL);
+	}
+	heredoc_name[0] = '.';
+	g_err_code = fill_heredoc_name(fd_urand, &heredoc_name);
 	return (heredoc_name);
 }
 

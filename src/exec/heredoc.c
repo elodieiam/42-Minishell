@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/14 11:17:59 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:36:33 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	child_process(t_node *node, t_data *data, char *lim)
 		}
 		res = ft_strjoin(line, "\n");
 		if (!res)
-			return (free(line), MALLOC_ERR);
+			return (free(line), UNKNOWN_ERR);
 		write(node->redirects->fd, res, ft_strlen(res));
 		free (line);
 		free (res);
@@ -91,10 +91,11 @@ int	open_heredoc(t_data *data, t_node *node)
 
 	childval = 0;
 	node->redirects->heredoc_name = get_heredoc_name();
+	// if (!node->redirects->heredoc_name)
 	node->redirects->fd = open(node->redirects->heredoc_name,
 			O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (node->redirects->fd == (-1))
-		return (UNKNOWN_ERR);
+		return (PERM_ERR);
 	pid = fork();
 	if (pid == (-1))
 		return (UNKNOWN_ERR);
@@ -102,7 +103,7 @@ int	open_heredoc(t_data *data, t_node *node)
 	if (pid == 0)
 	{
 		signal(SIGINT, ft_handler_heredoc);
-		return (child_process(node, data, node->redirects->files[0]));
+		return (child_process(node, data, node->redirects->file));
 	}
 	waitpid(pid, &childval, 0);
 	if (WEXITSTATUS(childval) == 130)
@@ -115,11 +116,7 @@ int	open_heredoc(t_data *data, t_node *node)
 
 int	open_heredocs(t_data *data, t_node *node)
 {
-	if (node->arguments && node->redirects
-		&& node->redirects->rdtype == 9)
-		g_err_code = open_heredoc(data, node);
-	else if (!node->arguments && node->redirects
-			&& node->redirects->rdtype == 9)
+	if (node->redirects && node->redirects->rdtype == T_DOPCHEV)
 		g_err_code = open_heredoc(data, node);
 	else if (!node->arguments)
 	{

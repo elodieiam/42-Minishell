@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/12 16:17:24 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 16:51:57 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef enum e_toktype
 	T_OPCHEV,
 	T_CLCHEV,
 	T_DOPCHEV,
-	T_DCLCHEV
 }	t_toktype;
 
 typedef struct s_env
@@ -45,16 +44,12 @@ typedef struct s_token
 
 typedef struct s_rdlist
 {
-	char			**files;
+	char			*file;
 	int				fd;
 	char			*heredoc_name;
 	t_toktype		rdtype;
 	struct s_rdlist	*next;
 }	t_rdlist;
-
-typedef struct s_command
-{
-}	t_command;
 
 typedef struct s_operand
 {
