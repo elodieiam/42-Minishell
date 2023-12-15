@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/15 13:04:05 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:35:22 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ int	increment_shlvl(t_data *data)
 	else
 		currlvl = ft_itoa(ft_atoi(&(data->env->envtab[i][6])) + 1);
 	if (!currlvl)
-		return (free(tab), MALLOC_ERR);
+		return (free(tab), UNKNOWN_ERR);
 	tab[1] = ft_strjoin("SHLVL=", currlvl);
 	free(currlvl);
 	if (!tab[1])
-		return (free(tab), MALLOC_ERR);
+		return (free(tab), UNKNOWN_ERR);
 	g_err_code = exec_export(data, tab);
 	free(tab[1]);
 	free(tab);

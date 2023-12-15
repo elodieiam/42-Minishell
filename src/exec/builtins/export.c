@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/05 14:49:29 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:37:01 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ int	change_var(t_data *data, char *argument, int j)
 
 	new_var = ft_strdup(argument);
 	if (!new_var)
-		return (MALLOC_ERR);
+		return (UNKNOWN_ERR);
 	if (!data->env->malloced)
 	{
 		tmp_env = cpy_env(data->env->envtab);
 		if (!tmp_env)
-			return (MALLOC_ERR);
+			return (UNKNOWN_ERR);
 		data->env->malloced = 1;
 		data->env->envtab = tmp_env;
 	}
@@ -81,8 +81,8 @@ int	var_already_set(t_data *data, char **arguments, int index)
 			arguments[index][i] != '=')
 		i++;
 	changed = search_var(data, arguments[index], i);
-	if (changed == MALLOC_ERR)
-		return (MALLOC_ERR);
+	if (changed == UNKNOWN_ERR)
+		return (UNKNOWN_ERR);
 	else if (changed == 1)
 		return (1);
 	return (0);

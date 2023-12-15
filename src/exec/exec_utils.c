@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 15:21:16 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/12 12:19:38 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:38:00 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,14 @@ int	export_lastarg(t_data *data, t_node *node)
 		return (g_err_code);
 	tab = ft_calloc(3, sizeof(char *));
 	if (!tab)
-		return (MALLOC_ERR);
+		return (UNKNOWN_ERR);
 	cpt = 0;
 	while (node->arguments[cpt + 1])
 		cpt++;
 	tab[0] = "export";
 	tab[1] = ft_strjoin("_=", node->arguments[cpt]);
 	if (!tab[1])
-		return (free(tab), exit_line(data, MALLOC_ERR));
+		return (free(tab), exit_line(data, UNKNOWN_ERR));
 	g_err_code = exec_export(data, tab);
 	free(tab[1]);
 	free(tab);

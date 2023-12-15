@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:31:59 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/12 12:06:48 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:36:32 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	cd_specific(t_data *data, t_node *node, char **newpwd)
 	{
 		*newpwd = get_varstr("$OLDPWD", &i, data->env->envtab);
 		if (!newpwd)
-			return (exit_line(data, errnl(MALLOC_ERR, "malloc failed")));
+			return (exit_line(data, errnl(UNKNOWN_ERR, "malloc failed")));
 		if (!ft_strncmp(*newpwd, "", 2))
 			return (free(*newpwd), exit_line(data,
 					errnl(1, "minishell: cd: OLDPWD not set")));
@@ -67,7 +67,7 @@ int	export_cd(t_data *data, char **export_tab, char *newpwd, char *oldpwd)
 	{
 		free(export_tab);
 		return (free(newpwd), exit_line(data,
-				errnl(MALLOC_ERR, "fatal: malloc failed")));
+				errnl(UNKNOWN_ERR, "fatal: malloc failed")));
 	}
 	export_tab[2] = ft_strjoin("OLDPWD=", oldpwd);
 	if (!export_tab[2])
@@ -75,7 +75,7 @@ int	export_cd(t_data *data, char **export_tab, char *newpwd, char *oldpwd)
 		free(export_tab[1]);
 		free(export_tab);
 		return (free(newpwd), exit_line(data,
-				errnl(MALLOC_ERR, "fatal: malloc failed")));
+				errnl(UNKNOWN_ERR, "fatal: malloc failed")));
 	}
 	export_tab[3] = NULL;
 	exec_export(data, export_tab);
@@ -104,6 +104,6 @@ int	exec_cd(t_data *data, t_node *node)
 	export_tab = malloc(sizeof(char *) * 4);
 	if (!export_tab)
 		return (free(newpwd), exit_line(data,
-				errnl(MALLOC_ERR, "fatal: malloc failed")));
+				errnl(UNKNOWN_ERR, "fatal: malloc failed")));
 	return (export_cd(data, export_tab, newpwd, oldpwd));
 }
