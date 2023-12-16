@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/15 23:33:51 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/16 11:30:18 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	open_redirects(t_data *data, t_rdlist *rd, t_node *node, int fd[2])
 		if (fd[1] != 1)
 			close(fd[1]);
 		if (access(node->redirects->file, F_OK) == -1)
-			fd[1] = open(node->redirects->file, O_WRONLY | O_CREAT, 0755);
+			fd[1] = open(node->redirects->file, O_WRONLY | O_CREAT, 0644);
 		else
 		{
 			if (access(node->redirects->file, W_OK) == -1)
