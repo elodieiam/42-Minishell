@@ -6,12 +6,13 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/17 14:46:57 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/17 16:01:21 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exit.h"
 #include <minishell.h>
+#include <unistd.h>
 
 int	open_redirects(t_data *data, t_rdlist *rd, t_node *node)
 {
@@ -68,7 +69,6 @@ int	handle_redirections(t_data *data, t_node *node)
 	}
 	if (data->fds.curr[1] != STDOUT_FILENO)
 	{
-		dprintf(2, "on passe tao\n");
 		data->fds.std[1] = dup(STDOUT_FILENO);
 		if (dup2(data->fds.curr[1], STDOUT_FILENO) == -1)
 			return (exit_line(data, UNKNOWN_ERR));
