@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:38:44 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/15 11:14:13 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/17 13:54:04 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ int	free_node(t_node *node)
 {
 	if (!node)
 		return (0);
-	if (node->arguments || (!node->arguments && node->redirects))
-	{
+	if (node->arguments)
 		free_args(&(node->arguments));
+	if (node->redirects)
 		free_rdlist(&(node->redirects));
-		free(node);
-	}
-	else
+	if (node->operand)
 	{
-		free_node(node->operand->r_child);
-		free_node(node->operand->l_child);
-		free(node->operand);
-		free(node);
+		if (node->operand->r_child)
+			free_node(node->operand->r_child);
+		if (node->operand->l_child)
+			free_node(node->operand->l_child);
+		free (node->operand);
 	}
+	free(node);
 	return (1);
 }
 

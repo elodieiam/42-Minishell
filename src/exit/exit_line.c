@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/16 18:28:14 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/17 13:51:50 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	errnl(int exit_code, char *error_str)
 
 int	exit_line(t_data *data, int exit_code)
 {
-	printf("exiting line\n");
 	if (!data)
 		return (exit_code);
 	if (data->prompt)
