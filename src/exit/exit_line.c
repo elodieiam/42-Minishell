@@ -6,11 +6,10 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/17 13:51:50 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/17 16:41:12 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
 #include <minishell.h>
 
 // write : minishell: command: arg: error\n
@@ -56,7 +55,7 @@ int	exit_line(t_data *data, int exit_code)
 		// free_tree(data);
 	if (data->pidlist)
 		free_pidlist(&(data->pidlist));
-	reset_rds(&(data->fds));
+	reset_rds(&(data->fds), NULL);
 	g_err_code = exit_code;
 	return (exit_code);
 }

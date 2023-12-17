@@ -6,13 +6,11 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/17 16:02:26 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/17 17:50:04 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
 #include <minishell.h>
-#include <stdio.h>
 
 int	srch_builtin(t_data *data, t_node *node)
 {
@@ -39,14 +37,14 @@ int	srch_builtin(t_data *data, t_node *node)
 
 int	exec_command(t_data *data, t_node *node)
 {
-	if (export_lastarg(data, node))
+	if (node->arguments && export_lastarg(data, node))
 		return (g_err_code);
 	if (node->redirects)
 		handle_redirections(data, node);
-	if (!srch_builtin(data, node))
+	if (node->arguments && node->arguments[0] && !srch_builtin(data, node))
 		g_err_code = execute(data, node);
 	if (node->redirects)
-		reset_rds(&(data->fds));
+		reset_rds(&(data->fds), node);
 	return (g_err_code);
 }
 
@@ -55,7 +53,7 @@ int	exec_or(t_data *data, t_node *tree)
 	if (!handle_redirections(data, tree) && exec(data, tree->operand->l_child))
 		exec(data, tree->operand->r_child);
 	if (tree->redirects)
-		reset_rds(&(data->fds));
+		reset_rds(&(data->fds), tree);
 	return (g_err_code);
 }
 
@@ -67,7 +65,7 @@ int	exec_and(t_data *data, t_node *tree)
 	if (!exec(data, tree->operand->l_child))
 		exec(data, tree->operand->r_child);
 	if (tree->redirects)
-		reset_rds(&(data->fds));
+		reset_rds(&(data->fds), tree);
 	return (g_err_code);
 }
 

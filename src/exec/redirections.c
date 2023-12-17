@@ -6,22 +6,26 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/17 16:01:21 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/17 17:43:26 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exit.h"
 #include <minishell.h>
-#include <unistd.h>
 
 int	open_redirects(t_data *data, t_rdlist *rd, t_node *node)
 {
 	if (rd->rdtype == T_DOPCHEV)
 	{
-		close(node->redirects->fd);
-		// if (exec_child_heredoc(data, node))
-		// 	return (1);
-		// unlink(node->redirects->heredoc_name);
+		if (data->fds.curr[0] != STDIN_FILENO)
+			close(data->fds.curr[0]);
+		if (access(rd->heredoc_name, F_OK) == -1)
+			return (exit_line(data, errnl(NOTFOUND_ERR, "not found")));
+		if (access(rd->heredoc_name, R_OK) == -1)
+			return (exit_line(data, errnl(PERM_ERR, "access denied")));
+		if (rd->fd >= 0)
+			close(rd->fd);
+		data->fds.curr[0] = open(rd->heredoc_name, O_RDONLY);
+		signal(SIGINT, SIG_IGN);
 	}
 	else if (rd->rdtype == T_OPCHEV)
 	{
@@ -78,8 +82,19 @@ int	handle_redirections(t_data *data, t_node *node)
 }
 
 //TODO: protect calls
-int	reset_rds(t_fds *fds)
+int	reset_rds(t_fds *fds, t_node *node)
 {
+	t_rdlist	*curr_rd;
+
+	curr_rd = NULL;
+	if (node)
+		curr_rd = node->redirects;
+	while (curr_rd)
+	{
+		if (curr_rd->rdtype == T_DOPCHEV && curr_rd->heredoc_name)
+			unlink(curr_rd->heredoc_name);
+		curr_rd = curr_rd->next;
+	}
 	if (fds->curr[0] != STDIN_FILENO)
 	{
 		dup2(fds->std[0], STDIN_FILENO);
