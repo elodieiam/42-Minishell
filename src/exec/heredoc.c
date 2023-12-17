@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/17 18:11:29 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/17 22:45:49 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,8 @@ int	open_heredoc(t_data *data, t_node *node)
 		return (UNKNOWN_ERR);
 	signal(SIGINT, SIG_IGN);
 	if (pid == 0)
-	{
-		signal(SIGINT, ft_handler_heredoc);
-		return (child_process(node, data, node->redirects->file));
-	}
+		return (signal(SIGINT, ft_handler_heredoc)
+			, child_process(node, data, node->redirects->file));
 	waitpid(pid, &childval, 0);
 	if (WEXITSTATUS(childval) == 130)
 	{

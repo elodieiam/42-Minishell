@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/17 12:02:19 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/17 22:43:58 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	pipex(t_data *data, t_node *node, int fd[2], int nread_fd)
 		pipex(data, node->operand->l_child, fd, nread_fd);
 		pipex(data, node->operand->r_child, fd, nread_fd);
 	}
-	else if (node->parent && (node->parent->operand->l_child == node || node->parent->parent))
+	else if (node->parent && \
+		(node->parent->operand->l_child == node || node->parent->parent))
 	{
 		g_err_code = middle_pipe(data, node, fd, nread_fd);
 		if (g_err_code)
