@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/16 15:22:18 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/17 14:46:57 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	handle_redirections(t_data *data, t_node *node)
 	}
 	if (data->fds.curr[1] != STDOUT_FILENO)
 	{
+		dprintf(2, "on passe tao\n");
 		data->fds.std[1] = dup(STDOUT_FILENO);
 		if (dup2(data->fds.curr[1], STDOUT_FILENO) == -1)
 			return (exit_line(data, UNKNOWN_ERR));
@@ -79,15 +80,17 @@ int	handle_redirections(t_data *data, t_node *node)
 //TODO: protect calls
 int	reset_rds(t_fds *fds)
 {
-	if (fds->curr[0] != 0)
+	if (fds->curr[0] != STDIN_FILENO)
 	{
-		dup2(fds->std[0], 0);
+		dup2(fds->std[0], STDIN_FILENO);
 		close(fds->std[0]);
+		fds->curr[0] = STDIN_FILENO;
 	}
-	if (fds->curr[1] != 1)
+	if (fds->curr[1] != STDOUT_FILENO)
 	{
-		dup2(fds->std[1], 1);
+		dup2(fds->std[1], STDOUT_FILENO);
 		close(fds->std[1]);
+		fds->curr[1] = STDOUT_FILENO;
 	}
 	return (0);
 }
