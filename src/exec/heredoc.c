@@ -6,53 +6,11 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/17 17:38:24 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/17 18:11:29 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-// int	execute_heredoc(t_data *data, t_node *node)
-// {
-// 	pid_t	pid;
-// 	int		childval;
-//
-// 	childval = 0;
-// 	pid = fork();
-// 	if (pid == -1)
-// 		return (exit_line(data, errnl(-1, "minishell: fork failed")));
-// 	if (!pid)
-// 		if (child_exec(data, node))
-// 			return (UNKNOWN_ERR);
-// 	if (waitpid(pid, &childval, 0) == -1)
-// 		return (exit_line(data, errnl(-1, "minishell: waitpid failed")));
-// 	if (handle_child_sigs(childval))
-// 		return (WTERMSIG(childval) + 128);
-// 	return (WEXITSTATUS(childval));
-// }
-
-// int	exec_child_heredoc(t_data *data, t_node *node)
-// {
-// 	pid_t	pid;
-// 	int		fd;
-//
-// 	fd = open(node->redirects->heredoc_name, O_RDONLY);
-// 	if (fd == (-1))
-// 		return (1);
-// 	pid = fork();
-// 	if (pid == -1)
-// 		return (exit_line(data, errnl(-1, "minishell: fork failed")));
-// 	if (pid == 0)
-// 	{
-// 		dup2(fd, 0);
-// 		close(fd);
-// 		if (!export_lastarg(data, node) && !srch_builtin(data, node))
-// 			g_err_code = execute_heredoc(data, node);
-// 		return (exit_all(data, g_err_code));
-// 	}
-// 	waitpid(pid, NULL, 0);
-// 	return (close(fd), unlink(node->redirects->heredoc_name), 0);
-// }
 
 int	child_process(t_node *node, t_data *data, char *lim)
 {
