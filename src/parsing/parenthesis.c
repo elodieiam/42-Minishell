@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 19:04:21 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/17 12:19:57 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/17 17:55:18 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_node	*handlepar(t_data *data)
 		data->tokens = freengonextok(data->tokens);
 	if (data->tmp_tree)
 		data->tmp_tree->subshell = 1;
-	if (data->tokens->type > 6 && data->tokens->type < 11)
+	if (data->tokens && data->tokens->type > 6 && data->tokens->type < 11)
 		data->tmp_tree->redirects = get_rds(data, rds);
 	return (data->tmp_tree);
 }
