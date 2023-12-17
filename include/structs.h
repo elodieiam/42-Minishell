@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/15 20:13:19 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/16 12:42:08 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,20 @@ typedef struct s_pidlist
 	struct s_pidlist	*next;
 }	t_pidlist;
 
+typedef struct s_fds
+{
+	int	std[2];
+	int	curr[2];
+}	t_fds;
+
 typedef struct s_data
 {
 	char			*prompt;
-	t_token			*tokens;
+	t_env			*env;
+	t_fds			fds;
 	t_node			*tree;
 	t_node			*tmp_tree;
-	t_env			*env;
+	t_token			*tokens;
 	t_pidlist		*pidlist;
 }	t_data;
 

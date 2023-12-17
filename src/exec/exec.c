@@ -6,15 +6,16 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/15 23:27:32 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:27:31 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exec.h"
 #include <minishell.h>
 
 int	srch_builtin(t_data *data, t_node *node)
 {
-	if (!node || !node->arguments)
+	if (!node || !node->arguments || !node->arguments[0])
 		return (0);
 	if (!ft_strncmp(node->arguments[0], "exit", 5))
 		return (exec_exit(data, node));
@@ -37,17 +38,9 @@ int	srch_builtin(t_data *data, t_node *node)
 
 int	exec_command(t_data *data, t_node *node)
 {
-	int	fd[2];
-	int	old_fd[2];
-
-	fd[0] = 0;
-	fd[1] = 1;
-	if (expand(node, data->env->envtab))
-		return (UNKNOWN_ERR);
 	if (!export_lastarg(data, node) &&\
-		!handle_redirections(data, node, fd, old_fd) && !srch_builtin(data, node))
+		!handle_redirections(data, node) && !srch_builtin(data, node))
 		g_err_code = execute(data, node);
-	reset_rds(fd, old_fd);
 	return (g_err_code);
 }
 
@@ -60,8 +53,9 @@ int	exec_or(t_data *data, t_node *tree)
 
 int	exec_and(t_data *data, t_node *tree)
 {
-	if (!exec(data, tree->operand->l_child))
+	if (!handle_redirections(data, tree) && !exec(data, tree->operand->l_child))
 		return (exec(data, tree->operand->r_child));
+	reset_rds(&(data->fds));
 	return (g_err_code);
 }
 
@@ -84,6 +78,7 @@ int	exec_subshell(t_data *data, t_node *node)
 				g_err_code = exec_or(data, node);
 			if (node->operand->optype == T_AND)
 				g_err_code = exec_and(data, node);
+			//implement fd old_fd for pipe ?
 			if (node->operand->optype == T_PIPE)
 				g_err_code = exec_pipe(data, node);
 		}

@@ -6,10 +6,11 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/12 19:07:49 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/16 18:28:14 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exec.h"
 #include <minishell.h>
 
 // write : minishell: command: arg: error\n
@@ -40,6 +41,7 @@ int	errnl(int exit_code, char *error_str)
 
 int	exit_line(t_data *data, int exit_code)
 {
+	printf("exiting line\n");
 	if (!data)
 		return (exit_code);
 	if (data->prompt)
@@ -51,8 +53,11 @@ int	exit_line(t_data *data, int exit_code)
 		free_tokens(&(data->tokens));
 	if (data->tree)
 		free_tree(data);
+	// if (data->tmp_tree)
+		// free_tree(data);
 	if (data->pidlist)
 		free_pidlist(&(data->pidlist));
+	reset_rds(&(data->fds));
 	g_err_code = exit_code;
 	return (exit_code);
 }

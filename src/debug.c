@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/15 17:12:03 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/16 17:38:31 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	pretty_print_ast(t_node *node, char *prefix)
 {
 	int		len;
 	char	*new_prefix;
+	t_rdlist	*curr;
 
 	if (!node)
 		return ;
@@ -92,6 +93,15 @@ void	pretty_print_ast(t_node *node, char *prefix)
 		return (print_cmd(node, prefix));
 	printf("%s├── Type: %s	subshell : %d\n",
 		prefix, tta(node->operand->optype), node->subshell);
+	curr = node->redirects;
+	printf("\n%s├── Redir: ", prefix);
+	while (curr)
+	{
+		printf("type : %s :", tta(curr->rdtype));
+		printf("file : %s\t", curr->file);
+		curr = curr->next;
+	}
+	printf("\n");
 	len = strlen(prefix);
 	new_prefix = malloc(len + 5);
 	strcpy(new_prefix, prefix);
