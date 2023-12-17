@@ -6,28 +6,28 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/12 16:17:24 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/16 12:42:08 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-//operators 4
-//redirection 7
+//operators >= 4
+//redirection >= 7
 typedef enum e_toktype
 {
 	T_START = 0,
-	T_WORD,
-	T_OPPAR,
-	T_CLPAR,
-	T_PIPE,
-	T_OR,
-	T_AND,
-	T_OPCHEV,
-	T_CLCHEV,
-	T_DOPCHEV,
-	T_DCLCHEV
+	T_WORD = 1,
+	T_OPPAR = 2,
+	T_CLPAR = 3,
+	T_PIPE = 4,
+	T_OR = 5,
+	T_AND = 6,
+	T_OPCHEV = 7,
+	T_CLCHEV = 8,
+	T_DOPCHEV = 9,
+	T_DCLCHEV = 10,
 }	t_toktype;
 
 typedef struct s_env
@@ -45,16 +45,12 @@ typedef struct s_token
 
 typedef struct s_rdlist
 {
-	char			**files;
+	char			*file;
 	int				fd;
 	char			*heredoc_name;
 	t_toktype		rdtype;
 	struct s_rdlist	*next;
 }	t_rdlist;
-
-typedef struct s_command
-{
-}	t_command;
 
 typedef struct s_operand
 {
@@ -78,13 +74,20 @@ typedef struct s_pidlist
 	struct s_pidlist	*next;
 }	t_pidlist;
 
+typedef struct s_fds
+{
+	int	std[2];
+	int	curr[2];
+}	t_fds;
+
 typedef struct s_data
 {
 	char			*prompt;
-	t_token			*tokens;
+	t_env			*env;
+	t_fds			fds;
 	t_node			*tree;
 	t_node			*tmp_tree;
-	t_env			*env;
+	t_token			*tokens;
 	t_pidlist		*pidlist;
 }	t_data;
 

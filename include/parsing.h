@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:28:57 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/11 14:36:17 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/15 20:28:02 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		rdlist_add_back(t_rdlist **list, t_rdlist *new_rd);
 t_rdlist	*new_rd(t_toktype rd_type, char *file);
 
 /*----------------cmd_node.c---------------*/
-t_node		*init_cmd_node(t_token **tokens, int malloc_size, int indicator);
+t_node		*init_cmd_node(t_token **tokens, int malloc_size);
 t_node		*handlecommand(t_data *data);
 void		free_args(char ***args);
 

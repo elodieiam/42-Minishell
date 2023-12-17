@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/15 13:14:48 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:09:32 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	exp_args(char ***args, char **env)
 			(*args)[i] = 0;
 			(*args) = sumtab((*args), tmp);
 			if (!(*args))
-				return (MALLOC_ERR);
+				return (UNKNOWN_ERR);
 		}
 		(*args)[i] = apply_exp((*args)[i], env);
 		if (!(*args)[i])
@@ -100,17 +100,20 @@ int	exp_rds(t_rdlist *rdlist, char **env)
 	{
 		if (rdlist->rdtype != T_DOPCHEV)
 		{
-			if (ft_strchr(rdlist->files[0], '*'))
+			if (ft_strchr(rdlist->file, '*'))
 			{
-				tmp = rdlist->files;
-				rdlist->files = expand_wildcard(rdlist->files[0]);
-				free_dchartab(tmp);
-				if (!rdlist->files)
-					return (MALLOC_ERR);
+				tmp = expand_wildcard(rdlist->file);
+				if (!tmp[0])
+					return (UNKNOWN_ERR);
+				if (tmp[1])
+					return (free_dchartab(tmp), 1);
+				rdlist->file = tmp[0];
+				free(tmp[1]);
+				free(tmp);
 			}
-			rdlist->files[0] = apply_exp(rdlist->files[0], env);
-			if (!rdlist->files[0])
-				return (MALLOC_ERR);
+			rdlist->file = apply_exp(rdlist->file, env);
+			if (!rdlist->file)
+				return (UNKNOWN_ERR);
 		}
 		rdlist = rdlist->next;
 	}

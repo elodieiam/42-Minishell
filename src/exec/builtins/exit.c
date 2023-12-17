@@ -6,12 +6,11 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:22:57 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/15 10:07:57 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/15 13:24:42 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <unistd.h>
 
 int	is_number(char *str)
 {

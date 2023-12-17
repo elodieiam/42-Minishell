@@ -6,15 +6,17 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/15 13:17:09 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/17 16:02:26 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exec.h"
 #include <minishell.h>
+#include <stdio.h>
 
 int	srch_builtin(t_data *data, t_node *node)
 {
-	if (!node || !node->arguments)
+	if (!node || !node->arguments || !node->arguments[0])
 		return (0);
 	if (!ft_strncmp(node->arguments[0], "exit", 5))
 		return (exec_exit(data, node));
@@ -37,24 +39,35 @@ int	srch_builtin(t_data *data, t_node *node)
 
 int	exec_command(t_data *data, t_node *node)
 {
-	if (expand(node, data->env->envtab))
-		g_err_code = UNKNOWN_ERR;
-	else if (!export_lastarg(data, node) && !srch_builtin(data, node))
+	if (export_lastarg(data, node))
+		return (g_err_code);
+	if (node->redirects)
+		handle_redirections(data, node);
+	if (!srch_builtin(data, node))
 		g_err_code = execute(data, node);
+	if (node->redirects)
+		reset_rds(&(data->fds));
 	return (g_err_code);
 }
 
 int	exec_or(t_data *data, t_node *tree)
 {
-	if (exec(data, tree->operand->l_child))
-		return (exec(data, tree->operand->r_child));
+	if (!handle_redirections(data, tree) && exec(data, tree->operand->l_child))
+		exec(data, tree->operand->r_child);
+	if (tree->redirects)
+		reset_rds(&(data->fds));
 	return (g_err_code);
 }
 
 int	exec_and(t_data *data, t_node *tree)
 {
+	//protect handle redir
+	if (tree->redirects)
+		handle_redirections(data, tree);
 	if (!exec(data, tree->operand->l_child))
-		return (exec(data, tree->operand->r_child));
+		exec(data, tree->operand->r_child);
+	if (tree->redirects)
+		reset_rds(&(data->fds));
 	return (g_err_code);
 }
 
@@ -69,7 +82,7 @@ int	exec_subshell(t_data *data, t_node *node)
 		pid = fork();
 	if (!pid)
 	{
-		if (node->arguments || (!node->arguments && node->redirects))
+		if (node->arguments || (!node->operand && node->redirects))
 			g_err_code = exec_command(data, node);
 		else
 		{
@@ -77,6 +90,7 @@ int	exec_subshell(t_data *data, t_node *node)
 				g_err_code = exec_or(data, node);
 			if (node->operand->optype == T_AND)
 				g_err_code = exec_and(data, node);
+			//implement fd old_fd for pipe ?
 			if (node->operand->optype == T_PIPE)
 				g_err_code = exec_pipe(data, node);
 		}

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/15 09:06:00 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/17 12:02:19 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 	close(fd[0]);
 	close(fd[1]);
 	if (!append_pid(&(data->pidlist), child_pid))
-		return (exit_line(data, errnl(MALLOC_ERR, "malloc failed")));
+		return (exit_line(data, errnl(UNKNOWN_ERR, "malloc failed")));
 	return (0);
 }
 
@@ -55,7 +55,7 @@ int	last_pipe(t_data *data, t_node *node, int nread_fd)
 	}
 	close(nread_fd);
 	if (!append_pid(&(data->pidlist), child_pid))
-		return (exit_line(data, errnl(MALLOC_ERR, "malloc failed")));
+		return (exit_line(data, errnl(UNKNOWN_ERR, "malloc failed")));
 	return (0);
 }
 

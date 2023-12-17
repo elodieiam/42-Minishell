@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:48:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/25 14:38:12 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:36:03 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	fill_unset_tab(char **envtab, char **new_env, int index)
 		if (!new_env[j])
 		{
 			free_dchartab(new_env);
-			return (MALLOC_ERR);
+			return (UNKNOWN_ERR);
 		}
 		i++;
 		j++;
@@ -69,9 +69,9 @@ int	unset_env(t_data *data, int index)
 		nb_arg++;
 	new_env = malloc(sizeof(char *) * nb_arg);
 	if (!new_env)
-		return (MALLOC_ERR);
+		return (UNKNOWN_ERR);
 	if (fill_unset_tab(data->env->envtab, new_env, index))
-		return (MALLOC_ERR);
+		return (UNKNOWN_ERR);
 	if (data->env->malloced)
 		free_dchartab(data->env->envtab);
 	data->env->malloced = 1;
@@ -92,7 +92,7 @@ int	exec_unset(t_data *data, char **args)
 	{
 		if (var_exists(args[i], data->env->envtab, &j))
 			if (unset_env(data, j))
-				return (MALLOC_ERR);
+				return (UNKNOWN_ERR);
 		i++;
 	}
 	return (0);
