@@ -28,6 +28,8 @@ CC		=	cc
 # CFLAGS	=	-Wall -Wextra -Werror -I./include -g3 -fsanitize=address
 CFLAGS	=	-Wall -Wextra -Werror -I./include -g3
 
+RM_FLAGS = -rf
+
 ########		LIBFT		########
 
 LFT_DIR	=	libft
