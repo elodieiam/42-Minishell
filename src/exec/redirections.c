@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/17 22:41:34 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/18 13:01:14 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	open_infile(t_data *data, t_rdlist *rd)
 {
+	if (data->fds.curr[0] != STDIN_FILENO)
+		close(data->fds.curr[0]);
 	if (rd->rdtype == T_DOPCHEV)
 	{
 		if (access(rd->heredoc_name, F_OK) == -1)
@@ -38,6 +40,8 @@ int	open_infile(t_data *data, t_rdlist *rd)
 
 int	open_outfile(t_data *data, t_rdlist *rd)
 {
+	if (data->fds.curr[1] != STDOUT_FILENO)
+		close(data->fds.curr[1]);
 	if (rd->rdtype == T_CLCHEV)
 	{
 		if (access(rd->file, F_OK) == -1)
@@ -52,7 +56,7 @@ int	open_outfile(t_data *data, t_rdlist *rd)
 	else if (rd->rdtype == T_DCLCHEV)
 	{
 		if (access(rd->file, F_OK) == -1)
-			data->fds.curr[1] = open(rd->file, O_WRONLY | O_APPEND | O_CREAT, 0644);
+			data->fds.curr[1] = open(rd->file, O_WRONLY | O_APPEND | O_CREAT, 644);
 		else
 		{
 			if (access(rd->file, W_OK) == -1)
@@ -65,14 +69,12 @@ int	open_outfile(t_data *data, t_rdlist *rd)
 
 int	open_redirect(t_data *data, t_rdlist *rd)
 {
-	if (data->fds.curr[1] != 1)
-		close(data->fds.curr[1]);
 	if (rd->rdtype == T_DOPCHEV || rd->rdtype == T_OPCHEV)
 	{
 		if (open_infile(data, rd))
 			return (g_err_code);
 	}
-	if (rd->rdtype == T_DCLCHEV || rd->rdtype == T_CLCHEV)
+	else if (rd->rdtype == T_DCLCHEV || rd->rdtype == T_CLCHEV)
 	{
 		if (open_outfile(data, rd))
 			return (g_err_code);
