@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/17 22:31:23 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/18 12:43:49 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ int			reset_rds(t_fds *fds, t_node *node);
 
 /*--------------heredoc_utils.c--------------*/
 char		*get_heredoc_name(void);
-void		exit_heredoc(t_node *node);
+void		exit_heredoc(t_rdlist *rd);
 
 #endif

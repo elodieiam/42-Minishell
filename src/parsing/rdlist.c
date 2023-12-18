@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 17:27:32 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/15 17:11:37 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/18 12:28:42 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,20 @@ t_rdlist	*new_rd(t_toktype rd_type, char *file)
 
 void	rdlist_add_back(t_rdlist **list, t_rdlist *new_rd)
 {
+	t_rdlist	*curr;
+
 	if (!list)
 		return ;
 	if (!*list)
 		*list = new_rd;
 	else
 	{
-		while ((*list)->next)
+		curr = *list;
+		while (curr->next)
 		{
-			*list = (*list)->next;
+			curr = curr->next;
 		}
-		(*list)->next = new_rd;
+		curr->next = new_rd;
 		new_rd->next = NULL;
 	}
 }
