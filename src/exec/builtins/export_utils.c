@@ -6,20 +6,25 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 17:44:59 by elrichar          #+#    #+#             */
-/*   Updated: 2023/11/20 16:20:17 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/18 22:58:15 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int	check_equal_sign(char *str)
+static int	check_equal_sign(char *str, int *append)
 {
 	if (*str == '=')
 		return (0);
-	while (*str && *str != '=')
+	while (*str && *str != '=' && *str != '+')
 		str++;
 	if (!*str)
 		return (1);
+	if (*str == '+' && str[1] && str[1] == '=' && str[2])
+	{
+		*append = 1;
+		return (1);
+	}
 	if (*str == '=' && *(str + 1) && *(str + 1) != '=')
 		return (1);
 	if (*str == '=' && !*(str + 1))
@@ -31,7 +36,7 @@ static int	check_valid_string(char *str)
 {
 	if (!ft_isalpha(*str) && *str != '_')
 		return (0);
-	while (*str && *str != '=')
+	while (*str && *str != '=' && *str != '+')
 	{
 		if (is_varsep(*str))
 			return (0);
@@ -59,9 +64,9 @@ void	swap_strings(char **s1, char **s2)
 	*s2 = tmp;
 }
 
-int	is_valid_arg(char *str)
+int	is_valid_arg(char *str, int *append)
 {
-	if (!check_equal_sign(str))
+	if (!check_equal_sign(str, append))
 		return (0);
 	if (!check_valid_string(str))
 		return (0);

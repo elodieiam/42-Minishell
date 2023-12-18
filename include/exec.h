@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/18 12:43:49 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 00:44:58 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,16 @@ int			exec_echo(t_node *node);
 int			exec_export(t_data *data, char **arguments);
 
 /*----------------export_utils.c-------------*/
-int			is_valid_arg(char *str);
+int			is_valid_arg(char *str, int *append);
 int			ft_strcmp(char *s1, char *s2);
 void		swap_strings(char **s1, char **s2);
 
 /*----------------export_env.c---------------*/
 int			display_env(t_data *data);
 int			update_env(t_data *data, char **arguments, int index);
+
+/*----------------export_append.c------------*/
+char		*append_var(t_data *data, char *argument);
 
 /*----------------exec_env.c-----------------*/
 int			exec_env(t_data *data);
