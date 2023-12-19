@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/17 22:43:58 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 11:54:15 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int	exec_pipe(t_data *data, t_node *node)
 
 	fd[0] = -1;
 	fd[1] = -1;
+	signal(SIGQUIT, sig_handler_child);
+	signal(SIGINT, sig_handler_child);
 	nread_fd = dup(STDIN_FILENO);
 	pipex(data, node, fd, nread_fd);
 	pid = pop_pid(&(data->pidlist));
