@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/15 19:35:00 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 15:53:04 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "exit.h"
 # include "exec.h"
 # include "expand.h"
+# include "lexer.h"
 
 # define SUCCESS 0,
 # define UNSPEC_ERR 1
@@ -43,6 +44,12 @@ char	*tta(t_toktype int_type);
 void	pretty_print_ast(t_node *node, char *prefix);
 void	print_tokens(t_token *tokens);
 void	print_dchartab(char **tab);
+
+/*-----------------data.c----------*/
+t_data	*init_data(char **env);
+
+/*---------------main.c------------*/
+int	cherr_code(int err_code);
 
 /*---------------signals.c---------*/
 void	ft_handler(int signum);

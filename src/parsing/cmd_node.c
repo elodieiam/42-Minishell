@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/17 12:24:54 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:05:21 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_node	*fill_cmd_node(t_token **token, t_node *res, int *arg_cpt)
 			free_dchartab(res->arguments);
 			free_rdlist(&(res->redirects));
 			free(res);
-			return (NULL);
+			return (cherr_code(UNKNOWN_ERR), NULL);
 		}
 		rdlist_add_back(&(res->redirects), rd);
 		(*token) = freengonextok((*token));
@@ -59,10 +59,10 @@ t_node	*init_cmd_node(t_token **tokens, int malloc_size)
 	arg_cpt = 0;
 	res = new_node(1);
 	if (!res)
-		return (NULL);
+		return (cherr_code(UNKNOWN_ERR), NULL);
 	res->arguments = malloc(malloc_size * sizeof(char *));
 	if (!res->arguments)
-		return (NULL);
+		return (cherr_code(UNKNOWN_ERR), NULL);
 	while ((*tokens) && (*tokens)->type != T_PIPE && (*tokens)->type != T_CLPAR
 		&& (*tokens)->type != T_OR && (*tokens)->type != T_AND)
 		if (!fill_cmd_node(tokens, res, &arg_cpt))
@@ -83,14 +83,13 @@ t_node	*handlecommand(t_data *data)
 	while (curr && (curr->type < 4 || curr->type > 6) && curr->type != T_CLPAR)
 	{
 		if (curr->type == T_WORD)
-			malloc_size++;
-		else if (curr->type > 6 && curr->type < 11)
 		{
-			// if (!curr->next || curr->next->type != T_WORD)
-			// 	return (exit_line(data,
-			// 		errnl(2, "syntax error, no file after redirection")), NULL);
-			curr = curr->next;
+			if (check_word(data, curr))
+				return (cherr_code(SYNTAX_ERR), NULL);
+			malloc_size++;
 		}
+		else if (curr->type > 6 && curr->type < 11)
+			curr = curr->next;
 		curr = curr->next;
 	}
 	return (init_cmd_node(&(data->tokens), ++malloc_size));

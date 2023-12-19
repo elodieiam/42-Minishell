@@ -6,15 +6,16 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:28:57 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/15 20:28:02 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:05:33 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
-# include "lexer.h"
+# include "structs.h"
 
 /*----------------parsing.c---------------*/
+int			check_word(t_data *data, t_token *toklist);
 int			parse(t_data *data);
 int			add_nodeontop(t_node *node, t_node **head);
 

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/19 12:56:26 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 17:01:39 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,10 @@
 
 unsigned char	g_err_code;
 
-t_data	*init_data(char **env)
+int	cherr_code(int err_code)
 {
-	t_data	*data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (NULL);
-	data->prompt = NULL;
-	data->tokens = NULL;
-	data->tree = NULL;
-	data->tmp_tree = NULL;
-	data->pidlist = NULL;
-	data->fds.curr[0] = STDIN_FILENO;
-	data->fds.curr[1] = STDOUT_FILENO;
-	data->env = malloc(sizeof(t_env));
-	if (!data->env)
-		return (free(data), NULL);
-	data->env->envtab = env;
-	data->env->malloced = 0;
-	g_err_code = 0;
-	return (data);
+	g_err_code = err_code;
+	return (err_code);
 }
 
 int	process_line(t_data *data)
@@ -45,14 +28,13 @@ int	process_line(t_data *data)
 		return (1);
 	add_history(data->prompt);
 	data->tokens = ft_lexer(data->prompt);
-	if (!data->tokens)
-		return (g_err_code);
-	parse(data);
-	// expand(data->tree, data->env->envtab);
+	if (parse(data))
+		return (exit_line(data, g_err_code), 0);
 	// pretty_print_ast(data->tree, "");
 	if (open_heredocs(data, data->tree))
-		return (0);
-	g_err_code = exec(data, data->tree);
+		return (exit_line(data, g_err_code), 0);
+	if (exec(data, data->tree))
+		return (exit_line(data, g_err_code), 0);
 	exit_line(data, g_err_code);
 	return (0);
 }
@@ -116,7 +98,10 @@ int	main(int ac, char *av[], char **env)
 		return (exit_line(data, g_err_code));
 	exit_val = 0;
 	while (!exit_val)
+	{
 		exit_val = process_line(data);
+		printf("err code: %d\n", g_err_code);
+	}
 	printf("exit\n");
 	return (exit_all(data, g_err_code));
 }

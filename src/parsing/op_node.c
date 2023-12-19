@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:12:40 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/15 19:37:21 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:48:18 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,8 @@ int	handlepipe(t_data *data)
 {
 	t_node	*pipe_node;
 
-	if (!data->tokens->next)
-		return (exit_line(data, errnl(2, \
-			"minishell: syntax error near token 'newline'")));
-	if (data->tokens->next->type > 3)
-		return (exit_line(data, errnl(2, \
-			"minishell: syntax error near token '|'")));
+	if (!data->tokens->next || data->tokens->next->type > 2)
+		return (syntax_error(data, data->tokens));
 	pipe_node = new_node(0);
 	if (!pipe_node || !pipe_node->operand)
 	{

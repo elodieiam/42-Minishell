@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 12:25:35 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/05 12:49:53 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:39:40 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	**get_files(DIR *d, char **res, char *str)
 		}
 		dir = readdir(d);
 	}
+	closedir(d);
 	return (res);
 }
 

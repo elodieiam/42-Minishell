@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/19 12:03:18 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/19 15:36:07 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	open_heredoc(t_data *data, t_rdlist *rd)
 	if (WEXITSTATUS(childval) == 130)
 	{
 		close(rd->fd);
-		return (unlink(rd->heredoc_name), SIGINT_ERR);
+		return (unlink(rd->heredoc_name), cherr_code(SIGINT_ERR));
 	}
 	return (0);
 }
@@ -74,11 +74,13 @@ int	open_heredocs(t_data *data, t_node *node)
 {
 	t_rdlist	*curr_rd;
 
+	if (!node)
+		return (g_err_code);
 	curr_rd = node->redirects;
 	while (curr_rd)
 	{
-		if (curr_rd->rdtype == T_DOPCHEV)
-			g_err_code = open_heredoc(data, curr_rd);
+		if (curr_rd->rdtype == T_DOPCHEV && open_heredoc(data, curr_rd))
+			return (exit_line(data, g_err_code));
 		curr_rd = curr_rd->next;
 	}
 	if (!node->arguments)

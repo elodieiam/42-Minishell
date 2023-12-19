@@ -6,11 +6,25 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 13:04:23 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:12:18 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+ 
+int	syntax_error(t_data *data, t_token *toklist)
+{
+	char	*tok_str;
+
+	if (!toklist)
+		tok_str = "newline";
+	else
+		tok_str = toklist->string;
+	ft_putstr_fd("minishell : syntax error near unexpected token '", 2);
+	ft_putstr_fd(tok_str, 2);
+	write(2, "'\n", 2);
+	return (exit_line(data, SYNTAX_ERR));
+}
 
 // write : minishell: command: arg: error\n
 int	ferrnl(char *command, char *arg, char *error, int ret_val)
@@ -51,8 +65,6 @@ int	exit_line(t_data *data, int exit_code)
 		free_tokens(&(data->tokens));
 	if (data->tree)
 		free_tree(data);
-	// if (data->tmp_tree)
-		// free_tree(data);
 	if (data->pidlist)
 		free_pidlist(&(data->pidlist));
 	reset_rds(&(data->fds), NULL);

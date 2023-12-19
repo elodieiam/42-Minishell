@@ -2,7 +2,7 @@ NAME	=	minishell
 
 SRC_DIR	=	src
 
-SRC		=	main.c signals.c \
+SRC		=	main.c signals.c data.c \
 			lexer/lexer.c lexer/lexer_utils.c lexer/tokens.c lexer/free_lexer.c \
 			parsing/parsing.c parsing/tree.c parsing/cmd_node.c parsing/rdlist.c parsing/op_node.c \
 			parsing/parenthesis.c \
@@ -26,8 +26,8 @@ OBJS	=	$(addprefix $(OBJ_DIR)/, $(OBJ))
 
 CC		=	cc
 
-# CFLAGS	=	-Wall -Wextra -Werror -I./include -g3 -fsanitize=address
-CFLAGS	=	-Wall -Wextra -Werror -I./include -g3
+CFLAGS	=	-Wall -Wextra -Werror -I./include -g3 -fsanitize=address
+# CFLAGS	=	-Wall -Wextra -Werror -I./include -g3
 
 RM_FLAGS = -rf
 
