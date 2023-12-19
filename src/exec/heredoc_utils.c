@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:35:58 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/18 12:43:28 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 12:07:19 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ char	*get_heredoc_name(void)
 	return (close(fd_urand), heredoc_name);
 }
 
-void	exit_heredoc(t_rdlist *rd)
+int	exit_heredoc(t_rdlist *rd, t_data *data, int g_err_code)
 {
 	printf("minishell: warning: heredoc delimited by EOF\n");
 	close(rd->fd);
-	unlink(rd->heredoc_name);
+	//unlink(rd->heredoc_name);
+	return (exit_all(data, g_err_code));
 }

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/18 12:45:42 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 12:03:18 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	child_process(t_data *data, t_rdlist *rd)
 		if (g_err_code == 130)
 			break ;
 		if (!line)
-			return (exit_heredoc(rd), exit_all(data, g_err_code));
+			return (exit_heredoc(rd, data, g_err_code));
 		if (!ft_strncmp(line, rd->file, ft_strlen(rd->file) + 1))
 		{
 			free (line);

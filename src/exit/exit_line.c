@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/17 16:41:12 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 12:08:54 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ int	exit_all(t_data *data, int exit_code)
 		data->env = NULL;
 	}
 	free(data);
+	fflush(stdout);
 	exit(exit_code);
 }
