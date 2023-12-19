@@ -6,12 +6,13 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 19:17:34 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 20:10:57 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <signal.h>
+#include <sys/wait.h>
 
 int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 {
@@ -94,7 +95,10 @@ int	exec_pipe(t_data *data, t_node *node)
 	while (pid != -1)
 	{
 		waitpid(pid, &childval, 0);
-		// wait(0);
+		if (WIFSIGNALED(childval))
+			childval = WIFEXITED(childval) + 128;
+		if (childval == 130)
+			write(2, "\n", 1);
 		pid = pop_pid(&(data->pidlist));
 	}
 	return (g_err_code);
