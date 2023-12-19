@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/17 17:43:54 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/20 00:19:56 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	child_exec(t_data *data, t_node *node)
 	signal(SIGINT, sig_handler_child);
 	execve(cmd_path, node->arguments, data->env->envtab);
 	free(cmd_path);
-	return (exit_line(data, errnl(-1, "minishell: execve failed")));
+	return (exit_all(data, exit_line(data, errnl(-1, "minishell: execve failed"))));
 }
 
 //TODO : protect execute callers from execve fail
