@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/19 16:05:21 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 20:04:09 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,18 @@ t_node	*init_cmd_node(t_token **tokens, int malloc_size)
 t_node	*handlecommand(t_data *data)
 {
 	t_token	*curr;
+	t_node	*res;
 	int		malloc_size;
 
 	curr = data->tokens;
 	malloc_size = 0;
 	if (curr && curr->type == T_OPPAR)
-		return (handlepar(data));
-	while (curr && (curr->type < 4 || curr->type > 6) && curr->type != T_CLPAR)
+	{
+		res = handlepar(data);
+		data->tmp_tree = NULL;
+		return (res);
+	}
+	while (curr && (curr->type == 1 || curr->type > 6))
 	{
 		if (curr->type == T_WORD)
 		{
@@ -92,5 +97,7 @@ t_node	*handlecommand(t_data *data)
 			curr = curr->next;
 		curr = curr->next;
 	}
+	if (curr && curr->type == T_OPPAR)
+		return (syntax_error(data, curr), NULL);
 	return (init_cmd_node(&(data->tokens), ++malloc_size));
 }

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:28:57 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 16:05:33 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 19:27:35 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 /*----------------parsing.c---------------*/
 int			check_word(t_data *data, t_token *toklist);
-int			parse(t_data *data);
+int			parse(t_data *data, t_node **tree);
 int			add_nodeontop(t_node *node, t_node **head);
 
 /*-----------------tree.c----------------*/
@@ -36,7 +36,7 @@ void		free_args(char ***args);
 
 /*----------------op_node.c---------------*/
 t_node		*handleoperator(t_data *data);
-int			handlepipe(t_data *data);
+int			handlepipe(t_data *data, t_node **tree);
 
 /*--------------parenthesis.c-------------*/
 t_node		*handlepar(t_data *data);

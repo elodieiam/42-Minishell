@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:38:44 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/17 13:54:04 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/19 17:11:52 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_node	*new_node(int is_command)
 	}
 	node->operand = malloc(sizeof(t_operand));
 	if (!node->operand)
-		return (NULL);
+		return (free(node), NULL);
 	node->operand->l_child = NULL;
 	node->operand->r_child = NULL;
 	node->operand->optype = 0;

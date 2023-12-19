@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 16:06:09 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 19:38:42 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,30 @@ int	add_nodeontop(t_node *node, t_node **head)
 	return (0);
 }
 
-int	parse(t_data *data)
+int	parse(t_data *data, t_node **tree)
 {
-	while (data->tokens)
+	while (data->tokens && data->tokens->type != T_CLPAR)
 	{
 		if (data->tokens->type == T_WORD || data->tokens->type == T_OPPAR
 			|| (data->tokens->type >= 7 && data->tokens->type <= 10))
 		{
-			if (add_nodeontop(handlecommand(data), &(data->tree)))
+			if (add_nodeontop(handlecommand(data), tree))
 				return (g_err_code);
 		}
-		else if (data->tokens->type > 4 && data->tokens->type < 7)
+		else if (data->tokens->type == T_OR || data->tokens->type == T_AND)
 		{
-			if (add_nodeontop(handleoperator(data), &(data->tree)))
+			if (!*tree)
+				return (syntax_error(data, data->tokens));
+			if (add_nodeontop(handleoperator(data), tree))
 				return (g_err_code);
 		}
 		else if (data->tokens->type == T_PIPE)
-			if (handlepipe(data))
+		{
+			if (!*tree)
+				return (syntax_error(data, data->tokens));
+			if (handlepipe(data, tree))
 				return (g_err_code);
+		}
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/19 17:01:39 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 19:38:52 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	process_line(t_data *data)
 		return (1);
 	add_history(data->prompt);
 	data->tokens = ft_lexer(data->prompt);
-	if (parse(data))
+	if (parse(data, &data->tree))
 		return (exit_line(data, g_err_code), 0);
 	// pretty_print_ast(data->tree, "");
 	if (open_heredocs(data, data->tree))

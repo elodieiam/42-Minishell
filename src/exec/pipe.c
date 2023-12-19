@@ -6,11 +6,12 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 13:02:05 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 19:17:34 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <signal.h>
 
 int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 {
@@ -70,17 +71,9 @@ int	pipex(t_data *data, t_node *node, int fd[2], int nread_fd)
 	}
 	else if (node->parent && \
 		(node->parent->operand->l_child == node || node->parent->parent))
-	{
 		g_err_code = middle_pipe(data, node, fd, nread_fd);
-		if (g_err_code)
-			return (g_err_code);
-	}
 	else if (node->arguments)
-	{
 		g_err_code = last_pipe(data, node, nread_fd);
-		if (g_err_code)
-			return (g_err_code);
-	}
 	return (0);
 }
 
@@ -89,17 +82,18 @@ int	exec_pipe(t_data *data, t_node *node)
 	int			fd[2];
 	int			nread_fd;
 	int			pid;
+	int			childval;
 
 	fd[0] = -1;
 	fd[1] = -1;
-	signal(SIGQUIT, sig_handler_child);
-	signal(SIGINT, sig_handler_child);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
 	nread_fd = dup(STDIN_FILENO);
 	pipex(data, node, fd, nread_fd);
 	pid = pop_pid(&(data->pidlist));
 	while (pid != -1)
 	{
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &childval, 0);
 		// wait(0);
 		pid = pop_pid(&(data->pidlist));
 	}
