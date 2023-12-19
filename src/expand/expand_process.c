@@ -6,7 +6,7 @@
 /*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:42:46 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/05 12:38:59 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 12:55:37 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ char	*expand_exceptions(char *str, int *i)
 	{
 		(*i)++;
 		return (ft_itoa(g_err_code));
+	}
+	else if (is_varsep(str[*i]))
+	{
+		(*i) += 2;
+		return (ft_strdup("$"));
 	}
 	(*i)++;
 	printf("%d\n", *i);
