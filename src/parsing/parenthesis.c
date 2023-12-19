@@ -6,10 +6,12 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 19:04:21 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 20:00:12 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 22:56:33 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exit.h"
+#include "parsing.h"
 #include <minishell.h>
 
 t_rdlist	*get_rds(t_data *data, t_rdlist *res)
@@ -20,10 +22,10 @@ t_rdlist	*get_rds(t_data *data, t_rdlist *res)
 	while (data->tokens && data->tokens->type > 6 && data->tokens->type < 11)
 	{
 		if (!data->tokens->next || data->tokens->next->type != T_WORD)
-			return (free_rdlist(&res), NULL);
+			return (free_rdlist(&res), syntax_error(data, data->tokens->next), NULL);
 		rd = new_rd((data->tokens->type), data->tokens->next->string);
 		if (!rd)
-			return (free_rdlist(&res), NULL);
+			return (cherr_code(UNKNOWN_ERR), free_rdlist(&res), NULL);
 		rdlist_add_back(&(res), rd);
 		data->tokens = freengonextok(data->tokens);
 		data->tokens = freengonextok(data->tokens);
@@ -52,8 +54,6 @@ t_node	*handlepar(t_data *data)
 
 	rds = NULL;
 	err = 0;
-	// if (data->tree && !data->tree->operand)
-	// 	return (syntax_error(data, data->tokens), NULL);
 	if (check_par(data))
 		return (NULL);
 	data->tokens = freengonextok(data->tokens);
@@ -66,6 +66,10 @@ t_node	*handlepar(t_data *data)
 	if (data->tmp_tree)
 		data->tmp_tree->subshell = 1;
 	if (data->tokens && data->tokens->type > 6 && data->tokens->type < 11)
+	{
 		data->tmp_tree->redirects = get_rds(data, rds);
+		if (!data->tmp_tree->redirects)
+			return (free_node(data->tmp_tree), NULL);
+	}
 	return (data->tmp_tree);
 }

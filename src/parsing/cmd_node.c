@@ -6,10 +6,11 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/19 20:04:09 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/20 00:06:13 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exit.h"
 #include <minishell.h>
 
 void	free_args(char ***args)
@@ -94,7 +95,11 @@ t_node	*handlecommand(t_data *data)
 			malloc_size++;
 		}
 		else if (curr->type > 6 && curr->type < 11)
+		{
 			curr = curr->next;
+			if (!curr || curr->type != T_WORD)
+				return (syntax_error(data, curr), NULL);
+		}
 		curr = curr->next;
 	}
 	if (curr && curr->type == T_OPPAR)
