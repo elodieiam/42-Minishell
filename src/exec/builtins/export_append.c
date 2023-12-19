@@ -6,7 +6,7 @@
 /*   By: tsaint-p </var/spool/mail/tsaint-p>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 00:40:37 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 00:48:10 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 11:49:45 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_headvar(t_data *data, char *var)
 		i++;
 	if (data->env->envtab[i])
 		return (ft_strdup(&data->env->envtab[i][ft_strlen(var) + 1]));
-	return (NULL);
+	return (ft_strdup(""));
 }
 
 char	*append_var(t_data *data, char *argument)
