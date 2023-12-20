@@ -6,13 +6,13 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/19 20:23:19 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/20 11:20:29 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-unsigned char	g_err_code;
+int	g_err_code;
 
 int	cherr_code(int err_code)
 {
