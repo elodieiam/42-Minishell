@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:12:40 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 19:28:42 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/20 22:34:42 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ t_node	*handleoperator(t_data *data)
 {
 	t_node	*op_node;
 
-	if (!data->tokens->next || (data->tokens->next->type > 2 && data->tokens->next->type < 7))
+	if (!data->tokens->next || \
+		(data->tokens->next->type > 2 && data->tokens->next->type < 7))
 		return (syntax_error(data, data->tokens->next), NULL);
 	op_node = new_node(0);
 	if (!op_node || !op_node->operand)
@@ -57,7 +58,8 @@ int	handlepipe(t_data *data, t_node **tree)
 {
 	t_node	*pipe_node;
 
-	if (!data->tokens->next || (data->tokens->next->type > 2 && data->tokens->next->type < 7))
+	if (!data->tokens->next || \
+		(data->tokens->next->type > 2 && data->tokens->next->type < 7))
 		return (syntax_error(data, data->tokens->next));
 	pipe_node = new_node(0);
 	if (!pipe_node)

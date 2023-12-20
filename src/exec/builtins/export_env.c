@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 16:08:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/19 11:49:50 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/20 19:42:00 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,9 @@ int	update_env(t_data *data, char **arguments, int index, int append)
 	new_env = malloc(sizeof(char *) * (nb_arg + 2));
 	if (!new_env)
 		return (0);
-	nb_arg = 0;
-	while (data->env->envtab[nb_arg])
-	{
+	nb_arg = -1;
+	while (data->env->envtab[++nb_arg])
 		new_env[nb_arg] = ft_strdup(data->env->envtab[nb_arg]);
-		nb_arg++;
-	}
 	if (append)
 		new_env[nb_arg] = append_var(data, arguments[index]);
 	else

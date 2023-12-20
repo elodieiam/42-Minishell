@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/18 13:01:14 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/20 20:57:12 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	open_infile(t_data *data, t_rdlist *rd)
 {
-	if (data->fds.curr[0] != STDIN_FILENO)
-		close(data->fds.curr[0]);
 	if (rd->rdtype == T_DOPCHEV)
 	{
 		if (access(rd->heredoc_name, F_OK) == -1)
@@ -40,10 +38,10 @@ int	open_infile(t_data *data, t_rdlist *rd)
 
 int	open_outfile(t_data *data, t_rdlist *rd)
 {
-	if (data->fds.curr[1] != STDOUT_FILENO)
-		close(data->fds.curr[1]);
 	if (rd->rdtype == T_CLCHEV)
 	{
+		if (data->fds.curr[0] != STDIN_FILENO)
+			close(data->fds.curr[0]);
 		if (access(rd->file, F_OK) == -1)
 			data->fds.curr[1] = open(rd->file, O_WRONLY | O_CREAT, 0644);
 		else
@@ -76,6 +74,8 @@ int	open_redirect(t_data *data, t_rdlist *rd)
 	}
 	else if (rd->rdtype == T_DCLCHEV || rd->rdtype == T_CLCHEV)
 	{
+		if (data->fds.curr[1] != STDOUT_FILENO)
+			close(data->fds.curr[1]);
 		if (open_outfile(data, rd))
 			return (g_err_code);
 	}

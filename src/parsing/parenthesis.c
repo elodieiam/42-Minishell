@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 19:04:21 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 22:56:33 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/20 22:18:51 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_rdlist	*get_rds(t_data *data, t_rdlist *res)
 	while (data->tokens && data->tokens->type > 6 && data->tokens->type < 11)
 	{
 		if (!data->tokens->next || data->tokens->next->type != T_WORD)
-			return (free_rdlist(&res), syntax_error(data, data->tokens->next), NULL);
+			return (free_rdlist(&res), syntax_error(data, data->tokens->next),
+				NULL);
 		rd = new_rd((data->tokens->type), data->tokens->next->string);
 		if (!rd)
 			return (cherr_code(UNKNOWN_ERR), free_rdlist(&res), NULL);

@@ -6,12 +6,12 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:54:04 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 16:12:18 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/20 19:42:18 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
- 
+
 int	syntax_error(t_data *data, t_token *toklist)
 {
 	char	*tok_str;
