@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/22 12:16:49 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 15:11:55 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	exec_command(t_data *data, t_node *node)
 {
-	if (node->arguments && export_lastarg(data, node))
-		return (g_err_code);
 	if (expand(node, data->env->envtab))
+		return (g_err_code);
+	if (node->arguments && export_lastarg(data, node))
 		return (g_err_code);
 	if (node->redirects)
 		handle_redirections(data, node);
