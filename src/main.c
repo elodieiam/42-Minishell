@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/20 11:20:29 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 13:15:42 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	main(int ac, char *av[], char **env)
 	while (!exit_val)
 	{
 		exit_val = process_line(data);
-		printf("err code: %d\n", g_err_code);
+		// printf("err code: %d\n", g_err_code);
 	}
 	printf("exit\n");
 	return (exit_all(data, g_err_code));

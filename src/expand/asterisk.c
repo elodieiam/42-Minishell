@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asterisk.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 12:25:35 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 16:39:40 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 12:50:50 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,5 @@ char	**expand_wildcard(char *str)
 	res = get_files(d, res, str);
 	if (!res)
 		return (NULL);
-	closedir(d);
 	return (res);
 }

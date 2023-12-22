@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:42:46 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 12:55:37 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:45:52 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,8 @@ char	*expand_exceptions(char *str, int *i)
 		return (ft_itoa(g_err_code));
 	}
 	else if (is_varsep(str[*i]))
-	{
-		(*i) += 2;
 		return (ft_strdup("$"));
-	}
 	(*i)++;
-	printf("%d\n", *i);
 	return (ft_strdup(""));
 }
 
@@ -65,17 +61,18 @@ char	*get_varstr(char *str, int *i, char **env)
 		return (NULL);
 	if (str[*i] != '$')
 		return (ft_strdup(""));
-	if (str[*i] == '$' && \
-		(ft_isdigit(str[*i + 1]) || is_varsep(str[*i + 1])))
+	if (str[*i] == '$' && (ft_isdigit(str[*i + 1]) || \
+		(is_varsep(str[*i + 1]) && str[*i + 1] != '_')))
 		return (expand_exceptions(str, i));
 	j = 0;
 	(*i)++;
-	while (!is_varsep(str[*i + j]))
+	while (!is_varsep(str[*i + j]) || (!j && str[*i] == '_'))
 		j++;
 	k = 0;
 	while (env[k] && (ft_strncmp(&str[*i], env[k], j) || env[k][j] != '='))
 		k++;
 	*i = *i + j;
+	printf("env = %s\n", env[k]);
 	if (env[k])
 		return (ft_strdup(&env[k][j + 1]));
 	return (ft_strdup(""));
