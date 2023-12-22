@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/22 12:44:31 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:43:39 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*get_cmd_path(t_data *data, char *command)
 
 void	check_file(t_data *data, char *file_path, char *cmd)
 {
-	if (!file_path)
+	if (!file_path || !cmd[0])
 		exit(exit_all(data, ferrnl(cmd, NULL, "command not found", 127)));
 	if (access(file_path, F_OK) == -1)
 		exit(exit_all(data,

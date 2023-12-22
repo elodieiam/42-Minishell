@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/22 15:30:43 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:43:07 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	var_already_set(t_data *data, char **arguments, int index, int append)
 	while (arguments[index][i] && arguments[index][i] != '='
 		&& arguments[index][i] != '+')
 		i++;
-	printf("i = %d\n", i);
 	changed = search_var(data, arguments[index], i, append);
 	if (changed == UNKNOWN_ERR)
 		return (UNKNOWN_ERR);
