@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 19:02:42 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/20 13:02:14 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 12:52:16 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	handle_child_sigs(int childval)
 			printf("Quit (core dumped)\n");
 		else if (WTERMSIG(childval) == SIGINT)
 			printf("\n");
-		return (1);
+		return (WTERMSIG(childval));
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 19:38:42 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 15:06:21 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	add_nodeontop(t_node *node, t_node **head)
 {
 	if (!head || !node)
 		return (g_err_code);
-	if (!(node->arguments) && node->operand && !node->operand->l_child)
+	if (*head && !(node->arguments) && node->operand && !node->operand->l_child)
 	{
 		(*head)->parent = node;
 		node->operand->l_child = *head;
