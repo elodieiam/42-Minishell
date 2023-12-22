@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:36:08 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/16 12:42:08 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:08:43 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef struct s_data
 	t_env			*env;
 	t_fds			fds;
 	t_node			*tree;
-	t_node			*tmp_tree;
 	t_token			*tokens;
 	t_pidlist		*pidlist;
 }	t_data;

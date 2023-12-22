@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 19:04:21 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/20 22:18:51 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:09:30 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,26 @@ t_node	*handlepar(t_data *data)
 {
 	t_rdlist	*rds;
 	int			err;
+	t_node		*tmp_tree;
 
 	rds = NULL;
 	err = 0;
 	if (check_par(data))
 		return (NULL);
 	data->tokens = freengonextok(data->tokens);
-	data->tmp_tree = NULL;
-	err = parse(data, &(data->tmp_tree));
+	tmp_tree = NULL;
+	err = parse(data, &(tmp_tree));
 	if (err)
 		return (NULL);
 	if (data->tokens->type == T_CLPAR)
 		data->tokens = freengonextok(data->tokens);
-	if (data->tmp_tree)
-		data->tmp_tree->subshell = 1;
+	if (tmp_tree)
+		tmp_tree->subshell = 1;
 	if (data->tokens && data->tokens->type > 6 && data->tokens->type < 11)
 	{
-		data->tmp_tree->redirects = get_rds(data, rds);
-		if (!data->tmp_tree->redirects)
-			return (free_node(data->tmp_tree), NULL);
+		tmp_tree->redirects = get_rds(data, rds);
+		if (!tmp_tree->redirects)
+			return (free_node(tmp_tree), NULL);
 	}
-	return (data->tmp_tree);
+	return (tmp_tree);
 }

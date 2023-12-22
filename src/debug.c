@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:30:17 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/16 17:38:31 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:15:17 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	pretty_print_ast(t_node *node, char *prefix)
 	printf("%s├── Type: %s	subshell : %d\n",
 		prefix, tta(node->operand->optype), node->subshell);
 	curr = node->redirects;
-	printf("\n%s├── Redir: ", prefix);
+	printf("%s├── Redir: ", prefix);
 	while (curr)
 	{
 		printf("type : %s :", tta(curr->rdtype));

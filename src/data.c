@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:03:59 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 15:09:22 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:09:45 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_data	*init_data(char **env)
 	data->prompt = NULL;
 	data->tokens = NULL;
 	data->tree = NULL;
-	data->tmp_tree = NULL;
 	data->pidlist = NULL;
 	data->fds.curr[0] = STDIN_FILENO;
 	data->fds.curr[1] = STDOUT_FILENO;

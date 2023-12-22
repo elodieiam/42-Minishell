@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:23:43 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/20 22:33:34 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:10:32 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,17 +95,12 @@ int	create_command(t_data *data, t_token **curr, int *malloc_size)
 t_node	*handlecommand(t_data *data)
 {
 	t_token	*curr;
-	t_node	*res;
 	int		malloc_size;
 
 	malloc_size = 0;
 	curr = data->tokens;
 	if (curr && curr->type == T_OPPAR)
-	{
-		res = handlepar(data);
-		data->tmp_tree = NULL;
-		return (res);
-	}
+		return (handlepar(data));
 	if (create_command(data, &curr, &malloc_size))
 		return (NULL);
 	if (curr && curr->type == T_OPPAR)
