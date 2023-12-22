@@ -6,13 +6,22 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/20 13:31:09 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 12:57:20 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <signal.h>
 #include <sys/wait.h>
+
+int	execute_pipe(t_data *data, t_node *node)
+{
+	if (!node)
+		return (g_err_code);
+	if (node->subshell)
+		return (exec_subshell(data, node));
+	return (child_exec(data, node));
+}
 
 int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 {
@@ -25,13 +34,14 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 	if (!child_pid)
 	{
 		signal(SIGINT, SIG_DFL);
-		signal(SIGTERM, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGQUIT, ft_handler);
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 		dup2(nread_fd, STDIN_FILENO);
 		close(nread_fd);
-		exec(data, node);
+		execute_pipe(data, node);
 		exit(exit_all(data, g_err_code));
 	}
 	close(nread_fd);
@@ -53,10 +63,12 @@ int	last_pipe(t_data *data, t_node *node, int nread_fd)
 	if (!child_pid)
 	{
 		signal(SIGINT, SIG_DFL);
-		signal(SIGTERM, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGQUIT, ft_handler);
 		dup2(nread_fd, STDIN_FILENO);
 		close(nread_fd);
-		exec(data, node);
+		// exec(data, node);
+		execute_pipe(data, node);
 		exit(exit_all(data, g_err_code));
 	}
 	close(nread_fd);
@@ -87,19 +99,22 @@ int	exec_pipe(t_data *data, t_node *node)
 	int			fd[2];
 	int			nread_fd;
 	int			pid;
+	int			print;
 
 	fd[0] = -1;
 	fd[1] = -1;
-	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, SIG_IGN);
 	nread_fd = dup(STDIN_FILENO);
 	pipex(data, node, fd, nread_fd);
 	pid = pop_pid(&(data->pidlist));
+	print = 1;
 	while (pid != -1)
 	{
-		waitpid(pid, &g_err_code, 0);
-		// handle_child_sigs(g_err_code);
+		waitpid(pid, &g_err_code, WUNTRACED);
+		if (print && handle_child_sigs(g_err_code))
+			print = 0;
 		pid = pop_pid(&(data->pidlist));
 	}
+	signal(SIGINT, ft_handler);
 	return (g_err_code);
 }

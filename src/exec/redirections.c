@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/20 20:57:12 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 11:49:50 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	open_infile(t_data *data, t_rdlist *rd)
 		if (rd->fd >= 0)
 			close(rd->fd);
 		data->fds.curr[0] = open(rd->heredoc_name, O_RDONLY);
-		signal(SIGINT, SIG_IGN);
+		// signal(SIGINT, SIG_IGN);
 	}
 	else if (rd->rdtype == T_OPCHEV)
 	{

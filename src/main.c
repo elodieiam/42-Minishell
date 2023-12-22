@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/20 11:20:29 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 12:15:01 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	cherr_code(int err_code)
 
 int	process_line(t_data *data)
 {
-	signal(SIGINT, ft_handler);
+	init_signal();
 	data->prompt = readline("minishell>");
 	if (!data->prompt)
 		return (1);
@@ -95,14 +95,14 @@ int	main(int ac, char *av[], char **env)
 	data = init_data(env);
 	if (!data)
 		return (-1);
-	init_signal();
+	// init_signal();
 	if (increment_shlvl(data))
 		return (exit_line(data, g_err_code));
 	exit_val = 0;
 	while (!exit_val)
 	{
 		exit_val = process_line(data);
-		printf("err code: %d\n", g_err_code);
+		// printf("err code: %d\n", g_err_code);
 	}
 	printf("exit\n");
 	return (exit_all(data, g_err_code));

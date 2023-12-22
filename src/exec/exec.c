@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/18 13:15:36 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 12:16:49 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	exec_or(t_data *data, t_node *tree)
 	return (g_err_code);
 }
 
+//protec handle redir
 int	exec_and(t_data *data, t_node *tree)
 {
-	//protect handle redir
 	if (tree->redirects)
 		handle_redirections(data, tree);
 	if (!exec(data, tree->operand->l_child))
