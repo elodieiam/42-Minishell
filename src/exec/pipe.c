@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/22 12:57:20 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/22 17:36:06 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	execute_pipe(t_data *data, t_node *node)
 		return (g_err_code);
 	if (node->subshell)
 		return (exec_subshell(data, node));
+	// expand
 	return (child_exec(data, node));
 }
 
