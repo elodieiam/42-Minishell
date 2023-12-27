@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/22 11:49:50 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:12:44 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	handle_redirections(t_data *data, t_node *node)
 {
 	t_rdlist	*curr_rd;
 
+	printf("handleredir : %d\n", getpid());
 	curr_rd = node->redirects;
 	while (curr_rd)
 	{
