@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/22 15:11:55 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/27 16:06:21 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	exec_command(t_data *data, t_node *node)
 	if (node->arguments && export_lastarg(data, node))
 		return (g_err_code);
 	if (node->redirects)
-		handle_redirections(data, node);
+		if (handle_redirections(data, node))
+			return (g_err_code);
 	if (node->arguments && node->arguments[0] && !srch_builtin(data, node))
 		g_err_code = execute(data, node);
 	if (node->redirects)
@@ -40,9 +41,15 @@ int	exec_or(t_data *data, t_node *tree)
 int	exec_and(t_data *data, t_node *tree)
 {
 	if (tree->redirects)
-		handle_redirections(data, tree);
+		if (handle_redirections(data, tree))
+			return (g_err_code);
 	if (!exec(data, tree->operand->l_child))
-		exec(data, tree->operand->r_child);
+	{
+		if (exec(data, tree->operand->r_child))
+			return (g_err_code);
+	}
+	else
+		return (g_err_code);
 	if (tree->redirects)
 		reset_rds(&(data->fds), tree);
 	return (g_err_code);
@@ -90,9 +97,9 @@ int	exec(t_data *data, t_node *node)
 	{
 		if (node->operand->optype == T_OR)
 			g_err_code = exec_or(data, node);
-		if (node->operand->optype == T_AND)
+		else if (node->operand->optype == T_AND)
 			g_err_code = exec_and(data, node);
-		if (node->operand->optype == T_PIPE)
+		else if (node->operand->optype == T_PIPE)
 			g_err_code = exec_pipe(data, node);
 	}
 	return (g_err_code);
