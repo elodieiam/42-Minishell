@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/27 17:06:20 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/27 18:08:50 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ int	child_process(t_data *data, t_rdlist *rd)
 		if (!line)
 			return (exit_heredoc(rd, data, g_err_code));
 		if (!ft_strncmp(line, rd->file, ft_strlen(rd->file) + 1))
-		{
-			free (line);
 			break ;
-		}
 		res = ft_strjoin(line, "\n");
 		free (line);
 		if (!res)
@@ -41,7 +38,7 @@ int	child_process(t_data *data, t_rdlist *rd)
 		write(rd->fd, line, ft_strlen(line));
 		free (line);
 	}
-	return (close(rd->fd), exit_all(data, g_err_code));
+	return (free(line), close(rd->fd), exit_all(data, g_err_code));
 }
 
 int	open_heredoc(t_data *data, t_rdlist *rd)
