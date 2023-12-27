@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/27 16:01:35 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/27 16:49:10 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	open_outfile(t_data *data, t_rdlist *rd)
 {
 	if (rd->rdtype == T_CLCHEV)
 	{
-		if (data->fds.curr[0] != STDIN_FILENO)
-			close(data->fds.curr[0]);
+		if (data->fds.curr[1] != STDOUT_FILENO)
+			close(data->fds.curr[1]);
 		if (access(rd->file, F_OK) == -1)
 			data->fds.curr[1] = open(rd->file, O_WRONLY | O_CREAT, 0644);
 		else

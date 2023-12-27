@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/19 15:36:07 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/27 17:06:20 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,14 @@ int	child_process(t_data *data, t_rdlist *rd)
 			break ;
 		}
 		res = ft_strjoin(line, "\n");
-		if (!res)
-			return (free(line), UNKNOWN_ERR);
-		write(rd->fd, res, ft_strlen(res));
 		free (line);
-		free (res);
+		if (!res)
+			return (UNKNOWN_ERR);
+		line = apply_exp(res, data->env->envtab);
+		if (!line)
+			return (UNKNOWN_ERR);
+		write(rd->fd, line, ft_strlen(line));
+		free (line);
 	}
 	return (close(rd->fd), exit_all(data, g_err_code));
 }
