@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/22 16:01:20 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/27 13:57:27 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	process_line(t_data *data)
 		return (exit_line(data, g_err_code), 0);
 	if (data->tokens)
 		return (syntax_error(data, data->tokens), 0);
-	pretty_print_ast(data->tree, "");
+	// pretty_print_ast(data->tree, "");
 	if (open_heredocs(data, data->tree))
 		return (exit_line(data, g_err_code), 0);
 	if (exec(data, data->tree))
