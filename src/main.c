@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/28 16:15:24 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/28 16:46:51 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	prep_stdinnout(void)
 		fd = open("/dev/stdin", O_RDWR);
 		if (fd == -1)
 			return (UNKNOWN_ERR);
-		if (dup2(fd, STDOUT_FILENO))
+		if (dup2(fd, STDOUT_FILENO) == -1)
 			return (close(fd), UNKNOWN_ERR);
 		close(fd);
 	}

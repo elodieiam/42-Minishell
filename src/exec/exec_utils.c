@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 15:21:16 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/16 18:11:01 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 16:43:59 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,11 @@ int	export_lastarg(t_data *data, t_node *node)
 	tab[1] = ft_strjoin("_=", node->arguments[cpt]);
 	if (!tab[1])
 		return (free(tab), exit_line(data, UNKNOWN_ERR));
-	g_err_code = exec_export(data, tab);
+	if (exec_export(data, tab))
+		return (g_err_code);
 	free(tab[1]);
 	free(tab);
-	return (g_err_code);
+	return (0);
 }
 
 void	free_dchartab(char **tab)

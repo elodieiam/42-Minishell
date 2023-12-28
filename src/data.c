@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 15:03:59 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/22 16:09:45 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 16:24:29 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ t_data	*init_data(char **env)
 		return (free(data), NULL);
 	data->env->envtab = env;
 	data->env->malloced = 0;
-	g_err_code = 0;
 	return (data);
 }
