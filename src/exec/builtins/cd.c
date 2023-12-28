@@ -79,7 +79,6 @@ int	export_cd(t_data *data, char **export_tab, char *newpwd, char *oldpwd)
 	}
 	export_tab[3] = NULL;
 	exec_export(data, export_tab);
-	free(newpwd);
 	free(export_tab[1]);
 	free(export_tab[2]);
 	free(export_tab);
@@ -89,6 +88,7 @@ int	export_cd(t_data *data, char **export_tab, char *newpwd, char *oldpwd)
 int	exec_cd(t_data *data, t_node *node)
 {
 	char	oldpwd[PATH_MAX];
+	char	finalpwd[PATH_MAX];
 	char	*newpwd;
 	char	**export_tab;
 
@@ -101,9 +101,13 @@ int	exec_cd(t_data *data, t_node *node)
 	if (check_access(newpwd) == -1)
 		return (free(newpwd), 1);
 	chdir(newpwd);
+	free(newpwd);
+	if (!getcwd(finalpwd, PATH_MAX))
+		return (exit_line(data, errnl(UNKNOWN_ERR, "fatal: getcwd failed")));
+	printf("new cd : %s\n", finalpwd);
 	export_tab = malloc(sizeof(char *) * 4);
 	if (!export_tab)
-		return (free(newpwd), exit_line(data,
+		return (exit_line(data,
 				errnl(UNKNOWN_ERR, "fatal: malloc failed")));
-	return (export_cd(data, export_tab, newpwd, oldpwd));
+	return (export_cd(data, export_tab, finalpwd, oldpwd));
 }
