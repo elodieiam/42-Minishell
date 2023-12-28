@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/20 11:20:52 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 13:50:10 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define NOTFOUND_ERR 127
 # define SIGINT_ERR 130
 # define UNKNOWN_ERR 255
+# define COL_RED "\033[1;31m"
+# define COL_RES "\033[0m"
 
 extern int	g_err_code;
 

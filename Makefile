@@ -22,6 +22,8 @@ OBJ		=	$(SRC:%.c=%.o)
 
 OBJS	=	$(addprefix $(OBJ_DIR)/, $(OBJ))
 
+OBJ_COUNT := 0
+
 ########	CC  & FLAGS		########
 
 CC		=	cc
@@ -37,36 +39,65 @@ LFT_DIR	=	libft
 
 LIBFT	=	$(LFT_DIR)/libft.a
 
+########		COLORS		########
+
+COLOR_RESET	=	\033[0m
+COLOR_RED	=	\033[1;31m
+COLOR_GREEN	=	\033[1;32m
+COLOR_YELLOW =	\033[1;93m
+COLOR_BLUE =	\033[1;94m
+COLOR_PINK	=	\033[38;5;206m
+COLOR_LBLUE	=	\033[1;94m
+
 ########		RULES		########
 
 all	:			$(NAME)
 
 $(NAME) :		$(OBJS) $(LIBFT) 
 				@$(CC) $(CFLAGS) -L$(LFT_DIR) $^ -o $@ -lreadline
+				@echo "$(COLOR_GREEN)$(NAME) has been successfully built!$(COLOR_RESET)"
+				@clear
+				@echo "$(COLOR_LBLUE)"
+				@echo "		==================================================================="
+				@echo "		███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "
+				@echo "		████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "
+				@echo "		██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     "
+				@echo "		██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "
+				@echo "		██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"
+				@echo "		╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"
+				@echo "		==================================================================="
+				@echo "$(COLOR_RESET)"
+				@./minishell
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(eval OBJ_COUNT=$(shell expr $(OBJ_COUNT) + 1))
+	@printf "\033[K\r"
+	@printf "[$(COLOR_BLUE)%d%%$(COLOR_RESET)] $(notdir $<)" $$(expr $$(($(OBJ_COUNT) * 100)) / $(words $(SRC)))
 
 
-$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
-				@mkdir -p $(@D)
-				$(CC) $(CFLAGS) -c $< -o $@
+
 
 $(LIBFT) :
-				@echo "making libft..."
+				@echo "\n$(COLOR_YELLOW)Making libft...$(COLOR_RESET)"
 				@make -sC $(LFT_DIR)
-				@echo "Done !"
+				@echo "$(COLOR_GREEN)Libft has been built successfully!$(COLOR_RESET)"
 
 clean : 
-				@echo "cleaning libft..."
+				@echo "$(COLOR_YELLOW)Cleaning libft...$(COLOR_RESET)"
 				@make -sC $(LFT_DIR) clean
-				@echo "cleaning .o files..."
+				@echo "$(COLOR_RED)Cleaning .o files...$(COLOR_RESET)"
 				@rm $(RM_FLAGS) $(OBJS)
-				@echo "Project cleaned !"
+				@echo "$(COLOR_GREEN)Project cleaned!$(COLOR_RESET)"
 
 fclean :		clean
-				@echo "cleaning executable and libft.a"
+				@echo "$(COLOR_YELLOW)Cleaning executable and libft.a...$(COLOR_RESET)"
 				@make -sC $(LFT_DIR) fclean
 				@rm $(RM_FLAGS) $(NAME)
-				@echo "Project fully cleaned"
+				@echo "$(COLOR_RED)Project fully cleaned!$(COLOR_RESET)"
 
 re:				fclean all
 
-.PHONY:			all clean fclean
+.PHONY:			all clean fclean re
+
