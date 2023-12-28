@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/27 16:06:21 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 17:04:30 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	exec_subshell(t_data *data, t_node *node)
 	childval = 0;
 	if (node->subshell)
 		pid = fork();
+	if (pid == -1)
+		return (fatal_error(data, "fork"));
 	if (!pid)
 	{
 		if (node->arguments || (!node->operand && node->redirects))
