@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/27 18:08:50 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 16:09:44 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ int	open_heredoc(t_data *data, t_rdlist *rd)
 	int		childval;
 
 	childval = 0;
-	rd->heredoc_name = get_heredoc_name();
+	rd->heredoc_name = get_heredoc_name(data);
+	if (!rd->heredoc_name)
+		return (g_err_code);
 	// dprintf(2, "hd name : %s\n", node->redirects-)
 	// if (!rd->heredoc_name)
 	rd->fd = open(rd->heredoc_name,
@@ -61,11 +63,14 @@ int	open_heredoc(t_data *data, t_rdlist *rd)
 	if (pid == 0)
 		return (signal(SIGINT, ft_handler_heredoc)
 			, child_process(data, rd));
-	waitpid(pid, &childval, 0);
+	if (waitpid(pid, &childval, 0) == -1)
+		return (UNKNOWN_ERR);
 	if (WEXITSTATUS(childval) == 130)
 	{
 		close(rd->fd);
-		return (unlink(rd->heredoc_name), cherr_code(SIGINT_ERR));
+		if (unlink(rd->heredoc_name) == -1)
+			return (UNKNOWN_ERR);	
+		return (cherr_code(SIGINT_ERR));
 	}
 	return (0);
 }
@@ -83,10 +88,12 @@ int	open_heredocs(t_data *data, t_node *node)
 			return (exit_line(data, g_err_code));
 		curr_rd = curr_rd->next;
 	}
-	if (!node->arguments)
+	if (node->operand)
 	{
-		open_heredocs(data, node->operand->l_child);
-		open_heredocs(data, node->operand->r_child);
+		if (open_heredocs(data, node->operand->l_child))
+			return (g_err_code);
+		if (open_heredocs(data, node->operand->r_child))
+			return (g_err_code);
 	}
 	return (0);
 }

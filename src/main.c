@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/28 13:47:00 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 16:15:24 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ int	cherr_code(int err_code)
 int	process_line(t_data *data)
 {
 	init_signal();
-	data->prompt = readline("\n\033[1;94mminishell> \033[0m");
+	data->prompt = readline("\033[1;94mminishell> \033[0m");
 	if (!data->prompt)
 		return (1);
 	add_history(data->prompt);
-	data->tokens = ft_lexer(data->prompt);
+	data->tokens = ft_lexer(data, data->prompt);
+	if (!data->tokens)
+		return (exit_line(data, g_err_code), 0);
 	if (parse(data, &data->tree))
 		return (exit_line(data, g_err_code), 0);
 	if (data->tokens)
@@ -77,7 +79,10 @@ int	prep_stdinnout(void)
 	else
 	{
 		fd = open("/dev/stdin", O_RDWR);
-		dup2(fd, STDOUT_FILENO);
+		if (fd == -1)
+			return (UNKNOWN_ERR);
+		if (dup2(fd, STDOUT_FILENO))
+			return (close(fd), UNKNOWN_ERR);
 		close(fd);
 	}
 	return (0);
@@ -88,13 +93,14 @@ int	main(int ac, char *av[], char **env)
 	t_data	*data;
 	int		exit_val;
 
-	prep_stdinnout();
 	if (ac != 1)
 		return (errnl(1, "Error : no arguments required"));
 	(void)av;
 	data = init_data(env);
 	if (!data)
-		return (-1);
+		return (UNKNOWN_ERR);
+	if (prep_stdinnout())
+		exit_all(data, fatal_error(data, "minishell launch"));
 	// init_signal();
 	if (increment_shlvl(data))
 		return (exit_line(data, g_err_code));

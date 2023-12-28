@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:35:58 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/19 12:07:19 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/28 15:45:02 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ char	*heredoc_urandpath(char **heredoc_name, int fd_urand)
 	while (++i < 15)
 	{
 		if (read(fd_urand, &buffer, 1) == -1)
+		{
+			g_err_code = UNKNOWN_ERR;
 			return (NULL);
+		}
 		(*heredoc_name)[i] = ((unsigned char) buffer % 26) + 97;
 	}
 	tmp = *heredoc_name;
@@ -49,7 +52,7 @@ int	fill_heredoc_name(int fd_urand, char **heredoc_name)
 	return (0);
 }
 
-char	*get_heredoc_name(void)
+char	*get_heredoc_name(t_data *data)
 {
 	char	*heredoc_name;
 	int		fd_urand;
@@ -63,7 +66,7 @@ char	*get_heredoc_name(void)
 	heredoc_name = ft_calloc(16, sizeof(char));
 	if (!heredoc_name)
 	{
-		g_err_code = UNKNOWN_ERR;
+		fatal_error(data, "malloc");
 		return (close(fd_urand), NULL);
 	}
 	heredoc_name[0] = '.';

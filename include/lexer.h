@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:30:00 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/10/23 17:08:59 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 16:15:44 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LEXER_H
 # include "structs.h"
 /*----------------lexer.c---------------*/
-t_token	*ft_lexer(char *cmd_line);
+t_token	*ft_lexer(t_data *data, char *cmd_line);
 void	printlist(t_token *token); //temp
 void	free_tokens(t_token **tokens);
 
