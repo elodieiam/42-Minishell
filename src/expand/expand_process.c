@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:42:46 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/22 14:45:52 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/27 16:20:38 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ char	*get_varstr(char *str, int *i, char **env)
 	while (env[k] && (ft_strncmp(&str[*i], env[k], j) || env[k][j] != '='))
 		k++;
 	*i = *i + j;
-	printf("env = %s\n", env[k]);
 	if (env[k])
 		return (ft_strdup(&env[k][j + 1]));
 	return (ft_strdup(""));

@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/27 13:57:27 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 13:47:00 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	cherr_code(int err_code)
 int	process_line(t_data *data)
 {
 	init_signal();
-	data->prompt = readline("minishell>");
+	data->prompt = readline("\n\033[1;94mminishell> \033[0m");
 	if (!data->prompt)
 		return (1);
 	add_history(data->prompt);

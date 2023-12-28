@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/27 13:40:50 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/27 15:43:50 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 		close(fd[1]);
 		dup2(nread_fd, STDIN_FILENO);
 		close(nread_fd);
-		handle_redirections(data, node);
-		printf("handleredir : %d", getpid());
 		exec(data, node);
-		reset_rds(&(data->fds), node);
-		printf("%d reset rds\n", getpid());
 		exit(exit_all(data, g_err_code));
 	}
 	close(nread_fd);
@@ -54,10 +50,7 @@ int	last_pipe(t_data *data, t_node *node, int nread_fd)
 	{
 		dup2(nread_fd, STDIN_FILENO);
 		close(nread_fd);
-		handle_redirections(data, node);
 		exec(data, node);
-		reset_rds(&(data->fds), node);
-		printf("%d reset rds\n", getpid());
 		exit(exit_all(data, g_err_code));
 	}
 	close(nread_fd);

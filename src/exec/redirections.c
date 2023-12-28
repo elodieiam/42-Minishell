@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/22 11:49:50 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 13:51:37 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	open_outfile(t_data *data, t_rdlist *rd)
 {
 	if (rd->rdtype == T_CLCHEV)
 	{
-		if (data->fds.curr[0] != STDIN_FILENO)
-			close(data->fds.curr[0]);
+		if (data->fds.curr[1] != STDOUT_FILENO)
+			close(data->fds.curr[1]);
 		if (access(rd->file, F_OK) == -1)
 			data->fds.curr[1] = open(rd->file, O_WRONLY | O_CREAT, 0644);
 		else
@@ -54,7 +54,7 @@ int	open_outfile(t_data *data, t_rdlist *rd)
 	else if (rd->rdtype == T_DCLCHEV)
 	{
 		if (access(rd->file, F_OK) == -1)
-			data->fds.curr[1] = open(rd->file, O_WRONLY | O_APPEND | O_CREAT, 644);
+			data->fds.curr[1] = open(rd->file, O_WRONLY | O_APPEND | O_CREAT, 0644);
 		else
 		{
 			if (access(rd->file, W_OK) == -1)
@@ -90,7 +90,8 @@ int	handle_redirections(t_data *data, t_node *node)
 	curr_rd = node->redirects;
 	while (curr_rd)
 	{
-		open_redirect(data, curr_rd);
+		if (open_redirect(data, curr_rd))
+			return (g_err_code);
 		curr_rd = curr_rd->next;
 	}
 	if (data->fds.curr[0] != STDIN_FILENO)
