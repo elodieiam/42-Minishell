@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/28 16:09:44 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/28 17:34:10 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	child_process(t_data *data, t_rdlist *rd)
 
 	line = NULL;
 	res = NULL;
+	signal(SIGINT, ft_handler_heredoc);
 	while (1)
 	{
 		line = readline("> ");
-		if (g_err_code == 130)
-			break ;
-		if (!line)
+		if (!line && g_err_code != 130)
 			return (exit_heredoc(rd, data, g_err_code));
-		if (!ft_strncmp(line, rd->file, ft_strlen(rd->file) + 1))
+		if (g_err_code == 130 || \
+			!ft_strncmp(line, rd->file, ft_strlen(rd->file) + 1))
 			break ;
 		res = ft_strjoin(line, "\n");
 		free (line);
@@ -46,14 +46,10 @@ int	open_heredoc(t_data *data, t_rdlist *rd)
 	int		pid;
 	int		childval;
 
-	childval = 0;
 	rd->heredoc_name = get_heredoc_name(data);
 	if (!rd->heredoc_name)
 		return (g_err_code);
-	// dprintf(2, "hd name : %s\n", node->redirects-)
-	// if (!rd->heredoc_name)
-	rd->fd = open(rd->heredoc_name,
-			O_CREAT | O_RDWR | O_TRUNC, 0644);
+	rd->fd = open(rd->heredoc_name, 578, 0644);
 	if (rd->fd == (-1))
 		return (PERM_ERR);
 	pid = fork();
@@ -61,15 +57,14 @@ int	open_heredoc(t_data *data, t_rdlist *rd)
 		return (UNKNOWN_ERR);
 	signal(SIGINT, SIG_IGN);
 	if (pid == 0)
-		return (signal(SIGINT, ft_handler_heredoc)
-			, child_process(data, rd));
+		return (child_process(data, rd));
 	if (waitpid(pid, &childval, 0) == -1)
-		return (UNKNOWN_ERR);
+		return (close(rd->fd), UNKNOWN_ERR);
 	if (WEXITSTATUS(childval) == 130)
 	{
 		close(rd->fd);
 		if (unlink(rd->heredoc_name) == -1)
-			return (UNKNOWN_ERR);	
+			return (UNKNOWN_ERR);
 		return (cherr_code(SIGINT_ERR));
 	}
 	return (0);

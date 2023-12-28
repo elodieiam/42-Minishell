@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/28 13:51:37 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 17:35:25 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	open_outfile(t_data *data, t_rdlist *rd)
 	else if (rd->rdtype == T_DCLCHEV)
 	{
 		if (access(rd->file, F_OK) == -1)
-			data->fds.curr[1] = open(rd->file, O_WRONLY | O_APPEND | O_CREAT, 0644);
+			data->fds.curr[1] = open(rd->file, 578, 0644);
 		else
 		{
 			if (access(rd->file, W_OK) == -1)

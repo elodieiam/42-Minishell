@@ -6,19 +6,17 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:41:50 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/28 16:17:01 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/28 16:56:39 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*get_sepstring(t_data *data, char **cmd_line)
+char	*get_sepstring(t_data *data, char **cmd_line, int i)
 {
-	int		i;
 	char	first_sep;
 	char	*res;
 
-	i = 0;
 	first_sep = **cmd_line;
 	if (first_sep == ')' || first_sep == '(')
 	{
@@ -76,7 +74,7 @@ char	*ft_getstring(t_data *data, char **cmd_line)
 	while (ft_isspace(**cmd_line))
 		(*cmd_line)++;
 	if (ft_iswordsep(**cmd_line))
-		return (get_sepstring(data, cmd_line));
+		return (get_sepstring(data, cmd_line, i));
 	if ((*cmd_line)[i] == 34 || (*cmd_line)[i] == 39)
 		quote = (*cmd_line)[i++];
 	while ((*cmd_line)[i] && !(!quote && ft_iswordsep((*cmd_line)[i])))
