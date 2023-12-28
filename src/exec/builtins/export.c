@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/28 18:48:57 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/28 21:08:55 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ int	exec_export(t_data *data, char **arguments)
 						return (g_err_code);
 				return (1);
 			}
-				
 		}
 		else
 			return (exit_line(data, ferrnl("export",

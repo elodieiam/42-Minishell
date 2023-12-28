@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 12:25:35 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/22 12:50:50 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/28 21:29:30 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	asterisk(char *file, char *exp)
 	return (0);
 }
 
-char	**get_files(DIR *d, char **res, char *str)
+char	**get_files(t_data *data, DIR *d, char **res, char *str)
 {
 	struct dirent	*dir;
 	int				i;
@@ -34,6 +34,8 @@ char	**get_files(DIR *d, char **res, char *str)
 		return (NULL);
 	i = 0;
 	dir = readdir(d);
+	if (!dir)
+		return (exit_line(data, errnl(UNKNOWN_ERR, "readdir failed")), NULL);
 	while (dir != NULL)
 	{
 		if ((*dir->d_name != '.' || *str == '.') && asterisk(dir->d_name, str))
@@ -45,29 +47,34 @@ char	**get_files(DIR *d, char **res, char *str)
 			}
 			res = tab_addback(res, dir->d_name);
 			if (!res)
-				return (NULL);
+				return (fatal_error(data, "malloc"), NULL);
 			i++;
 		}
 		dir = readdir(d);
+		if (!dir)
+			return (exit_line(data, errnl(UNKNOWN_ERR, "readdir failed")), NULL);
 	}
-	closedir(d);
+	if (closedir(d) == -1)
+		return (exit_line(data, errnl(UNKNOWN_ERR, "closedir failed")), NULL);
 	return (res);
 }
 
-char	**expand_wildcard(char *str)
+char	**expand_wildcard(t_data *data, char *str)
 {
 	char			**res;
 	DIR				*d;
 
 	d = opendir(".");
+	if (!d)
+		return (exit_line(data, errnl(UNKNOWN_ERR, "opendir failed")), NULL);
 	res = malloc(sizeof(char *) * 2);
 	if (!res)
-		return (NULL);
+		return (fatal_error(data, "malloc"), NULL);
 	res[0] = ft_strdup(str);
 	if (!res[0])
-		return (free(res), NULL);
+		return (free(res), fatal_error(data, "malloc"), NULL);
 	res[1] = NULL;
-	res = get_files(d, res, str);
+	res = get_files(data, d, res, str);
 	if (!res)
 		return (NULL);
 	return (res);

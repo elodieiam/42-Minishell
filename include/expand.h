@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:45 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/27 17:03:15 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 21:40:06 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 # include "structs.h"
 
 /*-------------asterisk.c-------------*/
-char	**expand_wildcard(char *str);
+char	**expand_wildcard(t_data *data, char *str);
 
 /*--------------expand.c--------------*/
-int		expand(t_node *node, char **env);
-char	*apply_exp(char *str, char **env);
+int		expand(t_data *data, t_node *node, char **env);
+char	*apply_exp(t_data *data, char *str, char **env);
 
 /*-----------expand_utils.c-----------*/
 int		is_varsep(char c);
 int		nonvarlen(char *str, int quote, int i);
-char	**sumtab(char **t1, char **t2);
+char	**sumtab(t_data *data, char **t1, char **t2);
 char	**tab_addback(char **tab, char *new);
 
 /*----------expand_process.c----------*/

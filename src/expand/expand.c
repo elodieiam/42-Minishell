@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/22 13:14:19 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/28 21:45:27 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*getnvarvar(char *res, char *str, int *i, char **env)
 	return (res);
 }
 
-char	*apply_exp(char *str, char **env)
+char	*apply_exp(t_data *data, char *str, char **env)
 {
 	char	*res;
 	char	*tmp;
@@ -51,7 +51,7 @@ char	*apply_exp(char *str, char **env)
 		return (NULL);
 	res = ft_strdup("");
 	if (!res)
-		return (free(str), NULL);
+		return (free(str), fatal_error(data, "malloc"), NULL);
 	i = 0;
 	while (str[i])
 	{
@@ -59,12 +59,12 @@ char	*apply_exp(char *str, char **env)
 		res = getnvarvar(res, str, &i, env);
 		free(tmp);
 		if (!res)
-			return (free(str), NULL);
+			return (free(str), fatal_error(data, "malloc"), NULL);
 	}
 	return (free(str), res);
 }
 
-int	exp_args(char ***args, char **env)
+int	exp_args(t_data *data, char ***args, char **env)
 {
 	int		i;
 	char	**tmp;
@@ -76,23 +76,25 @@ int	exp_args(char ***args, char **env)
 	{
 		if (ft_strchr((*args)[i], '*'))
 		{
-			tmp = expand_wildcard((*args)[i]);
+			tmp = expand_wildcard(data, (*args)[i]);
+			if (!tmp)
+				return (UNKNOWN_ERR);
 			free((*args)[i]);
 			(*args)[i] = 0;
-			(*args) = sumtab((*args), tmp);
+			(*args) = sumtab(data, (*args), tmp);
 			if (!(*args))
 				return (UNKNOWN_ERR);
 		}
-		(*args)[i] = apply_exp((*args)[i], env);
+		(*args)[i] = apply_exp(data, (*args)[i], env);
 		if (!(*args)[i])
-			return (-1);
+			return (UNKNOWN_ERR);
 		i++;
 	}
 	return (0);
 }
 
 //care if malloc fails
-int	exp_rds(t_rdlist *rdlist, char **env)
+int	exp_rds(t_data *data, t_rdlist *rdlist, char **env)
 {
 	char	**tmp;
 
@@ -102,7 +104,7 @@ int	exp_rds(t_rdlist *rdlist, char **env)
 		{
 			if (ft_strchr(rdlist->file, '*'))
 			{
-				tmp = expand_wildcard(rdlist->file);
+				tmp = expand_wildcard(data, rdlist->file);
 				if (!tmp[0])
 					return (UNKNOWN_ERR);
 				if (tmp[1])
@@ -111,7 +113,7 @@ int	exp_rds(t_rdlist *rdlist, char **env)
 				free(tmp[1]);
 				free(tmp);
 			}
-			rdlist->file = apply_exp(rdlist->file, env);
+			rdlist->file = apply_exp(data, rdlist->file, env);
 			if (!rdlist->file)
 				return (UNKNOWN_ERR);
 		}
@@ -120,12 +122,12 @@ int	exp_rds(t_rdlist *rdlist, char **env)
 	return (0);
 }
 
-int	expand(t_node *node, char **env)
+int	expand(t_data *data, t_node *node, char **env)
 {
 	if (!node)
 		return (0);
-	if (exp_args(&node->arguments, env)
-		|| exp_rds(node->redirects, env))
+	if (exp_args(data, &node->arguments, env)
+		|| exp_rds(data, node->redirects, env))
 		return (UNKNOWN_ERR);
 	return (0);
 }

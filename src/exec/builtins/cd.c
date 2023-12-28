@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:31:59 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/27 17:27:03 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 21:07:05 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	cd_specific(t_data *data, t_node *node, char **newpwd)
 	if (!node->arguments[1])
 	{
 		*newpwd = get_varstr("$HOME", &i, data->env->envtab);
+		if (!*newpwd)
+			return (fatal_error(data, "malloc"));
 		if (*newpwd && !ft_strncmp(*newpwd, "", 2))
 			return (free(newpwd), exit_line(data,
 					errnl(1, "minishell: cd: HOME not set")));
@@ -48,8 +50,8 @@ int	cd_specific(t_data *data, t_node *node, char **newpwd)
 	else if (!ft_strncmp(node->arguments[1], "-", 2))
 	{
 		*newpwd = get_varstr("$OLDPWD", &i, data->env->envtab);
-		if (!newpwd)
-			return (exit_line(data, errnl(UNKNOWN_ERR, "malloc failed")));
+		if (!*newpwd)
+			return (fatal_error(data, "malloc"));
 		if (!ft_strncmp(*newpwd, "", 2))
 			return (free(*newpwd), exit_line(data,
 					errnl(1, "minishell: cd: OLDPWD not set")));
@@ -66,16 +68,14 @@ int	export_cd(t_data *data, char **export_tab, char *newpwd, char *oldpwd)
 	if (!export_tab[1])
 	{
 		free(export_tab);
-		return (free(newpwd), exit_line(data,
-				errnl(UNKNOWN_ERR, "fatal: malloc failed")));
+		return (free(newpwd), fatal_error(data, "malloc"));
 	}
 	export_tab[2] = ft_strjoin("OLDPWD=", oldpwd);
 	if (!export_tab[2])
 	{
 		free(export_tab[1]);
 		free(export_tab);
-		return (free(newpwd), exit_line(data,
-				errnl(UNKNOWN_ERR, "fatal: malloc failed")));
+		return (free(newpwd), fatal_error(data, "malloc"));
 	}
 	export_tab[3] = NULL;
 	exec_export(data, export_tab);
@@ -93,21 +93,25 @@ int	exec_cd(t_data *data, t_node *node)
 	char	**export_tab;
 
 	if (!cd_specific(data, node, &newpwd))
+	{
 		newpwd = ft_strdup(node->arguments[1]);
+		if (!newpwd)
+			return (fatal_error(data, "malloc"));
+	}
 	else if (!newpwd || !data->prompt)
 		return (g_err_code);
 	if (!getcwd(oldpwd, PATH_MAX))
-		return (exit_line(data, errnl(UNKNOWN_ERR, "fatal: getcwd failed")));
+		return (free(newpwd), fatal_error(data, "getcwd"));
 	if (check_access(newpwd) == -1)
-		return (free(newpwd), 1);
-	chdir(newpwd);
+		return (free(newpwd), exit_line(data, errnl(UNKNOWN_ERR, "fatal: access failed")));
+	if (chdir(newpwd) == -1)
+		return (free(newpwd), exit_line(data, errnl(UNKNOWN_ERR, "fatal: chdir failed")));
 	free(newpwd);
 	if (!getcwd(finalpwd, PATH_MAX))
-		return (exit_line(data, errnl(UNKNOWN_ERR, "fatal: getcwd failed")));
+		return (fatal_error(data, "getcwd"));
 	printf("new cd : %s\n", finalpwd);
 	export_tab = malloc(sizeof(char *) * 4);
 	if (!export_tab)
-		return (exit_line(data,
-				errnl(UNKNOWN_ERR, "fatal: malloc failed")));
+		return (fatal_error(data, "malloc"));
 	return (export_cd(data, export_tab, finalpwd, oldpwd));
 }
