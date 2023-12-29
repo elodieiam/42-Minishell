@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/22 16:43:39 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/29 16:11:46 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*get_cmd_path(t_data *data, char *command)
 	{
 		tmp = bettercat(paths[i], command);
 		if (!access(tmp, X_OK))
-			break ;
+			return (free_dchartab(paths), free(tmp), NULL);
 		i++;
 		free(tmp);
 		tmp = NULL;

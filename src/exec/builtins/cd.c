@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:31:59 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/27 17:27:03 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/29 15:43:23 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ int	exec_cd(t_data *data, t_node *node)
 	free(newpwd);
 	if (!getcwd(finalpwd, PATH_MAX))
 		return (exit_line(data, errnl(UNKNOWN_ERR, "fatal: getcwd failed")));
-	printf("new cd : %s\n", finalpwd);
 	export_tab = malloc(sizeof(char *) * 4);
 	if (!export_tab)
 		return (exit_line(data,
