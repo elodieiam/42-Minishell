@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/29 14:05:22 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/29 17:17:28 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 	// if (fd == -1) free
 	if (!child_pid)
 	{
-		close(fd[0]);
+		fakeclose(__func__,fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
+		fakeclose(__func__,fd[1]);
 		dup2(nread_fd, STDIN_FILENO);
-		close(nread_fd);
+		fakeclose(__func__,nread_fd);
 		exec(data, node);
 		exit(exit_all(data, g_err_code));
 	}
-	close(nread_fd);
+	fakeclose(__func__,nread_fd);
 	nread_fd = dup(fd[0]); // leak
-	close(fd[0]);
-	close(fd[1]);
+	fakeclose(__func__,fd[0]);
+	fakeclose(__func__,fd[1]);
 	if (!append_pid(&(data->pidlist), child_pid))
 		return (exit_line(data, errnl(UNKNOWN_ERR, "malloc failed")));
 	return (0);
@@ -49,11 +49,11 @@ int	last_pipe(t_data *data, t_node *node, int nread_fd)
 	if (!child_pid)
 	{
 		dup2(nread_fd, STDIN_FILENO);
-		close(nread_fd);
+		fakeclose(__func__,nread_fd);
 		exec(data, node);
 		exit(exit_all(data, g_err_code));
 	}
-	close(nread_fd);
+	fakeclose(__func__,nread_fd);
 	if (!append_pid(&(data->pidlist), child_pid))
 		return (exit_line(data, errnl(UNKNOWN_ERR, "malloc failed")));
 	return (0);

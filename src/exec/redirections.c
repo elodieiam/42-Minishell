@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/28 17:35:25 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/29 17:20:10 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	open_infile(t_data *data, t_rdlist *rd)
 		if (access(rd->heredoc_name, R_OK) == -1)
 			return (exit_line(data, errnl(PERM_ERR, "access denied")));
 		if (rd->fd >= 0)
-			close(rd->fd);
+			fakeclose(__func__,rd->fd);
 		data->fds.curr[0] = open(rd->heredoc_name, O_RDONLY);
 		// signal(SIGINT, SIG_IGN);
 	}
@@ -41,7 +41,7 @@ int	open_outfile(t_data *data, t_rdlist *rd)
 	if (rd->rdtype == T_CLCHEV)
 	{
 		if (data->fds.curr[1] != STDOUT_FILENO)
-			close(data->fds.curr[1]);
+			fakeclose(__func__,data->fds.curr[1]);
 		if (access(rd->file, F_OK) == -1)
 			data->fds.curr[1] = open(rd->file, O_WRONLY | O_CREAT, 0644);
 		else
@@ -49,6 +49,7 @@ int	open_outfile(t_data *data, t_rdlist *rd)
 			if (access(rd->file, W_OK) == -1)
 				return (exit_line(data, errnl(PERM_ERR, "access denied")));
 			data->fds.curr[1] = open(rd->file, O_WRONLY);
+			fprintf(stderr, "rd->file %s\n", rd->file);
 		}
 	}
 	else if (rd->rdtype == T_DCLCHEV)
@@ -75,7 +76,9 @@ int	open_redirect(t_data *data, t_rdlist *rd)
 	else if (rd->rdtype == T_DCLCHEV || rd->rdtype == T_CLCHEV)
 	{
 		if (data->fds.curr[1] != STDOUT_FILENO)
-			close(data->fds.curr[1]);
+		{
+			fakeclose(__func__,data->fds.curr[1]);
+		}
 		if (open_outfile(data, rd))
 			return (g_err_code);
 	}
@@ -99,14 +102,15 @@ int	handle_redirections(t_data *data, t_node *node)
 		data->fds.std[0] = dup(STDIN_FILENO);
 		if (dup2(data->fds.curr[0], STDIN_FILENO) == -1)
 			return (exit_line(data, UNKNOWN_ERR));
-		close(data->fds.curr[0]);
+		fakeclose(__func__,data->fds.curr[0]);
 	}
 	if (data->fds.curr[1] != STDOUT_FILENO)
 	{
 		data->fds.std[1] = dup(STDOUT_FILENO);
+		fprintf(stderr, "ici %i\n", data->fds.std[1]);
 		if (dup2(data->fds.curr[1], STDOUT_FILENO) == -1)
 			return (exit_line(data, UNKNOWN_ERR));
-		close(data->fds.curr[1]);
+		fakeclose(__func__,data->fds.curr[1]);
 	}
 	return (0);
 }
@@ -128,13 +132,13 @@ int	reset_rds(t_fds *fds, t_node *node)
 	if (fds->curr[0] != STDIN_FILENO)
 	{
 		dup2(fds->std[0], STDIN_FILENO);
-		close(fds->std[0]);
+		fakeclose(__func__,fds->std[0]);
 		fds->curr[0] = STDIN_FILENO;
 	}
 	if (fds->curr[1] != STDOUT_FILENO)
 	{
 		dup2(fds->std[1], STDOUT_FILENO);
-		close(fds->std[1]);
+		fakeclose(__func__,fds->std[1]);
 		fds->curr[1] = STDOUT_FILENO;
 	}
 	return (0);

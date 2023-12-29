@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/28 17:04:30 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/29 17:27:57 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	exec_command(t_data *data, t_node *node)
 			return (g_err_code);
 	if (node->arguments && node->arguments[0] && !srch_builtin(data, node))
 		g_err_code = execute(data, node);
-	if (node->redirects)
+	if (data->tree && node->redirects)
 		reset_rds(&(data->fds), node);
 	return (g_err_code);
 }

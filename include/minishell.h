@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/28 13:50:10 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/29 17:36:23 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <signal.h>
+# include <errno.h>
 # include <dirent.h>
 
 # include "../libft/libft.h"
@@ -41,11 +42,13 @@
 
 extern int	g_err_code;
 
+
 /*---------------debug.c------------*/
 char	*tta(t_toktype int_type);
 void	pretty_print_ast(t_node *node, char *prefix);
 void	print_tokens(t_token *tokens);
 void	print_dchartab(char **tab);
+void fakeclose(const char func[15], int fd);
 
 /*-----------------data.c----------*/
 t_data	*init_data(char **env);

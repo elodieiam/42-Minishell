@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 19:02:42 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/22 12:52:16 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/29 17:17:28 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_handler_heredoc(int signum)
 {
 	if (signum == SIGINT)
 	{
-		close(0);
+		fakeclose(__func__,0);
 		printf("\n");
 		g_err_code = 130;
 	}

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/29 14:01:01 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/29 17:19:18 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ int	child_process(t_data *data, t_rdlist *rd)
 		res = ft_strjoin(line, "\n");
 		free (line);
 		if (!res)
-			return (close(rd->fd), UNKNOWN_ERR);
+			return (fakeclose(__func__,rd->fd), UNKNOWN_ERR);
 		line = apply_exp(res, data->env->envtab);
 		if (!line)
-			return (close(rd->fd), UNKNOWN_ERR);
+			return (fakeclose(__func__,rd->fd), UNKNOWN_ERR);
 		write(rd->fd, line, ft_strlen(line));
 		free (line);
 	}
-	return (free(line), close(rd->fd), exit_all(data, g_err_code));
+	return (free(line), fakeclose(__func__,rd->fd), exit_all(data, g_err_code));
 }
 
 int	open_heredoc(t_data *data, t_rdlist *rd)
@@ -59,10 +59,10 @@ int	open_heredoc(t_data *data, t_rdlist *rd)
 	if (pid == 0)
 		return (child_process(data, rd));
 	if (waitpid(pid, &childval, 0) == -1)
-		return (close(rd->fd), UNKNOWN_ERR);
+		return (fakeclose(__func__,rd->fd), UNKNOWN_ERR);
 	if (WEXITSTATUS(childval) == 130)
 	{
-		close(rd->fd);
+		fakeclose(__func__,rd->fd);
 		if (unlink(rd->heredoc_name) == -1)
 			return (UNKNOWN_ERR);
 		return (cherr_code(SIGINT_ERR));
@@ -80,8 +80,10 @@ int	open_heredocs(t_data *data, t_node *node)
 	while (curr_rd)
 	{
 		if (curr_rd->rdtype == T_DOPCHEV && open_heredoc(data, curr_rd))
+		{
+			fakeclose(__func__, curr_rd->fd);
 			return (exit_line(data, g_err_code));
-		close(curr_rd->fd);
+		}
 		curr_rd = curr_rd->next;
 	}
 	if (node->operand)
