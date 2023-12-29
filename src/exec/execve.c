@@ -6,7 +6,7 @@
 /*   By: tsaint-p <tsaint-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/29 16:11:46 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/29 16:16:05 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	*get_cmd_path(t_data *data, char *command)
 	int		i;
 
 	i = 0;
+	if (!command || !command[0])
+		return (0);
 	if (is_path(command))
 		return (ft_strdup(command));
 	paths = ft_split(get_paths(data), ':');
@@ -42,7 +44,7 @@ char	*get_cmd_path(t_data *data, char *command)
 	{
 		tmp = bettercat(paths[i], command);
 		if (!access(tmp, X_OK))
-			return (free_dchartab(paths), free(tmp), NULL);
+			break ;
 		i++;
 		free(tmp);
 		tmp = NULL;
