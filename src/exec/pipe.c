@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/29 17:17:28 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/29 19:29:00 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,20 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 	// if (fd == -1) free
 	if (!child_pid)
 	{
-		fakeclose(__func__,fd[0]);
+		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
-		fakeclose(__func__,fd[1]);
+		close(fd[1]);
 		dup2(nread_fd, STDIN_FILENO);
-		fakeclose(__func__,nread_fd);
+		close(nread_fd);
 		exec(data, node);
+		dprintf(2, "exiting piddddd : %d\n", getpid());
 		exit(exit_all(data, g_err_code));
 	}
-	fakeclose(__func__,nread_fd);
+	printf("middle pipe fork : %d\n", child_pid);
+	close(nread_fd);
 	nread_fd = dup(fd[0]); // leak
-	fakeclose(__func__,fd[0]);
-	fakeclose(__func__,fd[1]);
+	close(fd[0]);
+	close(fd[1]);
 	if (!append_pid(&(data->pidlist), child_pid))
 		return (exit_line(data, errnl(UNKNOWN_ERR, "malloc failed")));
 	return (0);
@@ -45,15 +47,17 @@ int	last_pipe(t_data *data, t_node *node, int nread_fd)
 
 	child_pid = -1;
 	child_pid = fork();
+	printf("fork : %d\n", child_pid);
 	// if (fd == -1) free
 	if (!child_pid)
 	{
 		dup2(nread_fd, STDIN_FILENO);
-		fakeclose(__func__,nread_fd);
+		close(nread_fd);
 		exec(data, node);
+		printf("exiting pid : %d\n", getpid());
 		exit(exit_all(data, g_err_code));
 	}
-	fakeclose(__func__,nread_fd);
+	close(nread_fd);
 	if (!append_pid(&(data->pidlist), child_pid))
 		return (exit_line(data, errnl(UNKNOWN_ERR, "malloc failed")));
 	return (0);
@@ -89,7 +93,7 @@ int	exec_pipe(t_data *data, t_node *node)
 	signal(SIGINT, SIG_IGN);
 	nread_fd = dup(STDIN_FILENO);
 	if (nread_fd == -1)
-			return (exit_line(data, errnl(UNKNOWN_ERR, "minishell: dup failed")));
+		return (exit_line(data, errnl(UNKNOWN_ERR, "minishell: dup failed")));
 	pipex(data, node, fd, nread_fd);
 	pid = pop_pid(&(data->pidlist));
 	while (pid != -1)

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/29 17:27:57 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/29 19:38:14 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	exec_command(t_data *data, t_node *node)
 		g_err_code = execute(data, node);
 	if (data->tree && node->redirects)
 		reset_rds(&(data->fds), node);
+	dprintf(2, "aleeeeeeeeeeed|%d\n", getpid());
 	return (g_err_code);
 }
 
@@ -93,7 +94,7 @@ int	exec(t_data *data, t_node *node)
 		return (g_err_code);
 	if (node->subshell)
 		g_err_code = exec_subshell(data, node);
-	else if (node->arguments || (!node->arguments && node->redirects))
+	else if (!node->operand)
 		g_err_code = exec_command(data, node);
 	else
 	{
@@ -104,5 +105,6 @@ int	exec(t_data *data, t_node *node)
 		else if (node->operand->optype == T_PIPE)
 			g_err_code = exec_pipe(data, node);
 	}
+	dprintf(2, "al2222222222222|%d\n", getpid());
 	return (g_err_code);
 }

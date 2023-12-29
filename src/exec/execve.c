@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/29 17:46:44 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/29 19:27:52 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	execute(t_data *data, t_node *node)
 		if (child_exec(data, node))
 			return (UNKNOWN_ERR);
 	signal(SIGINT, SIG_IGN);
+	dprintf(2, "after exec : %d\n", getpid());
 	if (waitpid(pid, &childval, 0) == -1)
 		return (exit_line(data, errnl(-1, "minishell: waitpid failed")));
 	if (handle_child_sigs(childval))

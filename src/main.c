@@ -6,19 +6,13 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/29 17:17:55 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/29 19:29:37 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 int	g_err_code;
-
-void fakeclose(const char func[15], int fd)
-{
-	fprintf(stderr, "JE SUIS %s\n", func);
-	close(fd);
-}
 
 int	cherr_code(int err_code)
 {
@@ -45,6 +39,7 @@ int	process_line(t_data *data)
 		return (exit_line(data, g_err_code), 0);
 	if (exec(data, data->tree))
 		return (exit_line(data, g_err_code), 0);
+	printf("aaaaaaaaaa");
 	exit_line(data, g_err_code);
 	return (0);
 }
@@ -88,8 +83,8 @@ int	prep_stdinnout(void)
 		if (fd == -1)
 			return (UNKNOWN_ERR);
 		if (dup2(fd, STDOUT_FILENO) == -1)
-			return (fakeclose(__func__, fd), UNKNOWN_ERR);
-		fakeclose(__func__, fd);
+			return (close( fd), UNKNOWN_ERR);
+		close( fd);
 	}
 	return (0);
 }

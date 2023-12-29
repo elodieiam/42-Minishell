@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:35:58 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/29 17:17:28 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/29 19:29:00 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,17 @@ char	*get_heredoc_name(t_data *data)
 	if (!heredoc_name)
 	{
 		fatal_error(data, "malloc");
-		return (fakeclose(__func__,fd_urand), NULL);
+		return (close(fd_urand), NULL);
 	}
 	heredoc_name[0] = '.';
 	g_err_code = fill_heredoc_name(fd_urand, &heredoc_name);
-	return (fakeclose(__func__,fd_urand), heredoc_name);
+	return (close(fd_urand), heredoc_name);
 }
 
 int	exit_heredoc(t_rdlist *rd, t_data *data, int g_err_code)
 {
 	printf("minishell: warning: heredoc delimited by EOF\n");
-	fakeclose(__func__,rd->fd);
+	close(rd->fd);
 	//unlink(rd->heredoc_name);
 	return (exit_all(data, g_err_code));
 }

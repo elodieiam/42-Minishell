@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 19:02:42 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/29 17:17:28 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/29 19:29:00 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_handler_heredoc(int signum)
 {
 	if (signum == SIGINT)
 	{
-		fakeclose(__func__,0);
+		close(0);
 		printf("\n");
 		g_err_code = 130;
 	}
