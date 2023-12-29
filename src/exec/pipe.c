@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/29 13:38:02 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:05:22 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 		exit(exit_all(data, g_err_code));
 	}
 	close(nread_fd);
-	nread_fd = dup(fd[0]);
+	nread_fd = dup(fd[0]); // leak
 	close(fd[0]);
 	close(fd[1]);
 	if (!append_pid(&(data->pidlist), child_pid))
