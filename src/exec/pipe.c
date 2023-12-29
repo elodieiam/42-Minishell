@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/28 17:13:20 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/29 13:38:02 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	exec_pipe(t_data *data, t_node *node)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, SIG_IGN);
 	nread_fd = dup(STDIN_FILENO);
-	if (nread_fd == -1 || close(STDIN_FILENO) == -1)
+	if (nread_fd == -1)
 			return (exit_line(data, errnl(UNKNOWN_ERR, "minishell: dup failed")));
 	pipex(data, node, fd, nread_fd);
 	pid = pop_pid(&(data->pidlist));
