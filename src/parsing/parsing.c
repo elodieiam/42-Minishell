@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:26:26 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/28 17:55:19 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/01 23:39:16 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	check_word(t_data *data, t_token *toklist)
 	{
 		if (quote && quote == toklist->string[i])
 			quote = 0;
-		else if (!quote && (toklist->string[i] == 39 || toklist->string[i] == 34))
+		else if (!quote
+			&& (toklist->string[i] == 39 || toklist->string[i] == 34))
 			quote = toklist->string[i];
 		i++;
 	}

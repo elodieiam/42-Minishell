@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/31 13:41:33 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/01 23:43:50 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,12 @@ int	exec_subshell(t_data *data, t_node *node)
 	{
 		if (node->arguments || (!node->operand && node->redirects))
 			g_err_code = exec_command(data, node);
-		else
-		{
-			if (node->operand->optype == T_OR)
-				g_err_code = exec_or(data, node);
-			if (node->operand->optype == T_AND)
-				g_err_code = exec_and(data, node);
-			if (node->operand->optype == T_PIPE)
-				g_err_code = exec_pipe(data, node);
-		}
+		else if (node->operand->optype == T_OR)
+			g_err_code = exec_or(data, node);
+		else if (node->operand->optype == T_AND)
+			g_err_code = exec_and(data, node);
+		else if (node->operand->optype == T_PIPE)
+			g_err_code = exec_pipe(data, node);
 		exit_all(data, g_err_code);
 	}
 	else if (waitpid(pid, &childval, 0) == -1)

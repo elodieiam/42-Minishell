@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2024/01/01 23:26:47 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/01 23:40:49 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int	prep_stdinnout(void)
 		if (fd == -1)
 			return (UNKNOWN_ERR);
 		if (dup2(fd, STDOUT_FILENO) == -1)
-			return (close( fd), UNKNOWN_ERR);
-		close( fd);
+			return (close(fd), UNKNOWN_ERR);
+		close(fd);
 	}
 	return (0);
 }

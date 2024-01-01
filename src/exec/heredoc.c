@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/29 19:29:00 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/01 23:41:14 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	open_heredocs(t_data *data, t_node *node)
 	{
 		if (curr_rd->rdtype == T_DOPCHEV && open_heredoc(data, curr_rd))
 		{
-			close( curr_rd->fd);
+			close(curr_rd->fd);
 			return (exit_line(data, g_err_code));
 		}
 		curr_rd = curr_rd->next;

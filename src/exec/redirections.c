@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/31 13:40:50 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/01 23:49:23 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	open_infile(t_data *data, t_rdlist *rd)
 		if (rd->fd >= 0)
 			close(rd->fd);
 		data->fds.curr[0] = open(rd->heredoc_name, O_RDONLY);
-		// signal(SIGINT, SIG_IGN);
 	}
 	else if (rd->rdtype == T_OPCHEV)
 	{

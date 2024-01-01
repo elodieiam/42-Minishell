@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/31 13:41:57 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/01 23:32:39 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ void	check_file(t_data *data, char *file_path, char *cmd)
 		exit(exit_all(data, ferrnl(cmd, NULL, "command not found", 127)));
 	if (access(file_path, F_OK) == -1)
 	{
-		free(file_path);	
+		free(file_path);
 		exit(exit_all(data,
 				ferrnl(cmd, NULL, "No such file or directory", 127)));
 	}
 	if (access(file_path, X_OK) == -1)
 	{
-		free(file_path);	
+		free(file_path);
 		exit(exit_all(data, ferrnl(cmd, NULL, "Permission denied", 126)));
 	}
 }
