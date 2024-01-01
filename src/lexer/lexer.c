@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:41:50 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/28 16:56:39 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/01 23:26:37 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ char	*fill_string(char *dest, char **cmd_line, int quote)
 	int	i;
 
 	i = 0;
-	if (**cmd_line == 34 || **cmd_line == 39)
-	{
-		dest[i++] = **cmd_line;
-		quote = *((*cmd_line)++);
-	}
 	while (**cmd_line && !(!quote && ft_iswordsep(**cmd_line)))
 	{
-		if (**cmd_line == quote)
+		if (!quote && (**cmd_line == 34 || **cmd_line == 39))
+		{
+			dest[i++] = **cmd_line;
+			quote = *(*cmd_line)++;
+		}
+		else if (**cmd_line == quote)
 			quote = 0;
 		dest[i++] = *((*cmd_line)++);
 	}
@@ -75,11 +75,14 @@ char	*ft_getstring(t_data *data, char **cmd_line)
 		(*cmd_line)++;
 	if (ft_iswordsep(**cmd_line))
 		return (get_sepstring(data, cmd_line, i));
-	if ((*cmd_line)[i] == 34 || (*cmd_line)[i] == 39)
-		quote = (*cmd_line)[i++];
-	while ((*cmd_line)[i] && !(!quote && ft_iswordsep((*cmd_line)[i])))
-		if ((*cmd_line)[i++] == quote)
+	while ((*cmd_line)[i] && (quote || !ft_iswordsep((*cmd_line)[i])))
+	{
+		if (!quote && ((*cmd_line)[i] == 34 || (*cmd_line)[i] == 39))
+			quote = (*cmd_line)[i];
+		else if ((*cmd_line)[i] == quote)
 			quote = 0;
+		i++;
+	}
 	if (quote && (*cmd_line)[i] == quote)
 		i++;
 	res = ft_calloc(i + 1, sizeof(char));
