@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/29 19:29:37 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/31 13:41:01 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	process_line(t_data *data)
 		return (exit_line(data, g_err_code), 0);
 	if (exec(data, data->tree))
 		return (exit_line(data, g_err_code), 0);
-	printf("aaaaaaaaaa");
 	exit_line(data, g_err_code);
 	return (0);
 }

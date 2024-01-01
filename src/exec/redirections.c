@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/29 19:29:00 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/31 13:40:50 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	open_outfile(t_data *data, t_rdlist *rd)
 			if (access(rd->file, W_OK) == -1)
 				return (exit_line(data, errnl(PERM_ERR, "access denied")));
 			data->fds.curr[1] = open(rd->file, O_WRONLY);
-			fprintf(stderr, "rd->file %s\n", rd->file);
 		}
 	}
 	else if (rd->rdtype == T_DCLCHEV)
@@ -107,7 +106,6 @@ int	handle_redirections(t_data *data, t_node *node)
 	if (data->fds.curr[1] != STDOUT_FILENO)
 	{
 		data->fds.std[1] = dup(STDOUT_FILENO);
-		fprintf(stderr, "ici %i\n", data->fds.std[1]);
 		if (dup2(data->fds.curr[1], STDOUT_FILENO) == -1)
 			return (exit_line(data, UNKNOWN_ERR));
 		close(data->fds.curr[1]);

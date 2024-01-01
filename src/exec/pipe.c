@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/29 19:29:00 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/31 13:40:21 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 		dup2(nread_fd, STDIN_FILENO);
 		close(nread_fd);
 		exec(data, node);
-		dprintf(2, "exiting piddddd : %d\n", getpid());
 		exit(exit_all(data, g_err_code));
 	}
-	printf("middle pipe fork : %d\n", child_pid);
 	close(nread_fd);
 	nread_fd = dup(fd[0]); // leak
 	close(fd[0]);
@@ -47,14 +45,12 @@ int	last_pipe(t_data *data, t_node *node, int nread_fd)
 
 	child_pid = -1;
 	child_pid = fork();
-	printf("fork : %d\n", child_pid);
 	// if (fd == -1) free
 	if (!child_pid)
 	{
 		dup2(nread_fd, STDIN_FILENO);
 		close(nread_fd);
 		exec(data, node);
-		printf("exiting pid : %d\n", getpid());
 		exit(exit_all(data, g_err_code));
 	}
 	close(nread_fd);
