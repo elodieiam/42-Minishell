@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:35:58 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/01 23:53:03 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/02 15:45:41 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ char	*get_heredoc_name(t_data *data)
 	}
 	heredoc_name[0] = '.';
 	g_err_code = fill_heredoc_name(fd_urand, &heredoc_name);
-	printf("hd name = %s\n", heredoc_name);
 	return (close(fd_urand), heredoc_name);
 }
 
