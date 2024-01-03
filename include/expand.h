@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:45 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/28 21:40:06 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/03 14:48:08 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ char	**tab_addback(char **tab, char *new);
 char	*expand_exceptions(char *str, int *i);
 char	*get_nonvarstr(char *str, int *i, int *quote);
 char	*get_varstr(char *str, int *i, char **env);
+char	*rmhdquotes(char *str);
 
 #endif

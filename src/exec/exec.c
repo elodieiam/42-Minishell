@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:27:51 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/28 21:22:39 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/01 23:43:50 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	exec_command(t_data *data, t_node *node)
 			return (g_err_code);
 	if (node->arguments && node->arguments[0] && !srch_builtin(data, node))
 		g_err_code = execute(data, node);
-	if (node->redirects)
+	if (data->tree && node->redirects)
 		reset_rds(&(data->fds), node);
 	return (g_err_code);
 }
@@ -37,7 +37,6 @@ int	exec_or(t_data *data, t_node *tree)
 	return (g_err_code);
 }
 
-//protec handle redir
 int	exec_and(t_data *data, t_node *tree)
 {
 	if (tree->redirects)
@@ -55,7 +54,6 @@ int	exec_and(t_data *data, t_node *tree)
 	return (g_err_code);
 }
 
-//implement fd old_fd for pipe ?
 int	exec_subshell(t_data *data, t_node *node)
 {
 	int	pid;
@@ -71,15 +69,12 @@ int	exec_subshell(t_data *data, t_node *node)
 	{
 		if (node->arguments || (!node->operand && node->redirects))
 			g_err_code = exec_command(data, node);
-		else
-		{
-			if (node->operand->optype == T_OR)
-				g_err_code = exec_or(data, node);
-			if (node->operand->optype == T_AND)
-				g_err_code = exec_and(data, node);
-			if (node->operand->optype == T_PIPE)
-				g_err_code = exec_pipe(data, node);
-		}
+		else if (node->operand->optype == T_OR)
+			g_err_code = exec_or(data, node);
+		else if (node->operand->optype == T_AND)
+			g_err_code = exec_and(data, node);
+		else if (node->operand->optype == T_PIPE)
+			g_err_code = exec_pipe(data, node);
 		exit_all(data, g_err_code);
 	}
 	else if (waitpid(pid, &childval, 0) == -1)
@@ -93,7 +88,7 @@ int	exec(t_data *data, t_node *node)
 		return (g_err_code);
 	if (node->subshell)
 		g_err_code = exec_subshell(data, node);
-	else if (node->arguments || (!node->arguments && node->redirects))
+	else if (!node->operand)
 		g_err_code = exec_command(data, node);
 	else
 	{

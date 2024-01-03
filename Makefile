@@ -28,7 +28,7 @@ OBJ_COUNT := 0
 
 CC		=	cc
 
-CFLAGS	=	-Wall -Wextra -Werror -I./include -g3 -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -I./include -g3 #-fsanitize=address
 # CFLAGS	=	-Wall -Wextra -Werror -I./include -g3
 
 RM_FLAGS = -rf

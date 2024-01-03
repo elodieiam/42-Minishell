@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/28 18:20:02 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/01 23:42:02 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 	child_pid = fork();
 	if (child_pid == -1)
 		return (exit_line(data, errnl(UNKNOWN_ERR, "fork failed")));
-	// if (fd == -1) free
 	if (!child_pid)
 	{
 		close(fd[0]);
@@ -52,7 +51,6 @@ int	last_pipe(t_data *data, t_node *node, int nread_fd)
 	child_pid = fork();
 	if (child_pid == -1)
 		return (exit_line(data, errnl(UNKNOWN_ERR, "fork failed")));
-	// if (fd == -1) free
 	if (!child_pid)
 	{
 		if (dup2(nread_fd, STDIN_FILENO) == -1)
@@ -104,7 +102,7 @@ int	exec_pipe(t_data *data, t_node *node)
 	while (pid != -1)
 	{
 		if (waitpid(pid, &childval, 0) == -1)
-			return (exit_line(data, errnl(UNKNOWN_ERR, "minishell: waitpid failed")));
+			return (exit_line(data, errnl(255, "minishell: waitpid failed")));
 		if (WIFSIGNALED(childval))
 			childval = WIFEXITED(childval) + 128;
 		if (childval == 130)

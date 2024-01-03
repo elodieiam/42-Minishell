@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:31:18 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/28 19:05:25 by elrichar         ###   ########.fr       */
+/*   Updated: 2023/12/29 16:05:16 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int	exec_pwd(t_data *data, t_node *node)
 {
 	char	*pwd;
 
-	if (node->arguments[1])
-		return (exit_line(data, errnl(1, "pwd: too many arguments")));
+	(void)node;
 	pwd = malloc(sizeof(char) * PATH_MAX);
 	if (!pwd)
 		return (fatal_error(data, "malloc"));
