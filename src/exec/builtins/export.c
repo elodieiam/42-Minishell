@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/28 21:08:55 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/04 00:22:30 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int	search_var(t_data *data, char *argument, int i, int append)
 	while (data->env->envtab[++j])
 	{
 		if (!ft_strncmp(argument, data->env->envtab[j], i) && \
-			(data->env->envtab[j][i] == '=' || data->env->envtab[j][i] == '+'))
+			(data->env->envtab[j][i] == '=' || data->env->envtab[j][i] == '+'
+			 || !data->env->envtab[j][i]))
 			return (change_var(data, argument, j, append));
 	}
 	return (0);
