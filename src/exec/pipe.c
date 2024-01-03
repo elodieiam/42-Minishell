@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2024/01/03 17:38:06 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/03 19:30:13 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,22 @@ int	last_pipe(t_data *data, t_node *node, int nread_fd)
 	return (0);
 }
 
+int	is_lastpipecmd(t_node *node)
+{
+	t_node	*curr;
+
+	if (node->parent->operand->l_child == node)
+		return (0);
+	curr = node;
+	while (curr->parent && curr->parent->operand->optype == T_PIPE)
+	{
+		if (curr->parent->operand->l_child == curr)
+			return (0);
+		curr = curr->parent;
+	}
+	return (1);
+}
+
 int	pipex(t_data *data, t_node *node, int fd[2], int nread_fd)
 {
 	if (!node || (!node->arguments && !node->operand))
@@ -74,11 +90,10 @@ int	pipex(t_data *data, t_node *node, int fd[2], int nread_fd)
 		pipex(data, node->operand->l_child, fd, nread_fd);
 		pipex(data, node->operand->r_child, fd, nread_fd);
 	}
-	else if (node->parent && \
-		(node->parent->operand->l_child == node || node->parent->parent))
-		return (middle_pipe(data, node, fd, nread_fd));
-	else if (node->arguments)
+	else if (is_lastpipecmd(node))
 		return (last_pipe(data, node, nread_fd));
+	else if (node->arguments)
+		return (middle_pipe(data, node, fd, nread_fd));
 	return (0);
 }
 
