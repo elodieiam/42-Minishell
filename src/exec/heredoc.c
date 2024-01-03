@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/03 16:32:45 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/03 17:30:57 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	hdchild_process(t_data *data, t_rdlist *rd)
 {
 	signal(SIGINT, ft_handler_heredoc);
 	rd->file = rmhdquotes(rd->file);
-	printf("rd->file = |%s|\n", rd->file);
 	if (!rd->file)
 		return (cherr_code(UNKNOWN_ERR));
 	while (!rl_heredoc(data, rd))
@@ -89,6 +88,8 @@ int	open_heredocs(t_data *data, t_node *node)
 	{
 		if (curr_rd->rdtype == T_DOPCHEV && open_heredoc(data, curr_rd))
 			return (close(curr_rd->fd), exit_line(data, g_err_code));
+		if (curr_rd->fd != -1)
+			close(curr_rd->fd);
 		curr_rd = curr_rd->next;
 	}
 	if (node->operand)
