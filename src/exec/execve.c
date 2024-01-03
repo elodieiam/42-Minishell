@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/01 23:32:39 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:33:46 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	child_exec(t_data *data, t_node *node)
 				errnl(-1, "minishell: execve failed"))));
 }
 
-//TODO : protect execute callers from execve fail
 int	execute(t_data *data, t_node *node)
 {
 	pid_t	pid;

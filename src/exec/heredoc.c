@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:37:25 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/03 14:51:29 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:32:45 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	rl_heredoc(t_data *data, t_rdlist *rd)
 	free (line);
 	if (!res)
 		return (UNKNOWN_ERR);
-	line = apply_exp(res, data->env->envtab);
+	line = apply_exp(data, res, data->env->envtab);
 	if (!line)
 		return (UNKNOWN_ERR);
 	write(rd->fd, line, ft_strlen(line));
@@ -89,7 +89,6 @@ int	open_heredocs(t_data *data, t_node *node)
 	{
 		if (curr_rd->rdtype == T_DOPCHEV && open_heredoc(data, curr_rd))
 			return (close(curr_rd->fd), exit_line(data, g_err_code));
-		close(curr_rd->fd);
 		curr_rd = curr_rd->next;
 	}
 	if (node->operand)

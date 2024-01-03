@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:35:58 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/02 15:45:41 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:34:15 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*heredoc_urandpath(char **heredoc_name, int fd_urand)
 	return (*heredoc_name);
 }
 
-// TODO: print errors 
 int	fill_heredoc_name(int fd_urand, char **heredoc_name)
 {
 	*heredoc_name = heredoc_urandpath(heredoc_name, fd_urand);

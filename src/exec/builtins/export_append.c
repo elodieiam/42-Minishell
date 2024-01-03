@@ -6,19 +6,20 @@
 /*   By: tsaint-p </var/spool/mail/tsaint-p>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 00:40:37 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/19 11:49:45 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/03 17:05:47 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*get_headvar(t_data *data, char *var)
+char	*get_headvar(t_data *data, int len, char *var)
 {
 	int		i;
 
 	i = 0;
 	while (data->env->envtab[i] && \
-		ft_strncmp(var, data->env->envtab[i], ft_strlen(var)))
+		(ft_strncmp(var, data->env->envtab[i], ft_strlen(var)) 
+		|| data->env->envtab[i][len] != '='))
 		i++;
 	if (data->env->envtab[i])
 		return (ft_strdup(&data->env->envtab[i][ft_strlen(var) + 1]));
@@ -37,7 +38,7 @@ char	*append_var(t_data *data, char *argument)
 	if (!tab[3])
 		return (NULL);
 	ft_strlcpy(tab[3], argument, i + 1);
-	tab[2] = get_headvar(data, tab[3]);
+	tab[2] = get_headvar(data, i, tab[3]);
 	tab[0] = ft_strdup(&argument[i + 2]);
 	tab[1] = ft_strjoin(tab[2], tab[0]);
 	if (tab[2])

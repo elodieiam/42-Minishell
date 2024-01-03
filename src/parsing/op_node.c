@@ -6,13 +6,12 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:12:40 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/20 22:34:42 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:34:06 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-//TODO: protect handlecommand
 t_node	*handleoperator(t_data *data)
 {
 	t_node	*op_node;
@@ -53,7 +52,6 @@ int	add_pipenode(t_data *data, t_node *pipe_node, t_node **tree)
 	return (0);
 }
 
-//TODO: protect handlecommand
 int	handlepipe(t_data *data, t_node **tree)
 {
 	t_node	*pipe_node;

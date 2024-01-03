@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/02 13:42:55 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:33:21 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int	open_redirect(t_data *data, t_rdlist *rd)
 	return (0);
 }
 
-// TODO: put ret_val in g_err_code
 int	handle_redirections(t_data *data, t_node *node)
 {
 	t_rdlist	*curr_rd;
@@ -112,7 +111,6 @@ int	handle_redirections(t_data *data, t_node *node)
 	return (0);
 }
 
-//TODO: protect calls
 int	reset_rds(t_fds *fds, t_node *node)
 {
 	t_rdlist	*curr_rd;

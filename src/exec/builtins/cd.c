@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:31:59 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/29 17:44:33 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:37:42 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,19 @@ int	export_cd(t_data *data, char **export_tab, char *newpwd, char *oldpwd)
 	if (!export_tab[1])
 		return (free(export_tab), free(newpwd), fatal_error(data, "malloc"));
 	if (oldpwd)
-  {
-    export_tab[2] = ft_strjoin("OLDPWD=", oldpwd);
-	  if (!export_tab[2])
-		  return (free(export_tab[1]), free(export_tab), free(newpwd),
-        fatal_error(data, "malloc"));
-  }
-  else
-    export_tab[2] = NULL;
+	{
+		export_tab[2] = ft_strjoin("OLDPWD=", oldpwd);
+		if (!export_tab[2])
+			return (free(export_tab[1]), free(export_tab), free(newpwd),
+				fatal_error(data, "malloc"));
+	}
+	else
+		export_tab[2] = NULL;
 	export_tab[3] = NULL;
 	exec_export(data, export_tab);
 	free(export_tab[1]);
-  if (export_tab[2])
-	  free(export_tab[2]);
+	if (export_tab[2])
+		free(export_tab[2]);
 	free(export_tab);
 	return (0);
 }
@@ -103,7 +103,7 @@ int	exec_cd(t_data *data, t_node *node)
 	if (chdir(newpwd) == -1)
 		return (free(newpwd), fprintf(stderr, "cd : %s\n", strerror(errno)));
 	getcwd(oldpwd, PATH_MAX);
-  free(newpwd);
+	free(newpwd);
 	if (!getcwd(finalpwd, PATH_MAX))
 		return (fatal_error(data, "getcwd"));
 	export_tab = malloc(sizeof(char *) * 4);
