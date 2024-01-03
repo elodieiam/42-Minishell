@@ -17,21 +17,25 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 	int	child_pid;
 
 	child_pid = -1;
-	pipe(fd); //protect ?
+	if (pipe(fd) == -1)
+		return (exit_line(data, errnl(UNKNOWN_ERR, "pipe failed")));
 	child_pid = fork();
-	// if (fd == -1) free
+	if (child_pid == -1)
+		return (exit_line(data, errnl(UNKNOWN_ERR, "fork failed")));
 	if (!child_pid)
 	{
 		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			exit(exit_all(data, g_err_code));
 		close(fd[1]);
-		dup2(nread_fd, STDIN_FILENO);
+		if (dup2(nread_fd, STDIN_FILENO) == -1)
+			exit(exit_all(data, g_err_code));
 		close(nread_fd);
 		exec(data, node);
 		exit(exit_all(data, g_err_code));
 	}
 	close(nread_fd);
-	nread_fd = dup(fd[0]); // leak
+	nread_fd = dup(fd[0]);
 	close(fd[0]);
 	close(fd[1]);
 	if (!append_pid(&(data->pidlist), child_pid))
@@ -45,10 +49,12 @@ int	last_pipe(t_data *data, t_node *node, int nread_fd)
 
 	child_pid = -1;
 	child_pid = fork();
-	// if (fd == -1) free
+	if (child_pid == -1)
+		return (exit_line(data, errnl(UNKNOWN_ERR, "fork failed")));
 	if (!child_pid)
 	{
-		dup2(nread_fd, STDIN_FILENO);
+		if (dup2(nread_fd, STDIN_FILENO) == -1)
+			exit(exit_all(data, g_err_code));
 		close(nread_fd);
 		exec(data, node);
 		exit(exit_all(data, g_err_code));
@@ -70,9 +76,9 @@ int	pipex(t_data *data, t_node *node, int fd[2], int nread_fd)
 	}
 	else if (node->parent && \
 		(node->parent->operand->l_child == node || node->parent->parent))
-		g_err_code = middle_pipe(data, node, fd, nread_fd);
+		return (middle_pipe(data, node, fd, nread_fd));
 	else if (node->arguments)
-		g_err_code = last_pipe(data, node, nread_fd);
+		return (last_pipe(data, node, nread_fd));
 	return (0);
 }
 
@@ -88,9 +94,10 @@ int	exec_pipe(t_data *data, t_node *node)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, SIG_IGN);
 	nread_fd = dup(STDIN_FILENO);
-	if (nread_fd == -1)
-		return (exit_line(data, errnl(UNKNOWN_ERR, "minishell: dup failed")));
-	pipex(data, node, fd, nread_fd);
+	if (nread_fd == -1 || close(STDIN_FILENO) == -1)
+			return (exit_line(data, errnl(UNKNOWN_ERR, "minishell: dup failed")));
+	if (pipex(data, node, fd, nread_fd) == UNKNOWN_ERR)
+		return (g_err_code);
 	pid = pop_pid(&(data->pidlist));
 	while (pid != -1)
 	{

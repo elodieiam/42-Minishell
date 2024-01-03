@@ -28,10 +28,10 @@ int	rl_heredoc(t_data *data, t_rdlist *rd)
 	res = ft_strjoin(line, "\n");
 	free (line);
 	if (!res)
-		return (close(rd->fd), UNKNOWN_ERR);
+		return (UNKNOWN_ERR);
 	line = apply_exp(res, data->env->envtab);
 	if (!line)
-		return (close(rd->fd), UNKNOWN_ERR);
+		return (UNKNOWN_ERR);
 	write(rd->fd, line, ft_strlen(line));
 	free (line);
 	return (0);

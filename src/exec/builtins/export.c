@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/22 16:43:07 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 21:08:55 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	change_var(t_data *data, char *argument, int j, int append)
 	{
 		tmp_env = cpy_env(data->env->envtab);
 		if (!tmp_env)
-			return (UNKNOWN_ERR);
+			return (free(new_var), UNKNOWN_ERR);
 		data->env->malloced = 1;
 		data->env->envtab = tmp_env;
 	}
@@ -100,7 +100,11 @@ int	exec_export(t_data *data, char **arguments)
 
 	i = 1;
 	if (!arguments[i])
-		return (display_env(data), 0);
+	{
+		if (display_env(data) == UNKNOWN_ERR)
+			return (g_err_code);
+		return (0);
+	}
 	while (arguments[i])
 	{
 		append = 0;
@@ -110,8 +114,11 @@ int	exec_export(t_data *data, char **arguments)
 			if (set == -1)
 				return (-1);
 			else if (set == 0)
-				if (!update_env(data, arguments, i, append))
-					return (1);
+			{
+					if (update_env(data, arguments, i, append) == UNKNOWN_ERR)
+						return (g_err_code);
+				return (1);
+			}
 		}
 		else
 			return (exit_line(data, ferrnl("export",

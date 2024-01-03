@@ -14,7 +14,7 @@
 
 int	exec_command(t_data *data, t_node *node)
 {
-	if (expand(node, data->env->envtab))
+	if (expand(data, node, data->env->envtab))
 		return (g_err_code);
 	if (node->arguments && export_lastarg(data, node))
 		return (g_err_code);
@@ -37,7 +37,6 @@ int	exec_or(t_data *data, t_node *tree)
 	return (g_err_code);
 }
 
-//protec handle redir
 int	exec_and(t_data *data, t_node *tree)
 {
 	if (tree->redirects)
@@ -55,7 +54,6 @@ int	exec_and(t_data *data, t_node *tree)
 	return (g_err_code);
 }
 
-//implement fd old_fd for pipe ?
 int	exec_subshell(t_data *data, t_node *node)
 {
 	int	pid;

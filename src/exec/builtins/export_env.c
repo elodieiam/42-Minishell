@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 16:08:37 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/20 19:42:00 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2023/12/28 18:50:39 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,22 @@ int	update_env(t_data *data, char **arguments, int index, int append)
 		nb_arg++;
 	new_env = malloc(sizeof(char *) * (nb_arg + 2));
 	if (!new_env)
-		return (0);
+		return (fatal_error(data, "malloc"));
 	nb_arg = -1;
 	while (data->env->envtab[++nb_arg])
+	{
 		new_env[nb_arg] = ft_strdup(data->env->envtab[nb_arg]);
+		if (!new_env[nb_arg])
+			return (free_dchartab(new_env), fatal_error(data, "malloc"));
+	}
 	if (append)
 		new_env[nb_arg] = append_var(data, arguments[index]);
 	else
+	{
 		new_env[nb_arg] = ft_strdup(arguments[index]);
+		if(!new_env[nb_arg])
+			return (free_dchartab(new_env), fatal_error(data, "malloc"));
+	}
 	new_env[nb_arg + 1] = NULL;
 	if (data->env->malloced == 1)
 		free_dchartab(data->env->envtab);
@@ -99,11 +107,13 @@ int	display_env(t_data *data)
 		nb_arg++;
 	new_env = malloc(sizeof(char *) * (nb_arg + 1));
 	if (!new_env)
-		return (0);
+		return (fatal_error(data, "malloc"));
 	nb_arg = 0;
 	while (data->env->envtab[nb_arg])
 	{
 		new_env[nb_arg] = ft_strdup(data->env->envtab[nb_arg]);
+		if (!new_env[nb_arg])
+			return (free_dchartab(new_env), fatal_error(data, "malloc"));
 		nb_arg++;
 	}
 	new_env[nb_arg] = NULL;
