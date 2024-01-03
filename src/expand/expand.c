@@ -6,13 +6,12 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:50:18 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/22 13:14:19 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/03 14:47:52 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-//leak on res ??
 char	*getnvarvar(char *res, char *str, int *i, char **env)
 {
 	char		*str_to_join;
@@ -91,11 +90,11 @@ int	exp_args(char ***args, char **env)
 	return (0);
 }
 
-//care if malloc fails
 int	exp_rds(t_rdlist *rdlist, char **env)
 {
 	char	**tmp;
 
+	tmp = NULL;
 	while (rdlist)
 	{
 		if (rdlist->rdtype != T_DOPCHEV)
@@ -103,17 +102,17 @@ int	exp_rds(t_rdlist *rdlist, char **env)
 			if (ft_strchr(rdlist->file, '*'))
 			{
 				tmp = expand_wildcard(rdlist->file);
-				if (!tmp[0])
-					return (UNKNOWN_ERR);
+				if (!tmp)
+					return (cherr_code(UNKNOWN_ERR));
 				if (tmp[1])
-					return (free_dchartab(tmp), 1);
+					return (free_dchartab(tmp), cherr_code(1));
 				rdlist->file = tmp[0];
 				free(tmp[1]);
 				free(tmp);
 			}
 			rdlist->file = apply_exp(rdlist->file, env);
 			if (!rdlist->file)
-				return (UNKNOWN_ERR);
+				return (cherr_code(UNKNOWN_ERR));
 		}
 		rdlist = rdlist->next;
 	}

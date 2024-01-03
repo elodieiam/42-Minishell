@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:42:46 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/27 16:20:38 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/03 14:48:47 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,57 @@ char	*get_varstr(char *str, int *i, char **env)
 	if (env[k])
 		return (ft_strdup(&env[k][j + 1]));
 	return (ft_strdup(""));
+}
+
+char	*fillrmhdquotes(char *str, char *res)
+{
+	int	i;
+	int	quote;
+	int	size;
+
+	i = 0;
+	quote = 0;
+	size = 0;
+	while (str[i])
+	{
+		if (quote && str[i] == quote)
+		{
+			quote = 0;
+			i++;
+		}
+		else if (!quote && (str[i] == 34 || str[i] == 39))
+			quote = str[i++];
+		res[size++] = str[i++];
+	}
+	res[size] = '\0';
+	return (res);
+}
+
+char	*rmhdquotes(char *str)
+{
+	int		i;
+	int		size;
+	char	*res;
+	int		quote;
+
+	i = 0;
+	quote = 0;
+	size = 0;
+	while (str[i])
+	{
+		if (quote && str[i] == quote)
+		{
+			quote = 0;
+			i++;
+		}
+		else if (!quote && (str[i] == 34 || str[i] == 39))
+			quote = str[i++];
+		size++;
+		i++;
+	}
+	res = malloc(sizeof(char) * (size + 1));
+	if (!res)
+		return (free(str), NULL);
+	fillrmhdquotes(str, res);
+	return (free(str), res);
 }
