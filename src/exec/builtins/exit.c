@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:22:57 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/02 12:46:34 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 14:07:50 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	exec_exit(t_data *data, t_node *node)
 				ft_atoll(node->arguments[1]) % 256;
 		else
 			exit_all(data, ferrnl("exit", node->arguments[1],
-					"numeric argument required", 1));
+					"numeric argument required", 2));
 		if (node->arguments[2])
 			return (errnl(1, "minishell: exit: too many arguments"));
 	}
