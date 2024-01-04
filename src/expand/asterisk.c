@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 12:25:35 by tsaint-p          #+#    #+#             */
-/*   Updated: 2024/01/04 01:16:50 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 18:48:55 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@ char	**get_files(t_data *data, DIR *d, char **res, char *str)
 			i++;
 		}
 		dir = readdir(d);
-		if (!dir)
-			return (exit_line(data,
-					errnl(UNKNOWN_ERR, "readdir failed")), NULL);
 	}
 	if (closedir(d) == -1)
 		return (exit_line(data, errnl(UNKNOWN_ERR, "closedir failed")), NULL);
