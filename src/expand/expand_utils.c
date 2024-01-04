@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:27:10 by tsaint-p          #+#    #+#             */
-/*   Updated: 2023/12/28 21:34:27 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/04 01:15:24 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ char	**sumtab(t_data *data, char **t1, char **t2)
 		j++;
 	res = malloc(sizeof(char *) * (i + j + 1));
 	if (!res)
-		return (free_dchartab(t1), free_dchartab(t2), fatal_error(data, "malloc"), NULL);
+		return (free_dchartab(t1),
+			free_dchartab(t2), fatal_error(data, "malloc"), NULL);
 	i = -1;
 	j = -1;
 	while (t1[++i])

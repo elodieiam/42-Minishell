@@ -6,7 +6,7 @@
 /*   By: tsaint-p </var/spool/mail/tsaint-p>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 00:40:37 by tsaint-p          #+#    #+#             */
-/*   Updated: 2024/01/03 17:05:47 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 01:13:51 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ char	*get_headvar(t_data *data, int len, char *var)
 
 	i = 0;
 	while (data->env->envtab[i] && \
-		(ft_strncmp(var, data->env->envtab[i], ft_strlen(var)) 
-		|| data->env->envtab[i][len] != '='))
+		(ft_strncmp(var, data->env->envtab[i], ft_strlen(var))
+			|| data->env->envtab[i][len] != '='))
 		i++;
 	if (data->env->envtab[i])
 		return (ft_strdup(&data->env->envtab[i][ft_strlen(var) + 1]));
