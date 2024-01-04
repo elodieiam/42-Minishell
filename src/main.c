@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2024/01/03 20:04:16 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 14:15:39 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	process_line(t_data *data)
 	data->prompt = readline("\033[1;94mminishell> \033[0m");
 	if (!data->prompt)
 		return (1);
-	add_history(data->prompt);
 	data->tokens = ft_lexer(data, data->prompt);
 	if (!data->tokens)
 		return (exit_line(data, g_err_code), 0);
+	add_history(data->prompt);
 	if (parse(data, &data->tree))
 		return (exit_line(data, g_err_code), 0);
 	if (data->tokens)
