@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 15:21:16 by tsaint-p          #+#    #+#             */
-/*   Updated: 2024/01/04 15:16:43 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/04 22:04:06 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,21 @@ char	*bettercat(char *s1, char *s2)
 
 int	end_export_lastarg(t_data *data, char **tab)
 {
-	int		fd;
-	int		tmp;
+	int		fd_devnull;
+	int		tmp_stderr;
 
-	fd = open("/dev/null", O_WRONLY);
-	tmp = dup(STDERR_FILENO);
-	dup2(fd, STDERR_FILENO);
-	close(STDERR_FILENO);
-	if (exec_export(data, tab))
-		return (free(tab[1]), free(tab), dup2(STDERR_FILENO, tmp),
-			close(fd), close(tmp), g_err_code);
-	dup2(STDERR_FILENO, tmp);
-	close(fd);
-	close(tmp);
+	tmp_stderr = dup(STDERR_FILENO);
+	fd_devnull = open("/dev/null", O_WRONLY);
+	dup2(fd_devnull, STDERR_FILENO);
+	close(fd_devnull);
+	exec_export(data, tab);
+	dup2(tmp_stderr, STDERR_FILENO);
+	close(tmp_stderr);
 	free(tab[1]);
 	free(tab);
 	return (0);
 }
 
-// what if arg[0] == NULL ?
-// print error ? exit line ?
 int	export_lastarg(t_data *data, t_node *node)
 {
 	char	**tab;
