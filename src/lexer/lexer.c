@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:41:50 by tsaint-p          #+#    #+#             */
-/*   Updated: 2024/01/01 23:26:37 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 14:03:04 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,9 @@ char	*fill_string(char *dest, char **cmd_line, int quote)
 	i = 0;
 	while (**cmd_line && !(!quote && ft_iswordsep(**cmd_line)))
 	{
+		fflush(stdout);
 		if (!quote && (**cmd_line == 34 || **cmd_line == 39))
-		{
-			dest[i++] = **cmd_line;
-			quote = *(*cmd_line)++;
-		}
+			quote = **cmd_line;
 		else if (**cmd_line == quote)
 			quote = 0;
 		dest[i++] = *((*cmd_line)++);
