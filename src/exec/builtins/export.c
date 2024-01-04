@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/04 14:26:36 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/04 18:23:23 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	exec_export(t_data *data, char **arguments)
 			{
 				if (update_env(data, arguments, i, append) == UNKNOWN_ERR)
 					return (g_err_code);
-				return (1);
+				return (0);
 			}
 		}
 		else

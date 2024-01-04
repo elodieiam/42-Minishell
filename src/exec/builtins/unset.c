@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:48:25 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/04 14:45:18 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/04 18:05:49 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	var_exists(char *cmd_arg, char **env, int *index)
 
 	i = 0;
 	j = 0;
-	while (cmd_arg[j] && cmd_arg[j] != '=')
+	while (cmd_arg[j])
 		j++;
 	while (env[i])
 	{
-		if (!ft_strncmp(cmd_arg, env[i], j))
+		if (!ft_strncmp(cmd_arg, env[i], j) && (!env[i][j] || env[i][j] == '='))
 		{
 			*index = i;
 			return (1);
@@ -91,8 +91,10 @@ int	exec_unset(t_data *data, char **args)
 	while (args[i])
 	{
 		if (var_exists(args[i], data->env->envtab, &j))
+		{
 			if (unset_env(data, j))
 				return (UNKNOWN_ERR);
+		}
 		i++;
 	}
 	return (0);
