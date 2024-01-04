@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2024/01/04 15:02:35 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 16:09:18 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ int	increment_shlvl(t_data *data)
 	return (g_err_code);
 }
 
-int	prep_stdinnout(void)
+int	prep_stdinnout(t_data *data)
 {
 	int		fd;
 
 	if (!isatty(0))
-		exit(0);
+		return (exit_all(data, 0));
 	else
 	{
 		fd = open("/dev/stdin", O_RDWR);
@@ -100,11 +100,10 @@ int	main(int ac, char *av[], char **env)
 	data = init_data(env);
 	if (!data)
 		return (UNKNOWN_ERR);
-	if (prep_stdinnout())
+	if (prep_stdinnout(data))
 		exit_all(data, fatal_error(data, "minishell launch"));
 	// init_signal();
-	if (increment_shlvl(data))
-		return (exit_line(data, g_err_code));
+	increment_shlvl(data);
 	exit_val = 0;
 	while (!exit_val)
 	{
