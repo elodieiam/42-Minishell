@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 16:08:37 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/03 16:47:23 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 23:00:20 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	chenv(t_data *data, char *argument, char **new_env, int append)
 	return (0);
 }
 
-int	update_env(t_data *data, char **arguments, int index, int append)
+int	update_env(t_data *data, char *argument, int append)
 {
 	char	**new_env;
 	int		nb_arg;
@@ -96,7 +96,7 @@ int	update_env(t_data *data, char **arguments, int index, int append)
 	new_env = malloc(sizeof(char *) * (nb_arg + 2));
 	if (!new_env)
 		return (fatal_error(data, "malloc"));
-	if (chenv(data, arguments[index], new_env, append))
+	if (chenv(data, argument, new_env, append))
 		return (g_err_code);
 	if (data->env->malloced == 1)
 		free_dchartab(data->env->envtab);

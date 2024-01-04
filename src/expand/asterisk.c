@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 12:25:35 by tsaint-p          #+#    #+#             */
-/*   Updated: 2024/01/04 18:48:55 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 22:27:45 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ char	**get_files(t_data *data, DIR *d, char **res, char *str)
 	struct dirent	*dir;
 	int				i;
 
-	if (!d)
-		return (NULL);
 	i = 0;
 	dir = readdir(d);
 	if (!dir)
@@ -40,7 +38,7 @@ char	**get_files(t_data *data, DIR *d, char **res, char *str)
 	{
 		if ((*dir->d_name != '.' || *str == '.') && asterisk(dir->d_name, str))
 		{
-			if (i == 0)
+			if (i++ == 0)
 			{
 				free(res[0]);
 				res[0] = NULL;
@@ -48,7 +46,6 @@ char	**get_files(t_data *data, DIR *d, char **res, char *str)
 			res = tab_addback(res, dir->d_name);
 			if (!res)
 				return (fatal_error(data, "malloc"), NULL);
-			i++;
 		}
 		dir = readdir(d);
 	}

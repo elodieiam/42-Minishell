@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:47:46 by taospa            #+#    #+#             */
-/*   Updated: 2023/12/29 19:30:24 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/04 23:14:15 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include "expand.h"
 # include "lexer.h"
 
-# define SUCCESS 0,
+# define SUCCESS 0
 # define UNSPEC_ERR 1
 # define SYNTAX_ERR 2
 # define PERM_ERR 126
@@ -41,7 +41,6 @@
 # define COL_RES "\033[0m"
 
 extern int	g_err_code;
-
 
 /*---------------debug.c------------*/
 char	*tta(t_toktype int_type);

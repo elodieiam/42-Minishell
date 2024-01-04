@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:33:51 by taospa            #+#    #+#             */
-/*   Updated: 2024/01/04 21:55:08 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 23:14:08 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	process_line(t_data *data)
 		return (exit_line(data, g_err_code), 0);
 	if (data->tokens)
 		return (syntax_error(data, data->tokens), 0);
-	// pretty_print_ast(data->tree, "");
 	if (open_heredocs(data, data->tree))
 		return (exit_line(data, g_err_code), 0);
 	if (exec(data, data->tree))
@@ -102,14 +101,10 @@ int	main(int ac, char *av[], char **env)
 		return (UNKNOWN_ERR);
 	if (prep_stdinnout(data))
 		exit_all(data, fatal_error(data, "minishell launch"));
-	// init_signal();
 	increment_shlvl(data);
 	exit_val = 0;
 	while (!exit_val)
-	{
 		exit_val = process_line(data);
-		// printf("err code: %d\n", g_err_code);
-	}
 	printf("exit\n");
 	return (exit_all(data, g_err_code));
 }

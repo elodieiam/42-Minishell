@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/04 17:56:13 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 23:08:57 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@ void		swap_strings(char **s1, char **s2);
 
 /*----------------export_env.c---------------*/
 int			display_env(t_data *data);
-int			update_env(t_data *data, char **arguments, int index, int append);
+int			update_env(t_data *data, char *argument, int append);
 
 /*----------------export_append.c------------*/
 char		*append_var(t_data *data, char *argument);
+char		**cpy_env(char **env);
 
 /*----------------exec_env.c-----------------*/
 int			exec_env(t_data *data);
@@ -89,7 +90,7 @@ int			handle_redirections(t_data *data, t_node *node);
 int			reset_rds(t_fds *fds, t_node *node);
 
 /*--------------heredoc_utils.c--------------*/
-char			*get_heredoc_name(t_data *data);
-int				exit_heredoc(t_rdlist *rd, t_data *data, int g_err_code);
+char		*get_heredoc_name(t_data *data);
+int			exit_heredoc(t_rdlist *rd, t_data *data, int g_err_code);
 
 #endif

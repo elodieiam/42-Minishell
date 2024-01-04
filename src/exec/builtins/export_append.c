@@ -6,11 +6,36 @@
 /*   By: tsaint-p </var/spool/mail/tsaint-p>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 00:40:37 by tsaint-p          #+#    #+#             */
-/*   Updated: 2024/01/04 01:13:51 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 22:40:01 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+char	**cpy_env(char **env)
+{
+	char	**res;
+	int		i;
+
+	if (!env)
+		return (NULL);
+	i = 0;
+	while (env[i])
+		i++;
+	res = malloc(sizeof(char *) * (i + 1));
+	if (!res)
+		return (NULL);
+	res[i] = NULL;
+	i = 0;
+	while (env[i])
+	{
+		res[i] = ft_strdup(env[i]);
+		if (!res[i])
+			return (NULL);
+		i++;
+	}
+	return (res);
+}
 
 char	*get_headvar(t_data *data, int len, char *var)
 {
