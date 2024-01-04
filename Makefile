@@ -12,8 +12,8 @@ SRC		=	main.c signals.c data.c \
 			exec/builtins/echo.c exec/builtins/export.c exec/builtins/export_utils.c \
 			exec/builtins/export_env.c exec/builtins/exit.c exec/builtins/cd.c \
 			exec/builtins/export_append.c exec/builtins/pwd.c exec/builtins/unset.c \
-			exec/builtins/builtins.c expand/asterisk.c expand/expand.c expand/expand_utils.c \
-			expand/expand_process.c \
+			exec/builtins/builtins.c exec/pipe_utils.c \
+			expand/asterisk.c expand/expand.c expand/expand_utils.c expand/expand_process.c \
 			debug.c
 
 OBJ_DIR	=	obj
