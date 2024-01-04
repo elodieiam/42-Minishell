@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/04 01:14:25 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 14:26:36 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	change_var(t_data *data, char *argument, int j, int append)
 	char	*new_var;
 	char	**tmp_env;
 
+	if (!ft_strchr(argument, '='))
+		return (1);
 	if (append)
 		new_var = append_var(data, argument);
 	else
