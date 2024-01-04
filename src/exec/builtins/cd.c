@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:31:59 by taospa            #+#    #+#             */
-/*   Updated: 2024/01/03 16:37:42 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 13:20:54 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ int	exec_cd(t_data *data, t_node *node)
 	}
 	else if (!newpwd || !data->prompt)
 		return (g_err_code);
+	getcwd(oldpwd, PATH_MAX);
 	if (chdir(newpwd) == -1)
 		return (free(newpwd), fprintf(stderr, "cd : %s\n", strerror(errno)));
-	getcwd(oldpwd, PATH_MAX);
 	free(newpwd);
 	if (!getcwd(finalpwd, PATH_MAX))
 		return (fatal_error(data, "getcwd"));
