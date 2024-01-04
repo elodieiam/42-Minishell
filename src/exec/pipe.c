@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 12:29:51 by tsaint-p          #+#    #+#             */
-/*   Updated: 2024/01/04 01:17:47 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 17:56:02 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 {
 	int	child_pid;
 
-	child_pid = -1;
 	if (pipe(fd) == -1)
 		return (exit_line(data, errnl(UNKNOWN_ERR, "pipe failed")));
 	child_pid = fork();
@@ -31,8 +30,7 @@ int	middle_pipe(t_data *data, t_node *node, int fd[2], int nread_fd)
 		if (dup2(nread_fd, STDIN_FILENO) == -1)
 			exit(exit_all(data, g_err_code));
 		close(nread_fd);
-		exec(data, node);
-		exit(exit_all(data, g_err_code));
+		return (child_pipe(data, node), exit_all(data, g_err_code));
 	}
 	close(nread_fd);
 	nread_fd = dup(fd[0]);
@@ -56,7 +54,7 @@ int	last_pipe(t_data *data, t_node *node, int nread_fd)
 		if (dup2(nread_fd, STDIN_FILENO) == -1)
 			exit(exit_all(data, g_err_code));
 		close(nread_fd);
-		exec(data, node);
+		child_pipe(data, node);
 		exit(exit_all(data, g_err_code));
 	}
 	close(nread_fd);
@@ -101,8 +99,6 @@ int	exec_pipe(t_data *data, t_node *node)
 {
 	int			fd[2];
 	int			nread_fd;
-	int			pid;
-	int			childval;
 
 	fd[0] = -1;
 	fd[1] = -1;
@@ -113,16 +109,6 @@ int	exec_pipe(t_data *data, t_node *node)
 		return (exit_line(data, errnl(UNKNOWN_ERR, "minishell: dup failed")));
 	if (pipex(data, node, fd, nread_fd) == UNKNOWN_ERR)
 		return (g_err_code);
-	pid = pop_pid(&(data->pidlist));
-	while (pid != -1)
-	{
-		if (waitpid(pid, &childval, 0) == -1)
-			return (exit_line(data, errnl(255, "minishell: waitpid failed")));
-		if (WIFSIGNALED(childval))
-			childval = WIFEXITED(childval) + 128;
-		if (childval == 130)
-			write(2, "\n", 1);
-		pid = pop_pid(&(data->pidlist));
-	}
+	wait_pipes(data);
 	return (g_err_code);
 }

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/28 15:45:17 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/04 17:56:13 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 /*-------------------exec.c------------------*/
 int			exec(t_data *data, t_node *node);
 int			exec_subshell(t_data *data, t_node *node);
+int			exec_command(t_data *data, t_node *node);
 
 /*-------------------builtins.c------------------*/
 int			srch_builtin(t_data *data, t_node *node);
@@ -73,6 +74,10 @@ int			open_heredocs(t_data *data, t_node *node);
 
 /*------------------pipe.c-------------------*/
 int			exec_pipe(t_data *data, t_node *node);
+
+/*---------------pipe_utils.c----------------*/
+int			wait_pipes(t_data *data);
+int			child_pipe(t_data *data, t_node *node);
 
 /*-----------------pidlist.c-----------------*/
 t_pidlist	*append_pid(t_pidlist **head, int new_pid);
