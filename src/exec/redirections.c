@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:36:23 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/03 16:33:21 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 14:45:50 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	open_outfile(t_data *data, t_rdlist *rd)
 		{
 			if (access(rd->file, W_OK) == -1)
 				return (exit_line(data, errnl(PERM_ERR, "access denied")));
-			data->fds.curr[1] = open(rd->file, O_WRONLY);
+			data->fds.curr[1] = open(rd->file, O_WRONLY | O_TRUNC);
+			printf("first open: %d\n", data->fds.curr[1]);
 		}
 	}
 	else if (rd->rdtype == T_DCLCHEV)
@@ -59,6 +60,7 @@ int	open_outfile(t_data *data, t_rdlist *rd)
 			if (access(rd->file, W_OK) == -1)
 				return (exit_line(data, errnl(PERM_ERR, "access denied")));
 			data->fds.curr[1] = open(rd->file, O_WRONLY | O_APPEND);
+			printf("second open: %d\n", data->fds.curr[1]);
 		}
 	}
 	return (0);
