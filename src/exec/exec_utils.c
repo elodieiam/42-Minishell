@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 15:21:16 by tsaint-p          #+#    #+#             */
-/*   Updated: 2024/01/04 13:25:05 by elrichar         ###   ########.fr       */
+/*   Updated: 2024/01/04 15:16:43 by elrichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,26 @@ char	*bettercat(char *s1, char *s2)
 	return (res);
 }
 
+int	end_export_lastarg(t_data *data, char **tab)
+{
+	int		fd;
+	int		tmp;
+
+	fd = open("/dev/null", O_WRONLY);
+	tmp = dup(STDERR_FILENO);
+	dup2(fd, STDERR_FILENO);
+	close(STDERR_FILENO);
+	if (exec_export(data, tab))
+		return (free(tab[1]), free(tab), dup2(STDERR_FILENO, tmp),
+			close(fd), close(tmp), g_err_code);
+	dup2(STDERR_FILENO, tmp);
+	close(fd);
+	close(tmp);
+	free(tab[1]);
+	free(tab);
+	return (0);
+}
+
 // what if arg[0] == NULL ?
 // print error ? exit line ?
 int	export_lastarg(t_data *data, t_node *node)
@@ -69,11 +89,7 @@ int	export_lastarg(t_data *data, t_node *node)
 	tab[1] = ft_strjoin("_=", node->arguments[cpt]);
 	if (!tab[1])
 		return (free(tab), fatal_error(data, "malloc"));
-	if (exec_export(data, tab))
-		return (free(tab[1]), free(tab), g_err_code);
-	free(tab[1]);
-	free(tab);
-	return (0);
+	return (end_export_lastarg(data, tab));
 }
 
 void	free_dchartab(char **tab)
