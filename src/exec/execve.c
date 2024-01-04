@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:20:37 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/04 17:32:17 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 19:18:54 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,11 @@ int	execute(t_data *data, t_node *node)
 		if (child_exec(data, node))
 			return (UNKNOWN_ERR);
 	signal(SIGINT, SIG_IGN);
-	if (waitpid(pid, &childval, 0) == -1)
+	if (waitpid(pid, &childval, WUNTRACED) == -1)
 		return (exit_line(data, errnl(-1, "minishell: waitpid failed")));
 	if (handle_child_sigs(childval))
+	{
 		return (WTERMSIG(childval) + 128);
+	}
 	return (WEXITSTATUS(childval));
 }

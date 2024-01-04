@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 19:02:42 by taospa            #+#    #+#             */
-/*   Updated: 2024/01/04 18:23:18 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/04 19:18:39 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	handle_child_sigs(int childval)
 		if (WTERMSIG(childval) == SIGQUIT)
 			printf("Quit (core dumped)\n");
 		else if (WTERMSIG(childval) == SIGINT)
-			write(2, "\n", 1);
+			write(1, "\n", 1);
 		return (WTERMSIG(childval));
 	}
 	return (0);
