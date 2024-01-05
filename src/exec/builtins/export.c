@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/05 12:46:56 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/05 12:51:26 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ int	export_arg(t_data *data, char *arg)
 		}
 	}
 	else
-		return (exit_line(data, ferrnl("export",
-					arg, "not a valid identifier", 1)));
+		return (ferrnl("export",
+					arg, "not a valid identifier", 1));
 	return (0);
 }
 
@@ -106,8 +106,7 @@ int	exec_export(t_data *data, char **arguments)
 	}
 	while (arguments[i])
 	{
-		if (export_arg(data, arguments[i]))
-			break ;
+		export_arg(data, arguments[i]);
 		i++;
 	}
 	return (0);
