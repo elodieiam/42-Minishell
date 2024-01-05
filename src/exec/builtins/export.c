@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:08:31 by elrichar          #+#    #+#             */
-/*   Updated: 2024/01/04 23:06:50 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/05 12:46:56 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ int	exec_export(t_data *data, char **arguments)
 	}
 	while (arguments[i])
 	{
-		export_arg(data, arguments[i]);
+		if (export_arg(data, arguments[i]))
+			break ;
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 17:44:59 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/18 22:58:15 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/05 12:38:08 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	check_equal_sign(char *str, int *append)
 	return (0);
 }
 
-static int	check_valid_string(char *str)
+int	check_valid_string(char *str)
 {
 	if (!ft_isalpha(*str) && *str != '_')
 		return (0);

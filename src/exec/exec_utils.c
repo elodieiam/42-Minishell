@@ -6,11 +6,12 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 15:21:16 by tsaint-p          #+#    #+#             */
-/*   Updated: 2024/01/04 22:04:06 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/05 12:45:10 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <unistd.h>
 
 int	is_path(const char *str)
 {
@@ -59,7 +60,9 @@ int	end_export_lastarg(t_data *data, char **tab)
 	fd_devnull = open("/dev/null", O_WRONLY);
 	dup2(fd_devnull, STDERR_FILENO);
 	close(fd_devnull);
-	exec_export(data, tab);
+	if (exec_export(data, tab) == UNKNOWN_ERR)
+		return (dup2(tmp_stderr, STDERR_FILENO), close(tmp_stderr)
+			, free(tab[1]), free(tab), UNKNOWN_ERR);
 	dup2(tmp_stderr, STDERR_FILENO);
 	close(tmp_stderr);
 	free(tab[1]);
@@ -84,6 +87,8 @@ int	export_lastarg(t_data *data, t_node *node)
 	tab[1] = ft_strjoin("_=", node->arguments[cpt]);
 	if (!tab[1])
 		return (free(tab), fatal_error(data, "malloc"));
+	if (!is_valid_arg(tab[1], 0))
+		return (free(tab[1]), free(tab), 0);
 	return (end_export_lastarg(data, tab));
 }
 
