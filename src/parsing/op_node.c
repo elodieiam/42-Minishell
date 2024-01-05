@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:12:40 by tsaint-p          #+#    #+#             */
-/*   Updated: 2024/01/03 19:28:07 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/05 14:42:35 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ t_node	*handleoperator(t_data *data)
 	return (op_node);
 }
 
-int	add_pipenode(t_data *data, t_node *pipe_node, t_node **tree)
+int	add_pipenode(t_node *pipe_node, t_node **tree)
 {
 	t_node	*current_node;
 
-	if (!data->tree || !data->tree->operand || data->tree->subshell
-		|| (data->tree->operand && data->tree->operand->optype == T_PIPE))
+	if (!*tree || !(*tree)->operand || (*tree)->subshell
+		|| ((*tree)->operand && (*tree)->operand->optype == T_PIPE))
 		return (add_nodeontop(pipe_node, tree), 0);
 	current_node = *tree;
-	while (current_node->operand->r_child && \
+	while (current_node && current_node->operand && current_node->operand->r_child && \
 	current_node->operand->r_child->operand && \
 	!current_node->operand->r_child->subshell)
 		current_node = current_node->operand->r_child;
@@ -69,5 +69,5 @@ int	handlepipe(t_data *data, t_node **tree)
 	if (!pipe_node->operand->r_child)
 		return (free(pipe_node->operand), free(pipe_node), g_err_code);
 	pipe_node->operand->r_child->parent = pipe_node;
-	return (add_pipenode(data, pipe_node, tree));
+	return (add_pipenode(pipe_node, tree));
 }
