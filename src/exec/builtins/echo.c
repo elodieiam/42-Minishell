@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:45:13 by elrichar          #+#    #+#             */
-/*   Updated: 2023/12/12 12:07:16 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/05 14:27:52 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ int	exec_echo(t_node *node)
 	i--;
 	while (node->arguments[i])
 	{
-		printf("%s", node->arguments[i++]);
+		ft_putstr_fd(node->arguments[i++], 1);
 		if (node->arguments[i])
-			printf(" ");
+			write(1, " ", 1);
 	}
 	if (!is_option)
-		printf("\n");
+		write(1, "\n", 1);
 	return (0);
 }
