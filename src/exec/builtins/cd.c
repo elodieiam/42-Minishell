@@ -6,7 +6,7 @@
 /*   By: elrichar <elrichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:31:59 by taospa            #+#    #+#             */
-/*   Updated: 2024/01/04 13:20:54 by tsaint-p         ###   ########.fr       */
+/*   Updated: 2024/01/05 14:02:45 by tsaint-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,9 @@ int	exec_cd(t_data *data, t_node *node)
 	char	*newpwd;
 	char	**export_tab;
 
+	oldpwd[0] = '\0';
+	if (node->arguments[1] && node->arguments[2])
+		return (errnl(1, "minishell: cd: too many arguments"));
 	if (!cd_specific(data, node, &newpwd))
 	{
 		newpwd = ft_strdup(node->arguments[1]);
